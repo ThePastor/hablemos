@@ -102,7 +102,7 @@ button:focus-visible, a:focus-visible, .cell:focus-visible, [tabindex]:focus-vis
 .halftone > :not(.shape) { position: relative; z-index: 1; }
 
 /* topbar */
-.topbar { display: grid; grid-template-columns: auto auto 1fr auto auto auto; align-items: stretch; border-bottom: 1px solid var(--line); background: var(--surface); position: sticky; top: 0; z-index: 20; min-height: 56px; }
+.topbar { display: grid; grid-template-columns: auto auto 1fr auto auto auto auto; align-items: stretch; border-bottom: 1px solid var(--line); background: var(--surface); position: sticky; top: 0; z-index: 20; min-height: 56px; }
 .topbar > * { display: flex; align-items: center; padding: 0 16px; border-right: 1px solid var(--line); min-width: 0; }
 .topbar > *:last-child { border-right: 0; }
 .topbar .wordmark { font-family: var(--font-display); font-weight: 800; font-size: 1.2rem; letter-spacing: -0.04em; text-decoration: none; color: var(--ink); white-space: nowrap; }
@@ -493,7 +493,7 @@ table.conj td.es { font-weight: 700; }
 .levelrow button i { width: 8px; height: 8px; border-radius: 50%; background: var(--pink-2); display: inline-block; }
 .levelrow button i.full { background: var(--pink-5); }
 .levelrow button.on i { background: #3A2230; opacity: .4; }
-.cards5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+.cards5 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
 .lcard { display: flex; flex-direction: column; gap: 10px; padding: 22px 20px 18px; border-radius: 20px; text-decoration: none; color: var(--ink); min-height: 230px; position: relative; transition: transform .15s, box-shadow .15s; }
 .lcard:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
 .lcard .mascot { align-self: flex-end; }
@@ -572,7 +572,7 @@ table.conj td.es { font-weight: 700; }
 }
 @media (max-width: 560px) { .cards5 { grid-template-columns: 1fr; } .stats3 { grid-template-columns: 1fr; } }
 @media (max-width: 900px) {
-  .topbar { grid-template-columns: auto auto 1fr auto auto; }
+  .topbar { grid-template-columns: auto auto 1fr auto auto auto; }
   .topbar .crumb { display: none; }
   .topbar .goal { justify-content: flex-end; }
   .hero { grid-template-columns: 1fr; }
@@ -597,7 +597,7 @@ table.conj td.es { font-weight: 700; }
   .halftone .shape { font-size: 12rem; }
 }
 @media (max-width: 560px) {
-  .topbar { grid-template-columns: auto auto 1fr auto; }
+  .topbar { grid-template-columns: auto auto 1fr auto auto; }
   .topbar > * { padding: 0 10px; }
   .topbar .cta { display: none; }
   .topbar .goal { padding: 0 8px; }
@@ -667,7 +667,7 @@ img, svg { max-width: 100%; }
 .mobnav { display: none; }
 @media (max-width: 760px) {
   .mobnav {
-    display: grid; grid-template-columns: repeat(6, 1fr); position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+    display: grid; grid-template-columns: repeat(7, 1fr); position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
     background: var(--surface); border-top: 1px solid var(--line);
     padding-bottom: env(safe-area-inset-bottom, 0px);
     box-shadow: 0 -8px 24px -18px rgba(0,0,0,.5);
@@ -706,7 +706,7 @@ img, svg { max-width: 100%; }
 /* phones */
 @media (max-width: 760px) {
   /* top bar: wordmark · level · ring · theme, all thumb-sized */
-  .topbar { grid-template-columns: 1fr auto auto auto; min-height: 52px; padding-left: env(safe-area-inset-left, 0px); padding-right: env(safe-area-inset-right, 0px); }
+  .topbar { grid-template-columns: 1fr auto auto auto auto; min-height: 52px; padding-left: env(safe-area-inset-left, 0px); padding-right: env(safe-area-inset-right, 0px); }
   .topbar > * { padding: 0 10px; }
   .topbar .crumb, .topbar .cta { display: none; }
   .topbar .lvl .label { display: none; }
@@ -836,6 +836,167 @@ img, svg { max-width: 100%; }
   .dlg .ctrl [data-act="repeat"] { grid-column: 1 / -1; }
 }
 
+/* =========================== v7: coins, casita, shop, collection, owner =========================== */
+.coin { font-family: var(--font-display); color: #C9922F; font-weight: 800; }
+.topbar .coins {
+  display: flex; align-items: center; gap: 6px; text-decoration: none; color: var(--ink);
+  font-family: var(--font-mono); font-size: .8rem; border-left: 1px solid var(--line); padding: 0 14px; white-space: nowrap;
+}
+.topbar .coins b { font-weight: 700; }
+.topbar .coins.ready::after { content: '🎁'; font-size: .85rem; animation: nudge 1.6s ease-in-out infinite; }
+@keyframes nudge { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+
+.xp-toast.coin { background: var(--sand); color: var(--ink); }
+
+/* big celebration card */
+.bigtoast {
+  position: fixed; right: 18px; bottom: 18px; z-index: 90; max-width: min(420px, calc(100vw - 24px));
+  display: flex; gap: 14px; align-items: flex-start;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 20px;
+  padding: 16px 42px 16px 16px; box-shadow: var(--shadow);
+  transform: translateY(14px); opacity: 0; transition: transform .28s ease, opacity .28s ease;
+}
+.bigtoast.in { transform: none; opacity: 1; }
+.bigtoast b { font-family: var(--font-display); font-size: 1.05rem; }
+.bigtoast p { color: var(--ink-2); font-size: .88rem; margin-top: 4px; line-height: 1.45; }
+.bigtoast .pic { flex: 0 0 auto; }
+.bigtoast .x { position: absolute; top: 8px; right: 10px; background: none; border: 0; font-size: 1.2rem; color: var(--ink-3); cursor: pointer; line-height: 1; padding: 4px 8px; }
+.bigtoast.namebox input { flex: 1 1 140px; min-width: 0; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; }
+@media (pointer: coarse) { .bigtoast.namebox input { min-height: 44px; font-size: 16px; } }
+.bigtoast .btn-row { margin-top: 10px; gap: 8px; }
+
+/* casita */
+.casita { display: grid; grid-template-columns: 1fr 340px; gap: 18px; padding: 22px 48px 30px; border-bottom: 1px solid var(--line); align-items: start; }
+.casita .room, .casita .buddybox { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 16px; }
+.roomsvg { width: 100%; height: auto; display: block; border-radius: 16px; margin: 8px 0 12px; border: 1px solid var(--line); }
+.casita .buddybox { text-align: center; }
+.casita .buddypic { display: flex; justify-content: center; margin: 6px 0 2px; }
+.casita .buddybox h2 { font-size: 1.5rem; letter-spacing: -0.03em; }
+.casita .buddybox p { margin: 2px 0 10px; }
+.stagebar { margin: 10px 0 12px; text-align: left; }
+.stagebar .row { margin-bottom: 5px; }
+.wearrow { display: grid; gap: 8px; text-align: left; }
+.wear { display: grid; gap: 4px; }
+.wear select { width: 100%; }
+
+.chests { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.chest { display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: 18px; background: var(--sand); border: 1px solid var(--line); }
+.chest.ready { background: var(--pink-1); border-color: var(--pink-3); }
+.chest .lid { font-size: 1.8rem; line-height: 1; }
+.chest > div { flex: 1 1 auto; }
+
+.castgrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.castcard { min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; padding: 16px 12px; border-radius: 20px; background: var(--surface); border: 1px solid var(--line); }
+.castcard.on { border-color: var(--pink-4); background: var(--pink-1); }
+.castcard.locked { opacity: .72; }
+.castcard .pic { min-height: 118px; display: flex; align-items: center; }
+.castcard .lockpic { font-family: var(--font-display); font-size: 3.4rem; color: var(--ink-3); opacity: .4; }
+.castcard .meter.sm { width: 100%; height: 6px; }
+.castcard .stages { display: flex; gap: 5px; margin-top: 4px; }
+.castcard .stages span { width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; font-family: var(--font-mono); font-size: .6rem; background: var(--line); color: var(--ink-3); }
+.castcard .stages span.on { background: var(--pink-4); color: #fff; }
+
+.buddystrip { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.buddystrip .bpic { text-decoration: none; }
+.buddystrip .binfo { flex: 1 1 260px; min-width: 0; }
+.buddystrip .binfo > b { font-family: var(--font-display); font-size: 1.2rem; }
+.brow { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+.brow .pill.go, .pill.go { background: var(--pink-3); color: var(--pink-ink); text-decoration: none; }
+
+/* shop + collection */
+.tabs { display: flex; gap: 8px; padding: 14px 48px 0; border-bottom: 1px solid var(--line); }
+.tabs a { padding: 9px 16px; border-radius: 12px 12px 0 0; text-decoration: none; color: var(--ink-2); font-family: var(--font-mono); font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; }
+.tabs a.on { background: var(--pink-1); color: var(--pink-5); }
+.shopgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; padding: 0; }
+#shopWrap .shopgrid, .page > .shopgrid { padding: 20px 48px 40px; }
+.shopcard { min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 5px; text-align: center; padding: 14px 12px; border-radius: 18px; background: var(--surface); border: 1px solid var(--line); }
+.shopcard.owned { background: var(--sage-soft); }
+.shopcard b { font-size: .95rem; }
+.shopcard .thumb { display: flex; align-items: center; justify-content: center; min-height: 104px; }
+.shopcard .thumb.wide { min-height: 0; width: 100%; }
+.shopcard .thumb svg { width: 100%; height: auto; max-height: 104px; border-radius: 10px; }
+.shopcard.r-rara { border-color: var(--pink-3); }
+.shopcard.r-legendaria { border-color: #E2B93B; box-shadow: inset 0 0 0 1px rgba(226,185,59,.35); }
+.collgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(126px, 1fr)); gap: 12px; }
+.collcard { min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 3px; text-align: center; padding: 12px 8px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); }
+.collcard .thumb { width: 76px; height: 76px; display: grid; place-items: center; }
+.collcard .thumb svg { width: 100%; height: 100%; }
+.collcard.locked { opacity: .45; filter: grayscale(1); }
+.collcard.r-legendaria:not(.locked) { border-color: #E2B93B; }
+
+/* owner */
+.cpill { display: inline-block; padding: 5px 11px; border-radius: 999px; font-family: var(--font-mono); font-size: .62rem; letter-spacing: .08em; text-transform: uppercase; background: var(--sand); color: var(--ink-2); border: 1px solid var(--line); }
+.cpill.ok { background: var(--sage-soft); color: var(--ink); }
+.cpill.go { background: var(--pink-2); color: var(--pink-ink); }
+.cpill.bad { background: #F6D4D4; color: #7A2230; }
+.ocard { border-bottom: 1px solid var(--line); padding: 24px 48px 28px; }
+.ohead { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin-bottom: 16px; }
+.ohead .who { display: flex; align-items: center; gap: 12px; }
+.obadges { display: flex; gap: 8px; flex-wrap: wrap; }
+.ogrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; }
+.ogrid > div { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 14px; }
+.orow { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+.spark { display: flex; align-items: flex-end; gap: 2px; height: 62px; margin-top: 8px; padding: 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+.spark i { flex: 1 1 0; background: var(--pink-3); border-radius: 2px 2px 0 0; min-height: 3px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.chips .chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px; background: var(--sand); font-size: .8rem; }
+.chips .chip b { font-family: var(--font-mono); font-size: .65rem; color: var(--pink-5); }
+.orecent { margin-top: 14px; }
+.orecent summary { cursor: pointer; font-family: var(--font-mono); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); padding: 8px 0; }
+.orecent ul { list-style: none; margin-top: 6px; max-height: 260px; overflow: auto; border: 1px solid var(--line); border-radius: 12px; }
+.orecent li { padding: 7px 12px; border-bottom: 1px solid var(--line); font-size: .85rem; }
+.orecent li:last-child { border-bottom: 0; }
+.orecent .mono { font-size: .68rem; color: var(--ink-3); }
+
+/* setup forms */
+.setupform { display: grid; gap: 12px; max-width: 680px; }
+.setupform.narrow { max-width: 420px; margin: 22px 48px; }
+.setupform label { display: grid; gap: 5px; min-width: 0; }
+.setupform > * { min-width: 0; }
+.setupform input, .setupform textarea { width: 100%; padding: 11px 13px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; }
+.setupform textarea { font-family: var(--font-mono); font-size: .72rem; resize: vertical; word-break: break-all; }
+.steps { margin: 0 0 16px 18px; display: grid; gap: 12px; }
+.steps li { line-height: 1.55; min-width: 0; }
+.code { display: block; max-width: 100%; white-space: pre; overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; font-family: var(--font-mono); font-size: .7rem; line-height: 1.6; margin: 8px 0; }
+
+@media (max-width: 1100px) {
+  .casita { grid-template-columns: 1fr; padding-left: 32px; padding-right: 32px; }
+  .castgrid { grid-template-columns: repeat(2, 1fr); }
+  .ocard { padding-left: 32px; padding-right: 32px; }
+  .tabs { padding-left: 32px; padding-right: 32px; }
+}
+@media (max-width: 760px) {
+  .casita { padding: 16px 18px 22px; gap: 14px; }
+  .tabs { padding-left: 18px; padding-right: 18px; }
+  .ocard { padding: 18px; }
+  .orow { grid-template-columns: 1fr; }
+  .chests { grid-template-columns: 1fr; }
+  .setupform.narrow { margin: 18px; }
+  .bigtoast { right: 10px; left: 10px; bottom: calc(70px + env(safe-area-inset-bottom, 0px)); max-width: none; }
+  .topbar .coins { padding: 0 8px; font-size: .72rem; }
+  .buddystrip { gap: 14px; }
+  .code { font-size: .62rem; }
+  .mobnav a { font-size: .5rem; }
+  .mobnav a .mi { font-size: .85rem; }
+}
+@media (max-width: 400px) {
+  .castgrid, .shopgrid { grid-template-columns: 1fr 1fr; }
+  .castcard, .collcard, .shopcard { min-width: 0; padding-left: 8px; padding-right: 8px; }
+  .castcard .mascot, .shopcard .mascot { width: 82px !important; height: 82px !important; }
+  .castcard .pic { min-height: 86px; }
+  .shopcard .thumb { min-height: 84px; }
+  .castcard b, .shopcard b, .collcard b { font-size: .85rem; }
+  .collgrid { grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); }
+  .mobnav a { font-size: .45rem; letter-spacing: 0; padding: 8px 0 7px; }
+  .topbar .coins { padding: 0 5px; }
+}
+@media (pointer: coarse) {
+  .setupform input, .setupform textarea, .wear select { min-height: 44px; font-size: 16px !important; }
+  .bigtoast .x { min-height: 44px; min-width: 44px; }
+  .tabs a { min-height: 44px; display: flex; align-items: center; }
+  .orecent summary { min-height: 44px; display: flex; align-items: center; }
+}
+
 </style>
 
 <header class="topbar">
@@ -849,6 +1010,7 @@ img, svg { max-width: 100%; }
     <svg class="ring" viewBox="0 0 36 36" aria-hidden="true"><circle class="track" cx="18" cy="18" r="15"></circle><circle class="fill" id="ringFill" cx="18" cy="18" r="15" stroke-dasharray="94.2" stroke-dashoffset="94.2"></circle></svg>
     <span class="streak" id="streakTxt"></span>
   </a>
+  <a class="coins" id="coinWidget" href="#casita" aria-label="Your quetzalitos and companion"><span class="coin" aria-hidden="true">◕</span><b id="coinTxt">0</b></a>
   <div class="theme"><button id="themeBtn" type="button" aria-label="Toggle light or dark theme">Dark</button></div>
   <div class="cta"><a class="btn" href="#hunt">Word Hunt <span class="arr">→</span></a></div>
 </header>
@@ -862,10 +1024,11 @@ img, svg { max-width: 100%; }
   <a href="#reading" data-sec="reading"><span class="mi">Aa</span>Read</a>
   <a href="#hunt" data-sec="hunt"><span class="mi">ñ</span>Hunt</a>
   <a href="#review" data-sec="review"><span class="mi">♥</span>Review</a>
+  <a href="#casita" data-sec="casita"><span class="mi">⌂♥</span>Casita</a>
 </nav>
 
 <footer class="foot page">
-  <span>Hablemos · Grade 1 → Fluent · <a href="#about">About</a></span>
+  <span>Hablemos · Grade 1 → Fluent · <a href="#about">About</a> · <a href="#owner">Owner</a></span>
   <span>v2 · built with <span class="heart">♥</span> for Nat <span class="heart">♥</span></span>
   <span id="footStat"></span>
 </footer>
@@ -2709,6 +2872,432 @@ const MASCOTS = {
 };
 function mascot(name, size, cls) { return `<span class="mascot ${cls || ''}" style="width:${size}px;height:${size}px">${MASCOTS[name] || ''}</span>`; }
 
+/* =========================== REWARDS: companions, evolution, cosmetics, coins =========================== */
+/* Currency: "quetzalitos" — 1 per XP earned, plus chests. Every XP also feeds the active companion's care,
+   which is what makes it evolve. Nothing here touches state at load time; part4 calls the init. */
+
+const COIN = '<span class="coin" aria-hidden="true">◕</span>';
+const COIN_NAME = 'quetzalitos';
+
+/* ----- the four companions ----- */
+const CHARS = [
+  { id: 'lola', name: 'Lola', kind: 'axolotl', unlock: 0,
+    blurb: 'A pink axolotl from Lake Atitlán. She does the talking.',
+    stages: ['Renacuaja', 'Pequeña', 'Curiosa', 'Valiente', 'Leyenda del Lago'],
+    anchor: { head: [100, 62, 1], face: [100, 108, 1], neck: [100, 154, .95], held: [162, 142, 1] } },
+  { id: 'mota', name: 'Mota', kind: 'kitten', unlock: 300,
+    blurb: 'A round black kitten with a bow. She hunts words.',
+    stages: ['Gatita', 'Traviesa', 'Cazadora', 'Reina del Tejado', 'Leyenda de la Noche'],
+    anchor: { head: [100, 48, 1], face: [100, 103, 1], neck: [100, 148, 1], held: [164, 152, 1] } },
+  { id: 'nopalito', name: 'Nopalito', kind: 'cactus', unlock: 800,
+    blurb: 'A little cactus from the dry Motagua valley. Patient, like grammar.',
+    stages: ['Brote', 'Pequeño', 'Espinoso', 'Floreciente', 'Guardián del Valle'],
+    anchor: { head: [100, 46, .92], face: [100, 104, 1], neck: [100, 150, .85], held: [158, 138, 1] } },
+  { id: 'nube', name: 'Nube', kind: 'cloud-sheep', unlock: 1600,
+    blurb: 'A cloud-sheep who reads slowly and remembers everything.',
+    stages: ['Nubecita', 'Algodón', 'Soñadora', 'Tormenta Suave', 'Leyenda del Cielo'],
+    anchor: { head: [100, 44, 1.05], face: [100, 110, 1], neck: [100, 152, 1], held: [166, 146, 1] } },
+];
+const CHAR_BY_ID = Object.fromEntries(CHARS.map(c => [c.id, c]));
+/* care XP needed to reach each stage (index = stage - 1) */
+const STAGE_AT = [0, 120, 400, 900, 1800];
+const STAGE_SCALE = [0.78, 0.86, 0.94, 1, 1.04];
+
+/* ----- cosmetics ----- */
+/* Each item draws centred on (0,0) so it can be dropped on any companion's anchor point. */
+const RARITY = { comun: { t: 'Común', p: 60 }, rara: { t: 'Rara', p: 140 }, legendaria: { t: 'Legendaria', p: 300 } };
+const ITEMS = [
+  /* --- head --- */
+  { id: 'bow-pink', slot: 'head', r: 'comun', es: 'Moño rosado', en: 'Pink bow',
+    svg: `<g><path d="M0 0l-26-14v28zM0 0l26-14v28z" fill="#FF8FAB" stroke="#FB6F92" stroke-width="2"/><circle r="7" fill="#FFC2D1" stroke="#FB6F92" stroke-width="2"/></g>` },
+  { id: 'bow-red', slot: 'head', r: 'comun', es: 'Moño rojo', en: 'Red bow',
+    svg: `<g><path d="M0 0l-26-14v28zM0 0l26-14v28z" fill="#D6455F" stroke="#9E2A40" stroke-width="2"/><circle r="7" fill="#E8697F" stroke="#9E2A40" stroke-width="2"/></g>` },
+  { id: 'beanie', slot: 'head', r: 'comun', es: 'Gorrito', en: 'Beanie',
+    svg: `<g><path d="M-30 6a30 26 0 0 1 60 0z" fill="#CCD5AE" stroke="#9FB27A" stroke-width="2"/><rect x="-33" y="4" width="66" height="10" rx="5" fill="#E9EDC9" stroke="#9FB27A" stroke-width="2"/><circle cy="-22" r="8" fill="#FFC2D1" stroke="#9FB27A" stroke-width="2"/></g>` },
+  { id: 'party-hat', slot: 'head', r: 'comun', es: 'Gorro de fiesta', en: 'Party hat',
+    svg: `<g><path d="M0-34l16 30h-32z" fill="#FFB3C6" stroke="#FB6F92" stroke-width="2"/><path d="M-10-14h20M-13-4h26" stroke="#FEFAE0" stroke-width="3" stroke-linecap="round"/><circle cy="-36" r="6" fill="#FAEDCD" stroke="#FB6F92" stroke-width="2"/></g>` },
+  { id: 'sombrero', slot: 'head', r: 'rara', es: 'Sombrero', en: 'Sun hat',
+    svg: `<g><ellipse cy="6" rx="42" ry="12" fill="#FAEDCD" stroke="#D4A373" stroke-width="2"/><path d="M-20 6a20 20 0 0 1 40 0z" fill="#FAEDCD" stroke="#D4A373" stroke-width="2"/><path d="M-21 2h42" stroke="#FF8FAB" stroke-width="5"/></g>` },
+  { id: 'flower-crown', slot: 'head', r: 'rara', es: 'Corona de flores', en: 'Flower crown',
+    svg: `<g>${[-30, -15, 0, 15, 30].map((x, i) => `<g transform="translate(${x} ${i % 2 ? 2 : -2})"><g fill="${i % 2 ? '#FFB3C6' : '#FF8FAB'}"><circle cx="0" cy="-7" r="5"/><circle cx="6" cy="-1" r="5"/><circle cx="4" cy="6" r="5"/><circle cx="-4" cy="6" r="5"/><circle cx="-6" cy="-1" r="5"/></g><circle r="3.5" fill="#FEFAE0"/></g>`).join('')}</g>` },
+  { id: 'crown', slot: 'head', r: 'legendaria', es: 'Corona', en: 'Crown',
+    svg: `<g><path d="M-28 8l-4-30 14 12 18-20 18 20 14-12-4 30z" fill="#F0C674" stroke="#C9922F" stroke-width="2.5" stroke-linejoin="round"/><circle cx="0" cy="-4" r="5" fill="#FF8FAB"/><circle cx="-17" cy="0" r="4" fill="#CCD5AE"/><circle cx="17" cy="0" r="4" fill="#CCD5AE"/></g>` },
+  { id: 'halo', slot: 'head', r: 'legendaria', es: 'Aureola', en: 'Halo',
+    svg: `<g><ellipse cy="-14" rx="26" ry="8" fill="none" stroke="#F0C674" stroke-width="6"/><ellipse cy="-14" rx="26" ry="8" fill="none" stroke="#FEFAE0" stroke-width="2"/></g>` },
+  /* --- face --- */
+  { id: 'glasses', slot: 'face', r: 'comun', es: 'Lentes', en: 'Glasses',
+    svg: `<g fill="none" stroke="#5C2E45" stroke-width="3"><circle cx="-19" r="13"/><circle cx="19" r="13"/><path d="M-6 0h12M-32 -4l-10-4M32 -4l10-4"/></g>` },
+  { id: 'sunglasses', slot: 'face', r: 'rara', es: 'Lentes de sol', en: 'Sunglasses',
+    svg: `<g><path d="M-34-8h28v12a10 10 0 0 1-20 2z" fill="#3A2230"/><path d="M34-8H6v12a10 10 0 0 0 20 2z" fill="#3A2230"/><path d="M-6-4h12" stroke="#3A2230" stroke-width="4"/><path d="M-12-9l6-3 6 3" stroke="#FFC2D1" stroke-width="2" fill="none"/></g>` },
+  { id: 'blush-hearts', slot: 'face', r: 'comun', es: 'Corazones', en: 'Heart cheeks',
+    svg: `<g fill="#FB6F92">${[-30, 30].map(x => `<path transform="translate(${x} 12) scale(.55)" d="M0 10C-14 0-18-10-11-15-6-19 0-14 0-9c0-5 6-10 11-6 7 5 3 15-11 25z"/>`).join('')}</g>` },
+  { id: 'mask', slot: 'face', r: 'rara', es: 'Antifaz', en: 'Masquerade mask',
+    svg: `<g><path d="M-34-8q14-8 28 0 6 4 12 0 14-8 28 0 2 16-12 20-12 3-16-8-4 11-16 8-14-4-12-20z" transform="translate(-2 0)" fill="#5C2E45" stroke="#3A2230" stroke-width="2"/><circle cx="-19" cy="2" r="7" fill="#FFC2D1" opacity=".35"/><circle cx="17" cy="2" r="7" fill="#FFC2D1" opacity=".35"/></g>` },
+  /* --- neck --- */
+  { id: 'scarf-pink', slot: 'neck', r: 'comun', es: 'Bufanda rosada', en: 'Pink scarf',
+    svg: `<g><path d="M-30 0q30 14 60 0 2 10-6 14-24 8-48 0-8-4-6-14z" fill="#FF8FAB" stroke="#FB6F92" stroke-width="2"/><path d="M18 10l10 26 10-4-8-24z" fill="#FFB3C6" stroke="#FB6F92" stroke-width="2"/></g>` },
+  { id: 'scarf-sage', slot: 'neck', r: 'comun', es: 'Bufanda verde', en: 'Sage scarf',
+    svg: `<g><path d="M-30 0q30 14 60 0 2 10-6 14-24 8-48 0-8-4-6-14z" fill="#CCD5AE" stroke="#9FB27A" stroke-width="2"/><path d="M18 10l10 26 10-4-8-24z" fill="#E9EDC9" stroke="#9FB27A" stroke-width="2"/></g>` },
+  { id: 'bandana', slot: 'neck', r: 'comun', es: 'Pañuelo', en: 'Bandana',
+    svg: `<g><path d="M-26 0q26 12 52 0l-26 26z" fill="#FAEDCD" stroke="#D4A373" stroke-width="2"/><path d="M-14 6l6 8M0 10l6 8M12 8l6 8" stroke="#D4A373" stroke-width="2"/></g>` },
+  { id: 'pearls', slot: 'neck', r: 'rara', es: 'Collar de perlas', en: 'Pearl necklace',
+    svg: `<g fill="#FEFAE0" stroke="#EBD3DA" stroke-width="1.5">${[-28, -20, -11, 0, 11, 20, 28].map((x, i) => `<circle cx="${x}" cy="${[2, 8, 13, 15, 13, 8, 2][i]}" r="5"/>`).join('')}</g>` },
+  { id: 'medal', slot: 'neck', r: 'legendaria', es: 'Medalla de oro', en: 'Gold medal',
+    svg: `<g><path d="M-14-4l10 20M14-4L4 16" stroke="#FF8FAB" stroke-width="5"/><circle cy="24" r="13" fill="#F0C674" stroke="#C9922F" stroke-width="2.5"/><path d="M0 17l3 6 6 1-4.5 4 1 6-5.5-3-5.5 3 1-6L-9 24l6-1z" fill="#FEFAE0"/></g>` },
+  /* --- held --- */
+  { id: 'book', slot: 'held', r: 'comun', es: 'Libro', en: 'Book',
+    svg: `<g><path d="M-18-14h34a4 4 0 0 1 4 4v28a4 4 0 0 1-4 4h-34z" fill="#FFC2D1" stroke="#FB6F92" stroke-width="2"/><path d="M-18-14v36l-8-4v-28z" fill="#FB6F92"/><path d="M-8-4h20M-8 4h20M-8 12h14" stroke="#FEFAE0" stroke-width="2.5" stroke-linecap="round"/></g>` },
+  { id: 'coffee', slot: 'held', r: 'comun', es: 'Café', en: 'Coffee',
+    svg: `<g><path d="M-14-8h26l-3 26a5 5 0 0 1-5 4h-10a5 5 0 0 1-5-4z" fill="#FEFAE0" stroke="#D4A373" stroke-width="2"/><path d="M12-2q10 0 10 8t-11 7" fill="none" stroke="#D4A373" stroke-width="2.5"/><path d="M-12-8h22l-1 8h-20z" fill="#8A5A3B"/><path d="M-4-20q4-6 0-10M6-20q4-6 0-10" stroke="#EBD3DA" stroke-width="2.5" fill="none" stroke-linecap="round"/></g>` },
+  { id: 'maraca', slot: 'held', r: 'rara', es: 'Maraca', en: 'Maraca',
+    svg: `<g><rect x="-3" y="4" width="6" height="26" rx="3" fill="#D4A373"/><ellipse cy="-6" rx="15" ry="17" fill="#FF8FAB" stroke="#FB6F92" stroke-width="2"/><path d="M-13-6h26" stroke="#FAEDCD" stroke-width="3"/><g fill="#FEFAE0"><circle cx="-6" cy="-13" r="2.5"/><circle cx="5" cy="-14" r="2.5"/><circle cx="0" cy="2" r="2.5"/></g></g>` },
+  { id: 'balloon', slot: 'held', r: 'rara', es: 'Globo', en: 'Balloon',
+    svg: `<g><path d="M0 6q-3 6-1 24" stroke="#5C2E45" stroke-width="2" fill="none"/><ellipse cy="-14" rx="17" ry="21" fill="#FFB3C6" stroke="#FB6F92" stroke-width="2"/><path d="M-3 4l3 4 3-4z" fill="#FB6F92"/><ellipse cx="-6" cy="-22" rx="4" ry="6" fill="#FEFAE0" opacity=".7" transform="rotate(-20 -6 -22)"/></g>` },
+  { id: 'flag-gt', slot: 'held', r: 'rara', es: 'Banderita', en: 'Little flag',
+    svg: `<g><rect x="-2" y="-24" width="4" height="52" rx="2" fill="#D4A373"/><path d="M2-22h34v22H2z" fill="#8FC5E8" stroke="#5C2E45" stroke-width="1.5"/><path d="M13-22h12v22H13z" fill="#FEFAE0"/><path d="M19-15l3 5-3 5-3-5z" fill="#9FB27A"/></g>` },
+  /* --- aura (drawn behind the companion) --- */
+  { id: 'sparkles', slot: 'aura', r: 'rara', es: 'Chispitas', en: 'Sparkles',
+    svg: `<g fill="#F0C674">${[[34, 40, 1], [166, 58, .8], [42, 132, .7], [160, 128, 1], [100, 26, .6]].map(([x, y, s]) => `<path transform="translate(${x} ${y}) scale(${s})" d="M0-14l3.5 10.5L14 0 3.5 3.5 0 14l-3.5-10.5L-14 0l10.5-3.5z"/>`).join('')}</g>` },
+  { id: 'hearts', slot: 'aura', r: 'rara', es: 'Corazoncitos', en: 'Floating hearts',
+    svg: `<g fill="#FF8FAB" opacity=".85">${[[36, 52, 1], [164, 44, .8], [46, 138, .7], [158, 134, .9]].map(([x, y, s]) => `<path transform="translate(${x} ${y}) scale(${s})" d="M0 10C-14 0-18-10-11-15-6-19 0-14 0-9c0-5 6-10 11-6 7 5 3 15-11 25z"/>`).join('')}</g>` },
+  { id: 'stars', slot: 'aura', r: 'legendaria', es: 'Estrellitas', en: 'Stars',
+    svg: `<g fill="#FFC2D1" stroke="#FB6F92" stroke-width="1.5">${[[30, 44, 1], [170, 50, .85], [38, 126, .8], [168, 122, .9], [100, 20, .7]].map(([x, y, s]) => `<path transform="translate(${x} ${y}) scale(${s})" d="M0-12l3.5 7.6 8.3 1-6 5.8 1.5 8.2L0 6.7-7.3 10.6l1.5-8.2-6-5.8 8.3-1z"/>`).join('')}</g>` },
+  { id: 'rainbow', slot: 'aura', r: 'legendaria', es: 'Arcoíris', en: 'Rainbow',
+    svg: `<g fill="none" stroke-width="9" stroke-linecap="round" opacity=".55"><path d="M22 152a78 78 0 0 1 156 0" stroke="#FF8FAB"/><path d="M33 152a67 67 0 0 1 134 0" stroke="#FAEDCD"/><path d="M44 152a56 56 0 0 1 112 0" stroke="#CCD5AE"/></g>` },
+];
+const ITEM_BY_ID = Object.fromEntries(ITEMS.map(i => [i.id, i]));
+const SLOTS = [
+  { k: 'head', t: 'Head' }, { k: 'face', t: 'Face' }, { k: 'neck', t: 'Neck' }, { k: 'held', t: 'Holding' }, { k: 'aura', t: 'Aura' },
+];
+const itemPrice = (it) => RARITY[it.r].p;
+
+/* ----- the casita: a room the companions live in ----- */
+const ROOM_BGS = [
+  { id: 'casita', es: 'Casita', en: 'Simple room', price: 0,
+    svg: `<rect width="600" height="300" fill="#FEFAE0"/><rect y="210" width="600" height="90" fill="#FAEDCD"/><path d="M0 210h600" stroke="#EBD3DA" stroke-width="3"/>` },
+  { id: 'lago', es: 'Lago de Atitlán', en: 'Lake view', price: 200,
+    svg: `<rect width="600" height="300" fill="#DCEBF5"/><path d="M0 150h600v60H0z" fill="#A7CDE3"/><path d="M60 150l70-90 70 90zM240 150l90-110 90 110z" fill="#9FB27A"/><path d="M240 150l90-110 90 110z" fill="#8AA06A" opacity=".6"/><circle cx="500" cy="60" r="26" fill="#FAEDCD"/><rect y="210" width="600" height="90" fill="#FAEDCD"/>` },
+  { id: 'atardecer', es: 'Atardecer', en: 'Sunset', price: 200,
+    svg: `<rect width="600" height="300" fill="#FFD9C0"/><circle cx="300" cy="180" r="80" fill="#FFB3C6"/><rect y="150" width="600" height="60" fill="#FF8FAB" opacity=".35"/><path d="M0 150h600" stroke="#FB6F92" stroke-width="2" opacity=".4"/><rect y="210" width="600" height="90" fill="#E7B79A"/>` },
+  { id: 'noche', es: 'Noche estrellada', en: 'Starry night', price: 300,
+    svg: `<rect width="600" height="300" fill="#2C2038"/><g fill="#FEFAE0">${[[60, 40], [140, 80], [220, 36], [300, 70], [380, 44], [460, 86], [540, 50], [100, 120], [500, 130], [260, 110]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2.5"/>`).join('')}</g><circle cx="510" cy="60" r="24" fill="#FAEDCD"/><circle cx="500" cy="54" r="22" fill="#2C2038"/><rect y="210" width="600" height="90" fill="#3D2C4B"/>` },
+];
+const ROOM_BG_BY_ID = Object.fromEntries(ROOM_BGS.map(b => [b.id, b]));
+/* decor sits at fixed anchors in the 600×300 scene */
+const DECOR = [
+  { id: 'rug', es: 'Alfombra', en: 'Woven rug', price: 80, at: [300, 254],
+    svg: `<g><ellipse rx="120" ry="26" fill="#FF8FAB" opacity=".55"/><ellipse rx="92" ry="19" fill="#FFC2D1"/><ellipse rx="60" ry="12" fill="#FAEDCD"/></g>` },
+  { id: 'plant', es: 'Maceta', en: 'Potted plant', price: 80, at: [66, 202],
+    svg: `<g><path d="M0-6q-30-10-26-42 22 4 26 34 4-32 28-38 6 34-28 46z" fill="#9FB27A"/><path d="M-20-4h40l-6 30h-28z" fill="#D4A373"/><path d="M-22-8h44v8h-44z" fill="#C08B5E"/></g>` },
+  { id: 'lamp', es: 'Lámpara', en: 'Lamp', price: 80, at: [528, 208],
+    svg: `<g><rect x="-3" y="-52" width="6" height="52" fill="#D4A373"/><path d="M-24-52h48l-8-26h-32z" fill="#FAEDCD" stroke="#D4A373" stroke-width="2"/><ellipse cy="2" rx="20" ry="6" fill="#D4A373"/></g>` },
+  { id: 'shelf', es: 'Repisa', en: 'Book shelf', price: 120, at: [110, 120],
+    svg: `<g><rect x="-56" y="0" width="112" height="8" rx="3" fill="#D4A373"/><g>${[[-42, '#FF8FAB', 30], [-30, '#CCD5AE', 36], [-18, '#FFC2D1', 26], [-6, '#FAEDCD', 34]].map(([x, c, h]) => `<rect x="${x}" y="${-h}" width="9" height="${h}" rx="2" fill="${c}"/>`).join('')}</g><g transform="translate(28 -14)"><ellipse rx="16" ry="13" fill="#FFC2D1"/><circle cx="-6" cy="-2" r="2" fill="#3A2230"/><circle cx="6" cy="-2" r="2" fill="#3A2230"/></g></g>` },
+  { id: 'papel', es: 'Papel picado', en: 'Paper banners', price: 120, at: [300, 16],
+    svg: `<g><path d="M-270 0q135 40 270 0" fill="none" stroke="#D4A373" stroke-width="2"/>${[-210, -150, -90, -30, 30, 90, 150, 210].map((x, i) => { const y = Math.round(34 - Math.abs(x) * 0.11); const c = ['#FF8FAB', '#CCD5AE', '#FFC2D1', '#FAEDCD'][i % 4]; return `<path d="M${x - 16} ${y}h32v25l-16 8-16-8z" fill="${c}"/>`; }).join('')}</g>` },
+  { id: 'marimba', es: 'Marimba', en: 'Marimba', price: 160, at: [72, 262],
+    svg: `<g><rect x="-56" y="-16" width="112" height="12" rx="4" fill="#D4A373"/>${[-46, -32, -18, -4, 10, 24, 38].map((x, i) => `<rect x="${x}" y="${-26 + i}" width="10" height="${20 - i}" rx="2" fill="#C08B5E"/>`).join('')}<path d="M-44-4v22M44-4v22" stroke="#8A5A3B" stroke-width="5"/></g>` },
+  { id: 'ventana', es: 'Ventana', en: 'Window', price: 160, at: [470, 96],
+    svg: `<g><rect x="-52" y="-46" width="104" height="92" rx="6" fill="#DCEBF5" stroke="#D4A373" stroke-width="5"/><path d="M0-46v92M-52 0h104" stroke="#D4A373" stroke-width="5"/><path d="M-46 30l26-30 22 26 18-16 26 20v12h-92z" fill="#9FB27A"/></g>` },
+  { id: 'tapete', es: 'Huipil en la pared', en: 'Woven wall hanging', price: 200, at: [140, 96],
+    svg: `<g><rect x="-40" y="-44" width="80" height="88" rx="4" fill="#FEFAE0" stroke="#D4A373" stroke-width="3"/>${[-30, -14, 2, 18].map((y, i) => `<g><rect x="-34" y="${y}" width="68" height="8" fill="${['#FB6F92', '#9FB27A', '#F0C674', '#FF8FAB'][i]}"/><path d="M-34 ${y + 12}h68" stroke="#EBD3DA" stroke-width="2"/></g>`).join('')}</g>` },
+  { id: 'quetzal', es: 'Quetzal', en: 'Quetzal bird', price: 300, at: [560, 130],
+    svg: `<g><path d="M-4 6q-22 26-30 52 20-14 34-40z" fill="#3E9E7E"/><ellipse rx="16" ry="18" fill="#4FB894"/><circle cy="-14" r="11" fill="#4FB894"/><path d="M-10-22q10-10 20 0z" fill="#3E9E7E"/><circle cx="4" cy="-16" r="2.5" fill="#3A2230"/><path d="M11-14l8 3-8 3z" fill="#F0C674"/><path d="M-2 8h10v18h-10z" fill="#D6455F"/></g>` },
+];
+const DECOR_BY_ID = Object.fromEntries(DECOR.map(d => [d.id, d]));
+
+/* ----- chests ----- */
+const CHESTS = {
+  daily: { t: 'Daily chest', need: 'Reach your daily XP goal', coins: [20, 45], itemChance: .35, pool: ['comun', 'rara'] },
+  weekly: { t: 'Golden chest', need: 'Every 7 days of streak', coins: [100, 100], itemChance: 1, pool: ['rara', 'legendaria'] },
+};
+
+/* ----- state helpers (called from part4 once S exists) ----- */
+function blankChar(id) { return { care: 0, worn: { head: null, face: null, neck: null, held: null, aura: null } }; }
+function initRewards() {
+  if (typeof S.coins !== 'number') S.coins = 0;
+  if (!S.buddy) S.buddy = 'lola';
+  if (!S.chars) S.chars = {};
+  CHARS.forEach(c => { if (!S.chars[c.id]) S.chars[c.id] = blankChar(c.id); });
+  if (!S.items) S.items = {};
+  if (!S.decor) S.decor = {};
+  if (!S.room) S.room = { bg: 'casita', on: {} };
+  if (!S.room.on) S.room.on = {};
+  if (!S.chest) S.chest = { daily: null, weekly: 0 };
+  if (!S.rewardSeen) S.rewardSeen = {};
+  /* everyone starts with one free bow so the dressing-up is discoverable */
+  if (!S.items['bow-pink']) S.items['bow-pink'] = true;
+}
+const charUnlocked = (id) => (S.xp || 0) >= (CHAR_BY_ID[id] ? CHAR_BY_ID[id].unlock : 0);
+const unlockedChars = () => CHARS.filter(c => charUnlocked(c.id));
+function charStage(id) {
+  const care = (S.chars[id] && S.chars[id].care) || 0;
+  let st = 1; STAGE_AT.forEach((n, i) => { if (care >= n) st = i + 1; });
+  return st;
+}
+function stageProgress(id) {
+  const care = (S.chars[id] && S.chars[id].care) || 0, st = charStage(id);
+  if (st >= 5) return { pct: 100, have: care, need: care, max: true };
+  const from = STAGE_AT[st - 1], to = STAGE_AT[st];
+  return { pct: Math.round((care - from) / (to - from) * 100), have: care - from, need: to - from, max: false };
+}
+const buddy = () => CHAR_BY_ID[charUnlocked(S.buddy) ? S.buddy : 'lola'];
+const ownedItems = () => ITEMS.filter(i => S.items[i.id]);
+const itemsFor = (slot) => ITEMS.filter(i => i.slot === slot);
+
+/* called by addXP: every XP is also a coin and also feeds the active companion */
+function rewardXP(n) {
+  S.coins = (S.coins || 0) + n;
+  const b = buddy(); const before = charStage(b.id);
+  S.chars[b.id].care = (S.chars[b.id].care || 0) + n;
+  const after = charStage(b.id);
+  const news = [];
+  if (after > before) news.push({ kind: 'stage', char: b.id, stage: after });
+  CHARS.forEach(c => { if (c.unlock > 0 && (S.xp || 0) >= c.unlock && !S.rewardSeen['char.' + c.id]) { S.rewardSeen['char.' + c.id] = true; news.push({ kind: 'char', char: c.id }); } });
+  return news;
+}
+
+/* chests */
+function chestReady(which) {
+  if (which === 'daily') return xpToday() >= S.goal && S.chest.daily !== todayStr();
+  const earned = Math.floor(streakAlive() / 7);
+  return earned > (S.chest.weekly || 0);
+}
+function rollItem(pool) {
+  const cand = ITEMS.filter(i => pool.indexOf(i.r) >= 0 && !S.items[i.id]);
+  if (!cand.length) return null;
+  return cand[Math.floor(Math.random() * cand.length)];
+}
+function openChest(which) {
+  const c = CHESTS[which];
+  const coins = c.coins[0] + Math.floor(Math.random() * (c.coins[1] - c.coins[0] + 1));
+  S.coins = (S.coins || 0) + coins;
+  let item = null;
+  if (Math.random() < c.itemChance) { item = rollItem(c.pool); if (item) S.items[item.id] = true; }
+  if (which === 'daily') S.chest.daily = todayStr(); else S.chest.weekly = Math.floor(streakAlive() / 7);
+  return { coins, item };
+}
+
+/* ----- drawing: a companion at a stage, wearing things ----- */
+function innerSVG(name) { return String(MASCOTS[name] || '').replace(/^[\s\S]*?<svg[^>]*>/, '').replace(/<\/svg>\s*$/, ''); }
+function layer(item, anchor) {
+  if (!item) return '';
+  if (item.slot === 'aura') return item.svg; /* auras use absolute 200×200 coordinates */
+  const [x, y, s] = anchor[item.slot] || [100, 100, 1];
+  return `<g transform="translate(${x} ${y}) scale(${s})">${item.svg}</g>`;
+}
+/* stage flourishes: the companion simply grows, and gains a little glow at the top stages */
+function stageFX(stage) {
+  /* a ring, not a filled disc — a disc turns muddy on the dark theme */
+  if (stage >= 5) return `<circle cx="100" cy="108" r="88" fill="none" stroke="#F0C674" stroke-width="2.5" opacity=".55"/><circle cx="100" cy="108" r="80" fill="none" stroke="#FFB3C6" stroke-width="7" opacity=".35"/>`;
+  if (stage === 4) return `<circle cx="100" cy="110" r="84" fill="none" stroke="#FFB3C6" stroke-width="6" opacity=".3"/>`;
+  return '';
+}
+function companionSVG(id, opts) {
+  opts = opts || {};
+  const c = CHAR_BY_ID[id] || CHARS[0];
+  const st = opts.stage || 1;
+  const worn = opts.worn || {};
+  const sc = STAGE_SCALE[st - 1];
+  const aura = worn.aura ? ITEM_BY_ID[worn.aura] : null;
+  const front = ['head', 'face', 'neck', 'held'].map(k => layer(worn[k] ? ITEM_BY_ID[worn[k]] : null, c.anchor)).join('');
+  return `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${esc(c.name)}, stage ${st}">
+    ${stageFX(st)}${aura ? layer(aura, c.anchor) : ''}
+    <g transform="translate(100 112) scale(${sc}) translate(-100 -112)">${innerSVG(id)}${front}</g>
+  </svg>`;
+}
+function companion(id, size, cls, opts) {
+  const ch = S.chars && S.chars[id];
+  const o = Object.assign({ stage: charStage(id), worn: (ch && ch.worn) || {} }, opts || {});
+  return `<span class="mascot ${cls || ''}" style="width:${size}px;height:${size}px">${companionSVG(id, o)}</span>`;
+}
+/* a small preview used in the shop: the buddy wearing one candidate item */
+function previewWith(itemId, size) {
+  const b = buddy();
+  const worn = Object.assign({}, S.chars[b.id].worn);
+  const it = ITEM_BY_ID[itemId]; if (it) worn[it.slot] = itemId;
+  return `<span class="mascot" style="width:${size}px;height:${size}px">${companionSVG(b.id, { stage: charStage(b.id), worn })}</span>`;
+}
+/* the room scene */
+function roomSVG() {
+  const bg = ROOM_BG_BY_ID[S.room.bg] || ROOM_BGS[0];
+  const on = Object.keys(S.room.on).filter(k => S.room.on[k] && DECOR_BY_ID[k]);
+  const props = on.map(k => { const d = DECOR_BY_ID[k]; return `<g transform="translate(${d.at[0]} ${d.at[1]})">${d.svg}</g>`; }).join('');
+  const cast = unlockedChars();
+  /* an even row along the floor, buddy first and centre-most */
+  const row = { 1: [300], 2: [238, 366], 3: [180, 302, 424], 4: [150, 252, 354, 456] }[cast.length] || [300];
+  /* the buddy takes the middle-most seat; everyone else fills the rest, left to right */
+  const mid = Math.floor((row.length - 1) / 2);
+  const others = cast.filter(c => c.id !== S.buddy);
+  const seat = {}; let k = 0;
+  row.forEach((x, i) => { if (i === mid && cast.some(c => c.id === S.buddy)) seat[S.buddy] = x; else if (others[k]) seat[others[k++].id] = x; });
+  cast.forEach((c, i) => { if (seat[c.id] == null) seat[c.id] = row[i] || 300; });
+  const folk = cast.map((c) => {
+    const p = [seat[c.id], 198]; const sc = (c.id === S.buddy ? 0.86 : 0.7);
+    const ch = S.chars[c.id] || blankChar(c.id);
+    const inner = companionSVG(c.id, { stage: charStage(c.id), worn: ch.worn }).trim().replace(/^<svg[^>]*>/, '').replace(/<\/svg>$/, '');
+    return `<g transform="translate(${p[0] - 100 * sc} ${p[1] - 100 * sc}) scale(${sc})">${inner}</g>`;
+  }).join('');
+  return `<svg viewBox="0 0 600 300" class="roomsvg" role="img" aria-label="Your casita">${bg.svg}${props}${folk}</svg>`;
+}
+
+/* =========================== LEARNER PROFILE, ACTIVITY LOG, CLOUD SYNC =========================== */
+/* Sync is a plain REST call to a Supabase table — no SDK, no external script.
+   claude.ai artifacts block outbound fetch, so sync only runs on the hosted (GitHub Pages) copy. */
+
+const CLOUD_KEY = 'hablemos.v1.cloud';
+const OWNER_KEY = 'hablemos.v1.owner';
+const TABLE = 'hablemos_progress';
+
+/* ----- learner profile ----- */
+function newLearnerId() {
+  const a = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let s = ''; for (let i = 0; i < 8; i++) s += a[Math.floor(Math.random() * a.length)];
+  return s;
+}
+function initProfile() {
+  if (!S.who) S.who = { id: newLearnerId(), name: '', since: todayStr() };
+  if (!S.who.id) S.who.id = newLearnerId();
+  if (!S.act) S.act = [];
+  if (!S.time) S.time = {};
+  if (!S.pron) S.pron = [];
+}
+const learnerName = () => (S.who && S.who.name) || 'Learner';
+
+/* ----- activity log (ring buffer, newest last) ----- */
+function logAct(k, v, extra) {
+  if (!S.act) S.act = [];
+  S.act.push(Object.assign({ t: Math.floor(Date.now() / 1000), k, v }, extra || {}));
+  if (S.act.length > 240) S.act = S.act.slice(-240);
+}
+/* ----- time on task: half a minute per 30s tick, only while the tab is visible and recently touched ----- */
+let LAST_TOUCH = Date.now();
+['pointerdown', 'keydown', 'touchstart', 'hashchange'].forEach(ev => window.addEventListener(ev, () => { LAST_TOUCH = Date.now(); }, { passive: true, capture: true }));
+function startClock() {
+  setInterval(() => {
+    if (document.hidden) return;
+    if (Date.now() - LAST_TOUCH > 120000) return;
+    const t = todayStr();
+    S.time[t] = Math.round(((S.time[t] || 0) + 0.5) * 10) / 10;
+    try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {}
+  }, 30000);
+}
+
+/* ----- the summary the owner view reads ----- */
+function last30() {
+  const out = {};
+  for (let i = 29; i >= 0; i--) { const d = addDays(-i); out[d] = S.xpLog[d] || 0; }
+  return out;
+}
+function weakWords() {
+  const counts = {};
+  (S.mistakes || []).forEach(m => { const t = (m.ex && (m.ex.prompt || m.ex.a || m.ex.q)) || m.lessonId || 'exercise'; counts[t] = (counts[t] || 0) + 1; });
+  (S.pron || []).filter(p => p.s < 70).forEach(p => { counts[p.w] = (counts[p.w] || 0) + 1; });
+  return Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 12).map(([w, n]) => ({ w, n }));
+}
+function summary() {
+  const pron = S.pron || [];
+  const avg = pron.length ? Math.round(pron.reduce((a, p) => a + p.s, 0) / pron.length) : null;
+  const mins = Object.values(S.time || {}).reduce((a, b) => a + b, 0);
+  const mins7 = Object.entries(S.time || {}).filter(([d]) => d >= addDays(-6)).reduce((a, [, v]) => a + v, 0);
+  const b = buddy();
+  return {
+    id: S.who.id, name: learnerName(), since: S.who.since,
+    v: BUILD.v, at: new Date().toISOString(),
+    xp: S.xp || 0, coins: S.coins || 0, level: S.level, goal: S.goal,
+    xpToday: xpToday(), streak: streakAlive(),
+    learned: learnedCount(), lessons: lessonsDone(), lessonsTotal: lessonsTotal(),
+    minutes: Math.round(mins), minutes7: Math.round(mins7),
+    buddy: b.id, stage: charStage(b.id),
+    chars: CHARS.filter(c => charUnlocked(c.id)).map(c => ({ id: c.id, stage: charStage(c.id), care: (S.chars[c.id] || {}).care || 0 })),
+    items: Object.keys(S.items || {}).length, itemsTotal: ITEMS.length,
+    pronCount: pron.length, pronAvg: avg,
+    mistakes: (S.mistakes || []).length,
+    weak: weakWords(),
+    days: last30(),
+    recent: (S.act || []).slice(-30),
+  };
+}
+
+/* ----- cloud config ----- */
+function cloudCfg() { try { return JSON.parse(localStorage.getItem(CLOUD_KEY) || 'null'); } catch (e) { return null; } }
+function setCloudCfg(c) { try { c ? localStorage.setItem(CLOUD_KEY, JSON.stringify(c)) : localStorage.removeItem(CLOUD_KEY); } catch (e) {} }
+function encodeSetup(c) { try { return btoa(JSON.stringify({ u: c.url, k: c.key })).replace(/=+$/, ''); } catch (e) { return ''; } }
+function decodeSetup(code) {
+  try {
+    const raw = String(code).trim().replace(/\s+/g, '');
+    const o = JSON.parse(atob(raw + '==='.slice(0, (4 - raw.length % 4) % 4)));
+    if (!o.u || !o.k) return null;
+    return { url: String(o.u).replace(/\/+$/, ''), key: String(o.k) };
+  } catch (e) { return null; }
+}
+
+const Cloud = {
+  state: 'off',        /* off | ready | syncing | ok | error | blocked */
+  msg: '',
+  last: null,
+  timer: null,
+  lastSent: '',
+  on() { return !!cloudCfg(); },
+  blocked() { return ON_CLAUDE; },
+  head(cfg, extra) {
+    return Object.assign({ apikey: cfg.key, Authorization: 'Bearer ' + cfg.key, 'Content-Type': 'application/json' }, extra || {});
+  },
+  setState(s, m) { Cloud.state = s; Cloud.msg = m || ''; document.querySelectorAll('[data-cloudstate]').forEach(el => paintCloudPill(el)); },
+  /* upsert this learner's row */
+  async push(force) {
+    const cfg = cloudCfg(); if (!cfg) return;
+    if (Cloud.blocked()) { Cloud.setState('blocked', 'Sync is switched off inside claude.ai — use your web address.'); return; }
+    const body = { id: S.who.id, name: learnerName(), updated_at: new Date().toISOString(), payload: summary() };
+    const sig = JSON.stringify([body.payload.xp, body.payload.coins, body.payload.lessons, body.payload.learned, body.payload.minutes, body.name]);
+    if (!force && sig === Cloud.lastSent) return;
+    Cloud.setState('syncing');
+    try {
+      const r = await fetch(cfg.url + '/rest/v1/' + TABLE, {
+        method: 'POST',
+        headers: Cloud.head(cfg, { Prefer: 'resolution=merge-duplicates,return=minimal' }),
+        body: JSON.stringify([body]),
+      });
+      if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + (await r.text()).slice(0, 120));
+      Cloud.lastSent = sig; Cloud.last = new Date();
+      Cloud.setState('ok');
+    } catch (e) {
+      Cloud.setState('error', String(e.message || e).slice(0, 160));
+    }
+  },
+  queue() {
+    if (!Cloud.on() || Cloud.blocked()) return;
+    clearTimeout(Cloud.timer);
+    Cloud.timer = setTimeout(() => Cloud.push(false), 6000);
+  },
+  async all() {
+    const cfg = cloudCfg(); if (!cfg) throw new Error('Cloud sync is not set up on this device yet.');
+    if (Cloud.blocked()) throw new Error('claude.ai blocks this page from reaching the internet. Open your hablemos web address instead.');
+    const r = await fetch(cfg.url + '/rest/v1/' + TABLE + '?select=id,name,updated_at,payload&order=updated_at.desc', { headers: Cloud.head(cfg) });
+    if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + (await r.text()).slice(0, 160));
+    return r.json();
+  },
+};
+function paintCloudPill(el) {
+  const map = { off: ['Not set up', 'off'], ready: ['Ready', 'off'], syncing: ['Syncing…', 'go'], ok: ['Synced', 'ok'], error: ['Sync problem', 'bad'], blocked: ['Off in claude.ai', 'off'] };
+  const [t, cls] = map[Cloud.state] || map.off;
+  el.className = 'cpill ' + cls;
+  el.textContent = t + (Cloud.state === 'ok' && Cloud.last ? ' · ' + Cloud.last.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '');
+  el.title = Cloud.msg || '';
+}
+function initCloud() {
+  if (Cloud.blocked()) { Cloud.state = cloudCfg() ? 'blocked' : 'off'; return; }
+  if (cloudCfg()) { Cloud.state = 'ready'; setTimeout(() => Cloud.push(true), 1500); }
+  document.addEventListener('visibilitychange', () => { if (document.hidden) Cloud.push(false); });
+  window.addEventListener('pagehide', () => Cloud.push(false));
+}
+
+/* ----- owner passcode ----- */
+function ownerPass() { try { return localStorage.getItem(OWNER_KEY) || ''; } catch (e) { return ''; } }
+function setOwnerPass(p) { try { p ? localStorage.setItem(OWNER_KEY, p) : localStorage.removeItem(OWNER_KEY); } catch (e) {} }
+function ownerUnlocked() { try { return sessionStorage.getItem(OWNER_KEY + '.ok') === '1'; } catch (e) { return false; } }
+function setOwnerUnlocked(v) { try { v ? sessionStorage.setItem(OWNER_KEY + '.ok', '1') : sessionStorage.removeItem(OWNER_KEY + '.ok'); } catch (e) {} }
+
 /* =========================== APP =========================== */
 const $ = (s, el = document) => el.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
@@ -2718,7 +3307,7 @@ const gridForm = (w) => stripAccents(String(w).toUpperCase()).replace(/[^A-Z\u00
 const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const DICT_BY_ES = Object.fromEntries(DICT.map(d => [d.es, d]));
 const KEY = 'hablemos.v1';
-const BUILD = { v: 'v6', date: '27 August 2026' };
+const BUILD = { v: 'v7', date: '31 August 2026' };
 const todayStr = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 const addDays = (n) => { const d = new Date(); d.setDate(d.getDate() + n); return todayStr(d); };
 const XP = { lesson: 15, perfect: 5, phrase: 5, passage: 15, huntWord: 2, hunt: 10, card: 1, mistake: 3, dialogue: 10, listen: 3 };
@@ -2726,8 +3315,10 @@ const XP = { lesson: 15, perfect: 5, phrase: 5, passage: 15, huntWord: 2, hunt: 
 /* ----- state ----- */
 let S = { level: 1, done: {}, found: {}, learned: {}, quiz: {}, spoken: {}, xp: 0, xpLog: {}, streak: { count: 0, last: null }, goal: 20, mistakes: [], cards: {}, listen: {} };
 function load() { try { const raw = localStorage.getItem(KEY); if (raw) { const o = JSON.parse(raw); S = Object.assign(S, o); S.streak = Object.assign({ count: 0, last: null }, o.streak || {}); } } catch (e) {} }
-function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} updateStat(); }
+function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} updateStat(); Cloud.queue(); }
 load();
+initRewards();
+initProfile();
 const LV = () => LEVELS.find(l => l.id === S.level) || LEVELS[0];
 const learnedCount = () => Object.keys(S.learned).length;
 const lessonsDone = () => Object.keys(S.done).filter(k => k.startsWith('g')).length;
@@ -2739,9 +3330,21 @@ function addXP(n, reason) {
   const before = xpToday();
   S.xp = (S.xp || 0) + n; S.xpLog[t] = before + n;
   if (S.streak.last !== t) { S.streak.count = S.streak.last === y ? (S.streak.count || 0) + 1 : 1; S.streak.last = t; }
+  const news = rewardXP(n);
+  logAct('xp', reason, { n });
   save();
   xpToast(`+${n} XP · ${reason}`);
+  xpToast(`+${n} ${COIN_NAME}`, 'coin');
+  news.forEach((ev, i) => setTimeout(() => announce(ev), 700 + i * 1400));
   if (before < S.goal && xpToday() >= S.goal) setTimeout(() => xpToast(`Daily goal reached ♥ ${streakAlive()}-day streak`), 900);
+  if (before < S.goal && xpToday() >= S.goal) setTimeout(() => xpToast('A daily chest is waiting in your Casita 🎁'), 1800);
+}
+/* a companion evolved, or a new one turned up */
+function announce(ev) {
+  const c = CHAR_BY_ID[ev.char];
+  if (ev.kind === 'stage') { bigToast(`${c.name} grew up!`, `${c.name} is now <b>${esc(c.stages[ev.stage - 1])}</b> — stage ${ev.stage} of 5.`, c.id); logAct('stage', c.name + ' → ' + c.stages[ev.stage - 1]); }
+  else { bigToast(`${c.name} joined you!`, `Unlocked at ${c.unlock} XP. Meet ${c.name} in your <a href="#casita">Casita</a>.`, c.id); logAct('unlock', c.name); }
+  save();
 }
 function levelProgress(id) {
   const items = pathItems(id); const done = items.filter(i => i.done).length;
@@ -3103,16 +3706,42 @@ async function repeatFlow(resEl, target, onScore) {
     const r = scoreHTML(alts, target, blob); resEl.innerHTML = r.html; wireBlob(resEl, blob);
     resEl.querySelector('[data-say-model]').addEventListener('click', () => speak(target, true));
     resEl.querySelectorAll('.wordbtn').forEach(b => b.addEventListener('click', () => speak(b.dataset.say, true)));
+    if (!S.pron) S.pron = [];
+    S.pron.push({ w: target.length > 40 ? target.slice(0, 40) + '…' : target, s: r.pct, t: Math.floor(Date.now() / 1000) });
+    if (S.pron.length > 120) S.pron = S.pron.slice(-120);
+    logAct('pron', target.length > 30 ? target.slice(0, 30) + '…' : target, { s: r.pct });
+    save();
     onScore(r.pct);
   }, async (msg) => { if (rec) await rec.stop(); resEl.innerHTML = `<div class="notice warn">${esc(msg)}</div>`; });
 }
 
+/* keep several celebration cards from landing on top of each other */
+function stackToasts() {
+  const base = window.innerWidth <= 760 ? 70 : 18;
+  let y = base;
+  Array.from(document.querySelectorAll('.bigtoast')).reverse().forEach(el => {
+    el.style.bottom = `calc(${y}px + env(safe-area-inset-bottom, 0px))`;
+    y += el.offsetHeight + 12;
+  });
+}
 /* ----- toasts ----- */
 function toast(msg) {
   let t = $('#toast'); if (!t) { t = document.createElement('div'); t.id = 'toast'; t.style.cssText = 'position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--inverse);color:var(--inverse-ink);padding:10px 16px;border-radius:999px;font-family:var(--font-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;z-index:50;max-width:90vw;text-align:center'; document.body.appendChild(t); }
   t.textContent = msg; t.hidden = false; clearTimeout(t._t); t._t = setTimeout(() => { t.hidden = true; }, 3200);
 }
-function xpToast(msg) { let st = $('#xpstack'); if (!st) { st = document.createElement('div'); st.id = 'xpstack'; document.body.appendChild(st); } const t = document.createElement('div'); t.className = 'xp-toast'; t.textContent = msg; st.appendChild(t); setTimeout(() => t.remove(), 2600); }
+function xpToast(msg, cls) { let st = $('#xpstack'); if (!st) { st = document.createElement('div'); st.id = 'xpstack'; document.body.appendChild(st); } const t = document.createElement('div'); t.className = 'xp-toast ' + (cls || ''); t.textContent = msg; st.appendChild(t); setTimeout(() => t.remove(), 2600); }
+/* a big celebratory card for evolutions and unlocks */
+function bigToast(title, html, charId) {
+  const el = document.createElement('div');
+  el.className = 'bigtoast';
+  el.innerHTML = `<div class="pic">${charId ? companion(charId, 92) : ''}</div><div><b>${esc(title)}</b><p>${html}</p></div><button type="button" class="x" aria-label="Close">×</button>`;
+  document.body.appendChild(el);
+  stackToasts();
+  requestAnimationFrame(() => el.classList.add('in'));
+  const kill = () => { el.classList.remove('in'); setTimeout(() => { el.remove(); stackToasts(); }, 300); };
+  el.querySelector('.x').addEventListener('click', kill);
+  setTimeout(kill, 7000);
+}
 
 /* ----- gloss lookup ----- */
 function gloss(raw) {
@@ -3140,6 +3769,8 @@ function updateStat() {
   $('#ringFill').setAttribute('stroke-dashoffset', (94.2 * (1 - pct)).toFixed(1));
   $('#streakTxt').innerHTML = `<b>♥ ${streakAlive()}</b> day${streakAlive() === 1 ? '' : 's'} · <b>${xpToday()}</b>/${S.goal} XP`;
   $('#footStat').textContent = `${learnedCount()} words · ${S.xp || 0} XP total`;
+  const ct = $('#coinTxt'); if (ct) ct.textContent = String(S.coins || 0);
+  const cw = $('#coinWidget'); if (cw) cw.classList.toggle('ready', chestReady('daily') || chestReady('weekly'));
   levelSel.value = String(S.level);
 }
 function crumb(parts) {
@@ -3172,6 +3803,10 @@ function render() {
   else if (page === 'reading') renderReading(id);
   else if (page === 'hunt') renderHunt(id);
   else if (page === 'review') renderReview(id);
+  else if (page === 'casita') renderCasita(id);
+  else if (page === 'shop') renderShop(id);
+  else if (page === 'collection') renderCollection();
+  else if (page === 'owner') renderOwner(id);
   else if (page === 'about') renderAbout();
   else renderHome();
   window.scrollTo({ top: 0, behavior: 'instant' });
@@ -3179,7 +3814,7 @@ function render() {
   foldSides();
 }
 function paintMobNav(page) {
-  const map = { home: 'home', grammar: 'grammar', speaking: 'speaking', reading: 'reading', hunt: 'hunt', review: 'review', about: 'home' };
+  const map = { home: 'home', grammar: 'grammar', speaking: 'speaking', reading: 'reading', hunt: 'hunt', review: 'review', casita: 'casita', shop: 'casita', collection: 'casita', owner: 'home', about: 'home' };
   document.querySelectorAll('.mobnav a').forEach(a => a.classList.toggle('on', a.dataset.sec === (map[page] || 'home')));
 }
 /* on a phone the page intro + side panel fill the first screen — fold them so the lesson starts at the top */
@@ -3266,6 +3901,19 @@ function renderHome() {
       <a class="lcard t-sage" href="#reading"><span class="glyph">Aa</span>${mascot('nube', 72)}<h3>Reading</h3><p>Passages read aloud, tap any word.</p><span class="foot"><span>${(READING[lv.id] || []).filter(r => r.qs.length).length} passages</span><span>→</span></span></a>
       <a class="lcard t-pink3" href="#hunt"><span class="glyph">ñ</span>${mascot('mota', 72)}<h3>Word Hunt</h3><p>Find the word, learn its meaning.</p><span class="foot"><span>${(HUNTS[lv.id] || []).length} puzzles</span><span>→</span></span></a>
       <a class="lcard t-sand" href="#review"><span class="glyph">♥</span>${mascot('nube', 72)}<h3>Review</h3><p>Flashcards and the mistakes you owe.</p><span class="foot"><span>${due} due</span><span>→</span></span></a>
+      <a class="lcard t-pink2" href="#casita"><span class="glyph">⌂</span>${companion(buddy().id, 72)}<h3>Casita</h3><p>Your friends, their outfits and the shop.</p><span class="foot"><span>${COIN} ${S.coins || 0}${chestReady('daily') || chestReady('weekly') ? ' · chest ready' : ''}</span><span>→</span></span></a>
+    </div>
+  </section>
+
+  <section class="hsec">
+    <div class="hhead"><div><span class="eyebrow">Rewards</span><h2>${esc(buddy().name)} is growing</h2><p>Every XP you earn is a ${COIN_NAME} to spend and a bit of care for whoever is with you.</p></div><a class="btn sm ghost" href="#collection">Collection →</a></div>
+    <div class="hbody buddystrip">
+      <a class="bpic" href="#casita">${companion(buddy().id, 132, 'float')}</a>
+      <div class="binfo">
+        <b>${esc(buddy().name)} · ${esc(buddy().stages[charStage(buddy().id) - 1])}</b>
+        ${stageBar(buddy().id)}
+        <div class="brow"><span class="pill">${COIN} ${S.coins || 0} ${COIN_NAME}</span><span class="pill">${Object.keys(S.items).length}/${ITEMS.length} items</span><span class="pill">${unlockedChars().length}/${CHARS.length} friends</span>${chestReady('daily') ? '<a class="pill go" href="#casita">🎁 chest ready</a>' : ''}</div>
+      </div>
     </div>
   </section>
 
@@ -3307,10 +3955,10 @@ function renderAbout() {
       <h2>Six levels, named after a growing plant</h2>
       ${LEVELS.map(l => `<p><b>${l.id} · ${esc(l.name)}</b> — ${esc(l.grade)} (${esc(l.cefr)}). ${esc(l.blurb)}</p>`).join('')}
       <h2 style="margin-top:20px">What's in, what's next</h2>
-      <p><b>In now:</b> levels 1–3 filled in (previews for 4–6); a ${DICT.length}-word dictionary; streak, XP and daily goal; a unit path; spaced-repetition flashcards; a mistakes queue; dialogues; listen-and-type; sentence building; a Latin-American Spanish voice with play and pause.</p>
-      <p><b>Next:</b> levels 4–6 filled in, verb drills, stories with audio, a “hearts” mode for quizzes, leaderboards for friends.</p>
-      <p><b>Later:</b> an AI conversation partner, native audio clips, writing correction, sign-in so progress follows you across devices.</p>
-      <p class="small">Progress is saved in this browser only. Built with ♥ for Nat ♥</p>
+      <p><b>In now:</b> levels 1–3 filled in (previews for 4–6); a ${DICT.length}-word dictionary; streak, XP and daily goal; a unit path; spaced-repetition flashcards; a mistakes queue; dialogues; listen-and-type; sentence building; a Latin-American Spanish voice with play and pause; and the <a href="#casita">Casita</a> — companions that grow, ${ITEMS.length} cosmetics, ${DECOR.length} pieces of decor and daily chests, all paid for with the XP you earn.</p>
+      <p><b>Next:</b> levels 4–6 filled in, verb drills, stories with audio, a “hearts” mode for quizzes.</p>
+      <p><b>Later:</b> an AI conversation partner, native audio clips, writing correction.</p>
+      <p class="small">Progress is saved in this browser, and — if cloud sync is switched on — mirrored to your own Supabase project so the <a href="#owner">Owner</a> page can see it. Built with ♥ for Nat ♥</p>
       <p class="small buildstamp">Version <b>${esc(BUILD.v)}</b> · built ${esc(BUILD.date)}<br>If this copy is on a web address, compare this line with the one in the Claude version to check it is up to date.</p>
     </div>
   </div>`;
@@ -3452,7 +4100,7 @@ function renderLesson(l) {
         S.done[l.id] = true; S.quiz[l.id] = right; save();
         $('#qscore').textContent = `${right}/${exs.length} · Lesson done ✓`;
         const c = app.querySelector(`.list button[data-id="${l.id}"] .check`); if (c) { c.classList.add('done'); c.textContent = '✓'; }
-        if (first) addXP(XP.lesson + (right === exs.length ? XP.perfect : 0), right === exs.length ? 'perfect lesson' : 'lesson done');
+        if (first) { logAct('lesson', l.title, { s: Math.round(right / exs.length * 100) }); addXP(XP.lesson + (right === exs.length ? XP.perfect : 0), right === exs.length ? 'perfect lesson' : 'lesson done'); }
       } else save();
     });
   });
@@ -3541,7 +4189,7 @@ function renderDialogues(dlgs, sub, canListen) {
   </div>`;
   const lineEls = Array.from(box.querySelectorAll('.line'));
   wirePlayer($('#dlgPlayer'), lineEls.map((el, i) => ({ text: cur.lines[i].es, el, group: i })), { stopAfterGroup: true, gapMs: 400, onpaint: (P) => { const h = $('#dlgHint'); if (h) h.textContent = P.state === 'paused' && P.waitingGroup !== null ? (cur.lines[P.waitingGroup].who === 'B' ? 'Your turn — say your line (● Say it), then press ▶ to hear Ana\'s next line.' : `Press ▶ to hear Ana's next line.`) : P.state === 'done' ? 'End of the dialogue. Press ▶ to hear it again.' : 'Each bubble has its own ▶ / ⏸. The player reads one line, then waits for ▶ — so you can answer Ana in your own time.'; } });
-  const finish = () => { if (S.done[cur.id]) return; S.done[cur.id] = true; addXP(XP.dialogue, 'dialogue done'); $('#dlgStatus').textContent = 'Done ✓'; const c = body.querySelector(`.list button[data-id="${cur.id}"] .check`); if (c) { c.classList.add('done'); c.textContent = '✓'; } };
+  const finish = () => { if (S.done[cur.id]) return; S.done[cur.id] = true; logAct('dialogue', cur.title); addXP(XP.dialogue, 'dialogue done'); $('#dlgStatus').textContent = 'Done ✓'; const c = body.querySelector(`.list button[data-id="${cur.id}"] .check`); if (c) { c.classList.add('done'); c.textContent = '✓'; } };
   lineEls.forEach(el => {
     const i = Number(el.dataset.i), l = cur.lines[i], res = el.querySelector('.result');
     const say = el.querySelector('[data-act="say"]'), slowline = el.querySelector('[data-act="slowline"]');
@@ -3652,7 +4300,7 @@ function renderPassage(r) {
         if (answers[qi] !== q.a) { b.classList.add('wrong'); recordMistake(r.id, qi, { t: 'mcq', ...q, why: 'From the passage “' + r.title + '”.' }); }
         const n = Object.keys(answers).length, right = Object.entries(answers).filter(([k, v]) => r.qs[k].a === v).length;
         $('#rscore').textContent = `${right}/${n} correct`;
-        if (n === r.qs.length) { const first = !S.done[r.id]; S.done[r.id] = true; save(); $('#rscore').textContent = `${right}/${r.qs.length} · Passage done ✓`; const c = app.querySelector(`.list button[data-id="${r.id}"] .check`); if (c) { c.classList.add('done'); c.textContent = '✓'; } if (first) addXP(XP.passage, 'passage done'); } else save();
+        if (n === r.qs.length) { const first = !S.done[r.id]; S.done[r.id] = true; save(); $('#rscore').textContent = `${right}/${r.qs.length} · Passage done ✓`; const c = app.querySelector(`.list button[data-id="${r.id}"] .check`); if (c) { c.classList.add('done'); c.textContent = '✓'; } if (first) { logAct('reading', r.title, { s: Math.round(right / r.qs.length * 100) }); addXP(XP.passage, 'passage done'); } } else save();
       }));
     });
   }
@@ -3748,7 +4396,7 @@ function paintHunt() {
   $('#huntLearned').textContent = `${learnedCount()} words in your list overall · ${Object.keys(S.learned).filter(k => (DICT_BY_ES[k] || {}).lvl === H.level).length} from level ${H.level}`;
   if (H.found.size === H.words.length && !$('.hunt .done')) {
     const key = 'h' + H.level + '-' + H.theme; const first = !S.done[key];
-    S.done[key] = true; save(); if (first) addXP(XP.hunt, 'puzzle complete');
+    S.done[key] = true; save(); if (first) { logAct('hunt', H.theme); addXP(XP.hunt, 'puzzle complete'); }
     const dc = $('#defcard');
     dc.insertAdjacentHTML('afterend', `<div class="done"><h3>¡Lo lograste!</h3><p>All ${H.words.length} words found — every one is now in your flashcards.</p><div class="btn-row"><button type="button" class="btn" id="againBtn">↻ Same theme, new grid</button>${(HUNTS[H.level] || []).length > H.setIdx + 1 ? `<button type="button" class="btn rose" id="nextBtn">Next puzzle →</button>` : `<a class="btn rose" href="#review">Review the words →</a>`}</div></div>`);
     $('#againBtn').addEventListener('click', () => { activeHunt = newHunt(H.level, H.setIdx); renderHunt(String(H.setIdx)); });
@@ -3877,7 +4525,397 @@ function renderMistakes() {
   wireExercise($('#mq .q'), m.ex, (ok) => { if (ok) { clearMistake(m.key); addXP(XP.mistake, 'mistake fixed'); } else { S.mistakes.push(S.mistakes.shift()); save(); } const b = $('#mNext'); b.hidden = false; b.addEventListener('click', () => renderReview('mistakes')); });
 }
 
+/* =========================== CASITA · SHOP · COLLECTION =========================== */
+function stageBar(id) {
+  const p = stageProgress(id), st = charStage(id), c = CHAR_BY_ID[id];
+  return `<div class="stagebar"><div class="row between"><span class="label">Stage ${st} of 5 · ${esc(c.stages[st - 1])}</span><span class="mono muted">${p.max ? 'fully grown' : p.have + '/' + p.need + ' care'}</span></div><div class="meter"><i style="width:${p.pct}%"></i></div></div>`;
+}
+function chestCard(which) {
+  const c = CHESTS[which], ready = chestReady(which);
+  return `<div class="chest ${ready ? 'ready' : ''}">
+    <span class="lid" aria-hidden="true">${ready ? '🎁' : '🔒'}</span>
+    <div><b>${esc(c.t)}</b><br><span class="small muted">${ready ? 'Ready to open' : esc(c.need)}</span></div>
+    <button type="button" class="btn sm ${ready ? 'rose' : 'ghost'}" data-chest="${which}" ${ready ? '' : 'disabled'}>${ready ? 'Open' : 'Locked'}</button>
+  </div>`;
+}
+function wireChests(root) {
+  root.querySelectorAll('[data-chest]').forEach(b => b.addEventListener('click', () => {
+    const which = b.dataset.chest;
+    if (!chestReady(which)) return;
+    const r = openChest(which);
+    logAct('chest', which + ' chest');
+    save();
+    bigToast(which === 'weekly' ? 'Golden chest!' : 'Daily chest!',
+      `<b>+${r.coins}</b> ${COIN_NAME}${r.item ? ` and a new ${RARITY[r.item.r].t.toLowerCase()} item: <b>${esc(r.item.es)}</b> (${esc(r.item.en)})` : ' — no new item this time'}.`, buddy().id);
+    renderCasita();
+  }));
+}
+function renderCasita(sub) {
+  crumb([{ t: 'Casita' }]);
+  const b = buddy();
+  const cast = unlockedChars();
+  const nextChar = CHARS.find(c => !charUnlocked(c.id));
+  const worn = S.chars[b.id].worn;
+  app.innerHTML = `
+  <section class="pagehead">
+    <div class="title"><span class="label">Casita</span><h1>Your little house</h1><p>Every XP you earn is also one ${COIN_NAME} to spend, and it feeds whichever companion is with you. Feed one long enough and it grows.</p></div>
+    <div class="side pink">
+      <span class="label">Purse</span><div class="es" style="font-size:2rem">${COIN} ${S.coins || 0}</div>
+      <span class="label" style="margin-top:8px">Collection</span><div class="small">${Object.keys(S.items).length} of ${ITEMS.length} items · ${cast.length} of ${CHARS.length} friends</div>
+      <div class="btn-row" style="margin-top:10px"><a class="btn sm rose" href="#shop">Shop →</a><a class="btn sm ghost" href="#collection">Collection →</a></div>
+    </div>
+  </section>
+
+  <div class="casita">
+    <div class="room">
+      <span class="label">The casita</span>
+      ${roomSVG()}
+      <div class="btn-row"><a class="btn sm ghost" href="#shop/decor">Decorate →</a></div>
+    </div>
+    <div class="buddybox">
+      <span class="label">With you today</span>
+      <div class="buddypic">${companion(b.id, 200, 'float')}</div>
+      <h2>${esc(b.name)}</h2>
+      <p class="muted small">${esc(b.blurb)}</p>
+      ${stageBar(b.id)}
+      <div class="wearrow">
+        ${SLOTS.map(s => { const it = worn[s.k] ? ITEM_BY_ID[worn[s.k]] : null; return `<div class="wear"><span class="label">${s.t}</span><select data-slot="${s.k}"><option value="">— none —</option>${itemsFor(s.k).filter(i => S.items[i.id]).map(i => `<option value="${i.id}" ${worn[s.k] === i.id ? 'selected' : ''}>${esc(i.es)} · ${esc(i.en)}</option>`).join('')}</select></div>`; }).join('')}
+      </div>
+      <p class="small muted">${ownedItems().length ? 'Change an outfit any time — nothing is used up.' : 'Buy something in the shop and it appears in these menus.'}</p>
+    </div>
+  </div>
+
+  <section class="hsec">
+    <div class="hhead"><div><span class="eyebrow">Chests</span><h2>Today's rewards</h2><p>Hit your daily goal for a chest. Every seventh day of your streak is a golden one.</p></div></div>
+    <div class="hbody chests">${chestCard('daily')}${chestCard('weekly')}</div>
+  </section>
+
+  <section class="hsec">
+    <div class="hhead"><div><span class="eyebrow">Friends</span><h2>Choose your companion</h2><p>Whoever is with you receives the care from every XP you earn — so they grow at different speeds.</p></div><span class="mono muted">${cast.length}/${CHARS.length} unlocked</span></div>
+    <div class="hbody castgrid">
+      ${CHARS.map(c => {
+        const un = charUnlocked(c.id), st = charStage(c.id);
+        return `<div class="castcard ${un ? '' : 'locked'} ${c.id === b.id ? 'on' : ''}">
+          <div class="pic">${un ? companion(c.id, 120) : `<span class="lockpic">?</span>`}</div>
+          <b>${esc(un ? c.name : 'Locked')}</b>
+          <span class="small muted">${un ? esc(c.stages[st - 1]) + ' · stage ' + st : 'Unlocks at ' + c.unlock + ' XP'}</span>
+          ${un ? `<div class="meter sm"><i style="width:${stageProgress(c.id).pct}%"></i></div>` : `<div class="meter sm"><i style="width:${Math.min(100, Math.round((S.xp || 0) / c.unlock * 100))}%"></i></div>`}
+          ${un ? (c.id === b.id ? `<span class="pill ok">with you</span>` : `<button type="button" class="btn sm" data-pick="${c.id}">Bring along</button>`) : `<span class="small muted">${Math.max(0, c.unlock - (S.xp || 0))} XP to go</span>`}
+        </div>`;
+      }).join('')}
+    </div>
+    ${nextChar ? `<p class="small muted" style="padding:0 4px">Next friend: <b>${esc(nextChar.name)}</b> at ${nextChar.unlock} XP.</p>` : ''}
+  </section>
+
+  <section class="hsec">
+    <div class="hhead"><div><span class="eyebrow">You</span><h2>Your name and sync</h2><p>Your name labels your progress. Sync keeps a copy in the cloud so it isn't lost if this phone is.</p></div><span class="cpill" data-cloudstate></span></div>
+    <div class="hbody setupform">
+      <label><span class="label">Your name</span><input type="text" id="whoName" maxlength="24" placeholder="Nat" value="${esc(S.who.name || '')}"></label>
+      <label><span class="label">Setup code${cloudCfg() ? ' (connected)' : ''}</span><input type="text" id="whoCode" placeholder="Paste the code you were sent"></label>
+      <div class="btn-row"><button type="button" class="btn sm rose" id="whoSave">Save</button><button type="button" class="btn sm ghost" id="whoSync">Sync now</button></div>
+      <p class="small muted" id="whoMsg">${ON_CLAUDE ? 'Sync is switched off inside claude.ai — it runs on your own web address.' : cloudCfg() ? 'Connected. Progress is sent every few seconds while you practise.' : 'Not connected yet — that is fine, everything still saves on this device.'}</p>
+    </div>
+  </section>`;
+  app.querySelectorAll('[data-pick]').forEach(btn => btn.addEventListener('click', () => { S.buddy = btn.dataset.pick; logAct('buddy', CHAR_BY_ID[S.buddy].name); save(); renderCasita(); }));
+  app.querySelectorAll('[data-slot]').forEach(sel => sel.addEventListener('change', () => { S.chars[b.id].worn[sel.dataset.slot] = sel.value || null; save(); renderCasita(); }));
+  wireChests(app);
+  document.querySelectorAll('[data-cloudstate]').forEach(paintCloudPill);
+  $('#whoSave').addEventListener('click', () => {
+    const msg = $('#whoMsg');
+    const n = $('#whoName').value.trim();
+    if (n) { S.who.name = n; S.who.asked = true; }
+    const code = $('#whoCode').value.trim();
+    if (code) {
+      const cfg = decodeSetup(code);
+      if (!cfg) { msg.textContent = 'That setup code was not readable — copy it again from the Owner page.'; return; }
+      setCloudCfg(cfg); Cloud.setState(ON_CLAUDE ? 'blocked' : 'ready');
+    }
+    save();
+    Cloud.push(true).then(() => { msg.textContent = Cloud.state === 'ok' ? 'Saved and synced. ✓' : Cloud.state === 'blocked' ? 'Saved. Sync runs on your own web address, not inside claude.ai.' : 'Saved. ' + (Cloud.msg || ''); });
+    msg.textContent = 'Saving…';
+  });
+  $('#whoSync').addEventListener('click', () => { const msg = $('#whoMsg'); msg.textContent = 'Syncing…'; Cloud.push(true).then(() => { msg.textContent = Cloud.state === 'ok' ? 'Synced. ✓' : (Cloud.msg || 'Sync is not set up on this device yet.'); }); });
+}
+
+function shopTabs(tab) {
+  return `<div class="tabs">${[['items', 'Cosmetics'], ['decor', 'Room & decor']].map(([k, t]) => `<a href="#shop/${k}" class="${tab === k ? 'on' : ''}">${t}</a>`).join('')}</div>`;
+}
+function renderShop(sub) {
+  const tab = sub === 'decor' ? 'decor' : 'items';
+  crumb([{ t: 'Casita', href: '#casita' }, { t: 'Shop' }]);
+  const head = `
+  <section class="pagehead">
+    <div class="title"><span class="label">Shop</span><h1>Spend your ${COIN_NAME}</h1><p>Common items cost ${RARITY.comun.p}, rare ${RARITY.rara.p}, legendary ${RARITY.legendaria.p}. Chests can also drop them for free.</p></div>
+    <div class="side pink"><span class="label">Purse</span><div class="es" style="font-size:2rem">${COIN} ${S.coins || 0}</div><span class="small muted">Earn one for every XP.</span><div class="btn-row" style="margin-top:10px"><a class="btn sm ghost" href="#casita">← Casita</a></div></div>
+  </section>${shopTabs(tab)}`;
+  if (tab === 'decor') {
+    app.innerHTML = head + `
+    <div class="shopgrid">
+      ${ROOM_BGS.map(bg => {
+        const owned = bg.price === 0 || S.decor['bg:' + bg.id];
+        const on = S.room.bg === bg.id;
+        return `<div class="shopcard ${owned ? 'owned' : ''}">
+          <div class="thumb wide"><svg viewBox="0 0 600 300">${bg.svg}</svg></div>
+          <b>${esc(bg.es)}</b><span class="small muted">${esc(bg.en)} · background</span>
+          ${on ? `<span class="pill ok">in use</span>` : owned ? `<button type="button" class="btn sm" data-usebg="${bg.id}">Use</button>` : `<button type="button" class="btn sm rose" data-buybg="${bg.id}" ${(S.coins || 0) < bg.price ? 'disabled' : ''}>${COIN} ${bg.price}</button>`}
+        </div>`;
+      }).join('')}
+      ${DECOR.map(d => {
+        const owned = !!S.decor[d.id], on = !!S.room.on[d.id];
+        return `<div class="shopcard ${owned ? 'owned' : ''}">
+          <div class="thumb"><svg viewBox="-70 -70 140 140">${d.svg}</svg></div>
+          <b>${esc(d.es)}</b><span class="small muted">${esc(d.en)}</span>
+          ${owned ? `<button type="button" class="btn sm ${on ? '' : 'rose'}" data-togdec="${d.id}">${on ? 'Put away' : 'Place in room'}</button>` : `<button type="button" class="btn sm rose" data-buydec="${d.id}" ${(S.coins || 0) < d.price ? 'disabled' : ''}>${COIN} ${d.price}</button>`}
+        </div>`;
+      }).join('')}
+    </div>`;
+    app.querySelectorAll('[data-buydec]').forEach(b => b.addEventListener('click', () => buyDecor(b.dataset.buydec)));
+    app.querySelectorAll('[data-togdec]').forEach(b => b.addEventListener('click', () => { const id = b.dataset.togdec; S.room.on[id] = !S.room.on[id]; save(); renderShop('decor'); }));
+    app.querySelectorAll('[data-usebg]').forEach(b => b.addEventListener('click', () => { S.room.bg = b.dataset.usebg; save(); renderShop('decor'); }));
+    app.querySelectorAll('[data-buybg]').forEach(b => b.addEventListener('click', () => buyBg(b.dataset.buybg)));
+    return;
+  }
+  app.innerHTML = head + SLOTS.map(s => `
+    <section class="hsec">
+      <div class="hhead"><div><span class="eyebrow">${s.t}</span><h2>${s.t === 'Aura' ? 'Auras' : s.t + ' items'}</h2></div><span class="mono muted">${itemsFor(s.k).filter(i => S.items[i.id]).length}/${itemsFor(s.k).length}</span></div>
+      <div class="hbody shopgrid">
+        ${itemsFor(s.k).map(i => {
+          const owned = !!S.items[i.id], price = itemPrice(i);
+          return `<div class="shopcard ${owned ? 'owned' : ''} r-${i.r}">
+            <div class="thumb">${previewWith(i.id, 104)}</div>
+            <b>${esc(i.es)}</b><span class="small muted">${esc(i.en)} · ${RARITY[i.r].t}</span>
+            ${owned ? `<span class="pill ok">owned</span>` : `<button type="button" class="btn sm rose" data-buy="${i.id}" ${(S.coins || 0) < price ? 'disabled' : ''}>${COIN} ${price}</button>`}
+          </div>`;
+        }).join('')}
+      </div>
+    </section>`).join('');
+  app.querySelectorAll('[data-buy]').forEach(b => b.addEventListener('click', () => buyItem(b.dataset.buy)));
+}
+function buyItem(id) {
+  const it = ITEM_BY_ID[id]; if (!it || S.items[id]) return;
+  const p = itemPrice(it);
+  if ((S.coins || 0) < p) { toast(`Not enough ${COIN_NAME} — ${p - (S.coins || 0)} more to go.`); return; }
+  S.coins -= p; S.items[id] = true;
+  const b = buddy(); S.chars[b.id].worn[it.slot] = id;
+  logAct('buy', it.es); save();
+  bigToast('New item!', `<b>${esc(it.es)}</b> (${esc(it.en)}) — ${esc(b.name)} is wearing it now.`, b.id);
+  renderShop('items');
+}
+function buyDecor(id) {
+  const d = DECOR_BY_ID[id]; if (!d || S.decor[id]) return;
+  if ((S.coins || 0) < d.price) { toast(`Not enough ${COIN_NAME} — ${d.price - (S.coins || 0)} more to go.`); return; }
+  S.coins -= d.price; S.decor[id] = true; S.room.on[id] = true;
+  logAct('buy', d.es); save();
+  bigToast('Added to the casita!', `<b>${esc(d.es)}</b> (${esc(d.en)}) is in the room now.`, buddy().id);
+  renderShop('decor');
+}
+function buyBg(id) {
+  const bg = ROOM_BG_BY_ID[id]; if (!bg || S.decor['bg:' + id]) return;
+  if ((S.coins || 0) < bg.price) { toast(`Not enough ${COIN_NAME} — ${bg.price - (S.coins || 0)} more to go.`); return; }
+  S.coins -= bg.price; S.decor['bg:' + id] = true; S.room.bg = id;
+  logAct('buy', bg.es); save();
+  renderShop('decor');
+}
+
+function renderCollection() {
+  crumb([{ t: 'Casita', href: '#casita' }, { t: 'Collection' }]);
+  const have = Object.keys(S.items).length, dhave = DECOR.filter(d => S.decor[d.id]).length;
+  app.innerHTML = `
+  <section class="pagehead">
+    <div class="title"><span class="label">Collection</span><h1>Everything there is to find</h1><p>Locked things stay grey until you buy them or a chest drops them. Nothing here is ever lost.</p></div>
+    <div class="side tint"><span class="label">Completion</span><div class="es" style="font-size:2rem">${Math.round((have + dhave + unlockedChars().length) / (ITEMS.length + DECOR.length + CHARS.length) * 100)}%</div><div class="meter"><i style="width:${(have + dhave + unlockedChars().length) / (ITEMS.length + DECOR.length + CHARS.length) * 100}%"></i></div><span class="small muted">${have}/${ITEMS.length} items · ${dhave}/${DECOR.length} decor · ${unlockedChars().length}/${CHARS.length} friends</span></div>
+  </section>
+  <section class="hsec">
+    <div class="hhead"><div><span class="eyebrow">Friends</span><h2>The cast</h2></div></div>
+    <div class="hbody castgrid">
+      ${CHARS.map(c => { const un = charUnlocked(c.id); return `<div class="castcard ${un ? '' : 'locked'}"><div class="pic">${un ? companion(c.id, 110) : '<span class="lockpic">?</span>'}</div><b>${esc(un ? c.name : '???')}</b><span class="small muted">${un ? esc(c.stages[charStage(c.id) - 1]) : c.unlock + ' XP'}</span>${un ? `<div class="stages">${c.stages.map((s, i) => `<span class="${charStage(c.id) > i ? 'on' : ''}" title="${esc(s)}">${i + 1}</span>`).join('')}</div>` : ''}</div>`; }).join('')}
+    </div>
+  </section>
+  ${SLOTS.map(s => `
+  <section class="hsec">
+    <div class="hhead"><div><span class="eyebrow">${s.t}</span><h2>${s.t === 'Aura' ? 'Auras' : s.t}</h2></div><span class="mono muted">${itemsFor(s.k).filter(i => S.items[i.id]).length}/${itemsFor(s.k).length}</span></div>
+    <div class="hbody collgrid">
+      ${itemsFor(s.k).map(i => `<div class="collcard ${S.items[i.id] ? '' : 'locked'} r-${i.r}"><div class="thumb"><svg viewBox="-46 -46 92 92">${i.slot === 'aura' ? `<g transform="translate(-100 -100) scale(.42) translate(100 100)">${i.svg}</g>` : i.svg}</svg></div><b>${esc(S.items[i.id] ? i.es : '???')}</b><span class="small muted">${S.items[i.id] ? esc(i.en) : RARITY[i.r].t + ' · ' + RARITY[i.r].p}</span></div>`).join('')}
+    </div>
+  </section>`).join('')}
+  <section class="hsec">
+    <div class="hhead"><div><span class="eyebrow">Casita</span><h2>Room &amp; decor</h2></div><span class="mono muted">${dhave}/${DECOR.length}</span></div>
+    <div class="hbody collgrid">
+      ${DECOR.map(d => `<div class="collcard ${S.decor[d.id] ? '' : 'locked'}"><div class="thumb"><svg viewBox="-70 -70 140 140">${d.svg}</svg></div><b>${esc(S.decor[d.id] ? d.es : '???')}</b><span class="small muted">${S.decor[d.id] ? esc(d.en) : d.price}</span></div>`).join('')}
+    </div>
+  </section>`;
+}
+
+/* =========================== OWNER =========================== */
+function fmtWhen(iso) {
+  if (!iso) return '—';
+  const d = new Date(iso), mins = Math.round((Date.now() - d.getTime()) / 60000);
+  if (mins < 2) return 'just now';
+  if (mins < 60) return mins + ' min ago';
+  if (mins < 60 * 24) return Math.round(mins / 60) + ' h ago';
+  const days = Math.round(mins / 1440);
+  return days + ' day' + (days === 1 ? '' : 's') + ' ago';
+}
+const ACT_LABEL = { xp: 'XP', chest: 'Chest', buy: 'Bought', stage: 'Grew', unlock: 'Unlocked', buddy: 'Companion', pron: 'Said' };
+function sparkline(days) {
+  const vals = Object.values(days), max = Math.max(10, ...vals);
+  return `<div class="spark" role="img" aria-label="XP over the last 30 days">${vals.map((v, i) => `<i style="height:${Math.max(3, Math.round(v / max * 100))}%" title="${Object.keys(days)[i]}: ${v} XP"></i>`).join('')}</div>`;
+}
+function ownerCard(row) {
+  const p = row.payload || {};
+  const done = p.lessonsTotal ? Math.round(p.lessons / p.lessonsTotal * 100) : 0;
+  return `<section class="ocard">
+    <div class="ohead">
+      <div class="who">${p.buddy ? `<span class="mascot" style="width:56px;height:56px">${companionSVG(p.buddy, { stage: p.stage || 1, worn: {} })}</span>` : ''}
+        <div><b>${esc(row.name || p.name || 'Learner')}</b><br><span class="small muted">${esc(row.id)} · last seen ${fmtWhen(row.updated_at)} · ${esc(p.v || '')}</span></div></div>
+      <div class="obadges"><span class="pill">Level ${p.level ?? '—'}</span><span class="pill">♥ ${p.streak ?? 0}-day streak</span><span class="pill">${p.xp ?? 0} XP</span></div>
+    </div>
+    <div class="ogrid">
+      <div><span class="label">Today</span><div class="big-stat">${p.xpToday ?? 0}<small>/${p.goal ?? 20} XP</small></div><span class="small muted">${(p.xpToday ?? 0) >= (p.goal ?? 20) ? 'goal reached' : 'goal not reached yet'}</span></div>
+      <div><span class="label">Words learned</span><div class="big-stat">${p.learned ?? 0}</div><span class="small muted">${p.mistakes ?? 0} in the mistakes queue</span></div>
+      <div><span class="label">Lessons</span><div class="big-stat">${p.lessons ?? 0}<small>/${p.lessonsTotal ?? 0}</small></div><span class="small muted">${done}% of the course</span></div>
+      <div><span class="label">Time practising</span><div class="big-stat">${p.minutes7 ?? 0}<small> min</small></div><span class="small muted">last 7 days · ${p.minutes ?? 0} min all time</span></div>
+      <div><span class="label">Pronunciation</span><div class="big-stat">${p.pronAvg == null ? '—' : p.pronAvg + '<small>%</small>'}</div><span class="small muted">${p.pronCount ?? 0} attempts scored</span></div>
+      <div><span class="label">Collection</span><div class="big-stat">${p.items ?? 0}<small>/${p.itemsTotal ?? 0}</small></div><span class="small muted">${(p.chars || []).length} friend${(p.chars || []).length === 1 ? '' : 's'} · ${COIN_NAME} ${p.coins ?? 0}</span></div>
+    </div>
+    <div class="orow">
+      <div><span class="label">XP over 30 days</span>${sparkline(p.days || {})}</div>
+      <div><span class="label">Needs work</span>${(p.weak || []).length ? `<div class="chips">${p.weak.map(w => `<span class="chip">${esc(w.w)}<b>${w.n}</b></span>`).join('')}</div>` : '<p class="small muted">Nothing repeatedly missed yet.</p>'}</div>
+    </div>
+    <details class="orecent"><summary>Recent activity (${(p.recent || []).length})</summary><ul>${(p.recent || []).slice().reverse().map(a => `<li><span class="mono">${new Date(a.t * 1000).toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span> <b>${esc(ACT_LABEL[a.k] || a.k)}</b> ${esc(a.v)}${a.n ? ` <span class="muted">+${a.n}</span>` : ''}${a.s != null ? ` <span class="muted">${a.s}%</span>` : ''}</li>`).join('')}</ul></details>
+  </section>`;
+}
+function renderOwner(sub) {
+  crumb([{ t: 'Owner' }]);
+  if (!ownerPass()) return ownerSetPass();
+  if (!ownerUnlocked()) return ownerGate();
+  const cfg = cloudCfg();
+  app.innerHTML = `
+  <section class="pagehead">
+    <div class="title"><span class="label">Owner</span><h1>Who is learning</h1><p>Everyone whose copy of Hablemos is signed in to the same cloud project appears here, newest first.</p></div>
+    <div class="side tint">
+      <span class="label">Cloud sync</span><span class="cpill" data-cloudstate></span>
+      <div class="btn-row" style="margin-top:10px"><button type="button" class="btn sm rose" id="oRefresh">Refresh</button><button type="button" class="btn sm ghost" id="oSetup">Setup</button><button type="button" class="btn sm ghost" id="oLock">Lock</button></div>
+    </div>
+  </section>
+  <div id="ownerBody">${cfg ? '<p class="muted">Loading…</p>' : ''}</div>
+  ${cfg ? '' : ownerSetupHTML()}`;
+  document.querySelectorAll('[data-cloudstate]').forEach(paintCloudPill);
+  $('#oLock').addEventListener('click', () => { setOwnerUnlocked(false); render(); });
+  $('#oSetup').addEventListener('click', () => { $('#ownerBody').innerHTML = ownerSetupHTML(); wireOwnerSetup(); });
+  $('#oRefresh').addEventListener('click', loadOwner);
+  if (cfg) loadOwner(); else wireOwnerSetup();
+}
+async function loadOwner() {
+  const box = $('#ownerBody'); if (!box) return;
+  box.innerHTML = '<p class="muted">Loading…</p>';
+  try {
+    const rows = await Cloud.all();
+    if (!rows.length) { box.innerHTML = `<div class="notice">No learners yet. Open Hablemos on the other device, put a name in <b>Casita → your name</b>, and earn a little XP — the row appears here within a few seconds.</div>`; return; }
+    box.innerHTML = rows.map(ownerCard).join('');
+  } catch (e) {
+    box.innerHTML = `<div class="notice warn"><b>Could not read the cloud.</b><br>${esc(String(e.message || e))}</div>` + ownerSetupHTML();
+    wireOwnerSetup();
+  }
+}
+function ownerSetupHTML() {
+  const cfg = cloudCfg();
+  return `<section class="hsec" id="cloudSetup">
+    <div class="hhead"><div><span class="eyebrow">Setup</span><h2>Connect the cloud</h2><p>One free Supabase project holds everyone's progress. You do this once, then paste the same setup code into each device.</p></div></div>
+    <div class="hbody">
+      ${ON_CLAUDE ? `<div class="notice warn">You are viewing this inside claude.ai, which blocks the page from reaching the internet — sync can be set up here but will only run on your own web address.</div>` : ''}
+      <ol class="steps">
+        <li>Go to <b>supabase.com</b>, sign in, and create a new project (the free plan is plenty).</li>
+        <li>Open <b>SQL Editor</b> → <b>New query</b>, paste this in and press <b>Run</b>:
+          <pre class="code" id="sqlBox">create table if not exists ${TABLE} (
+  id text primary key,
+  name text,
+  updated_at timestamptz default now(),
+  payload jsonb
+);
+alter table ${TABLE} enable row level security;
+drop policy if exists "hablemos read"   on ${TABLE};
+drop policy if exists "hablemos insert" on ${TABLE};
+drop policy if exists "hablemos update" on ${TABLE};
+create policy "hablemos read"   on ${TABLE} for select using (true);
+create policy "hablemos insert" on ${TABLE} for insert with check (true);
+create policy "hablemos update" on ${TABLE} for update using (true);</pre>
+          <button type="button" class="btn sm ghost" id="copySql">Copy the SQL</button></li>
+        <li>Open <b>Project Settings → API</b>. Copy the <b>Project URL</b> and the <b>anon public</b> key into the two boxes below.</li>
+      </ol>
+      <div class="setupform">
+        <label><span class="label">Project URL</span><input type="url" id="cfgUrl" placeholder="https://abcdefgh.supabase.co" value="${esc(cfg ? cfg.url : '')}"></label>
+        <label><span class="label">anon public key</span><input type="text" id="cfgKey" placeholder="eyJhbGci…" value="${esc(cfg ? cfg.key : '')}"></label>
+        <div class="btn-row"><button type="button" class="btn rose" id="cfgSave">Save &amp; test</button>${cfg ? '<button type="button" class="btn ghost" id="cfgClear">Disconnect this device</button>' : ''}</div>
+        <p class="small muted" id="cfgMsg"></p>
+      </div>
+      ${cfg ? `<div class="setupform">
+        <span class="label">Setup code for the other devices</span>
+        <p class="small muted">Paste this one line into <b>Casita → Cloud sync</b> on Nat's phone and it is connected — no typing URLs.</p>
+        <textarea id="setupCode" rows="3" readonly>${esc(encodeSetup(cfg))}</textarea>
+        <div class="btn-row"><button type="button" class="btn sm" id="copyCode">Copy the setup code</button></div>
+      </div>` : ''}
+      <p class="small muted">The anon key is designed to be public — it only reaches this one table. Anyone who has your setup code can read and write these progress rows, so share it only with the people using the app.</p>
+    </div>
+  </section>`;
+}
+function wireOwnerSetup() {
+  const cs = $('#copySql'); if (cs) cs.addEventListener('click', () => copyText($('#sqlBox').textContent, cs, 'Copy the SQL'));
+  const cc = $('#copyCode'); if (cc) cc.addEventListener('click', () => copyText($('#setupCode').value, cc, 'Copy the setup code'));
+  const cl = $('#cfgClear'); if (cl) cl.addEventListener('click', () => { setCloudCfg(null); Cloud.setState('off'); render(); });
+  const sv = $('#cfgSave'); if (!sv) return;
+  sv.addEventListener('click', async () => {
+    const url = $('#cfgUrl').value.trim().replace(/\/+$/, ''), key = $('#cfgKey').value.trim();
+    const msg = $('#cfgMsg');
+    if (!/^https:\/\/.+/.test(url) || key.length < 20) { msg.textContent = 'That does not look right — the URL starts with https:// and the key is a long string.'; return; }
+    setCloudCfg({ url, key });
+    msg.textContent = 'Testing…';
+    try { await Cloud.all(); await Cloud.push(true); msg.textContent = 'Connected. ✓'; setTimeout(() => render(), 700); }
+    catch (e) { msg.textContent = 'Saved, but the test failed: ' + String(e.message || e); }
+  });
+}
+function copyText(t, btn, label) {
+  const done = () => { btn.textContent = 'Copied ✓'; setTimeout(() => { btn.textContent = label; }, 1600); };
+  if (navigator.clipboard) navigator.clipboard.writeText(t).then(done, () => toast('Could not copy — select it by hand.'));
+  else { const ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); done(); } catch (e) { toast('Could not copy.'); } ta.remove(); }
+}
+function ownerSetPass() {
+  app.innerHTML = `<section class="pagehead"><div class="title"><span class="label">Owner</span><h1>Set an owner passcode</h1><p>This page shows everyone's progress, so it is kept behind a passcode on each device. Pick one you will remember — it is stored only in this browser.</p></div></section>
+  <div class="setupform narrow"><label><span class="label">New passcode</span><input type="password" id="pw1" autocomplete="new-password"></label><label><span class="label">Again</span><input type="password" id="pw2" autocomplete="new-password"></label><div class="btn-row"><button type="button" class="btn rose" id="pwSave">Set passcode</button><a class="btn ghost" href="#home">Cancel</a></div><p class="small muted" id="pwMsg"></p></div>`;
+  $('#pwSave').addEventListener('click', () => {
+    const a = $('#pw1').value, b = $('#pw2').value;
+    if (a.length < 4) { $('#pwMsg').textContent = 'Use at least four characters.'; return; }
+    if (a !== b) { $('#pwMsg').textContent = 'The two do not match.'; return; }
+    setOwnerPass(a); setOwnerUnlocked(true); renderOwner();
+  });
+}
+function ownerGate() {
+  app.innerHTML = `<section class="pagehead"><div class="title"><span class="label">Owner</span><h1>Owner passcode</h1><p>Enter the passcode you set on this device.</p></div></section>
+  <div class="setupform narrow"><label><span class="label">Passcode</span><input type="password" id="pw" autocomplete="current-password"></label><div class="btn-row"><button type="button" class="btn rose" id="pwGo">Open</button><a class="btn ghost" href="#home">Back</a></div><p class="small muted" id="pwMsg"></p></div>`;
+  const go = () => { if ($('#pw').value === ownerPass()) { setOwnerUnlocked(true); renderOwner(); } else $('#pwMsg').textContent = 'Not that one.'; };
+  $('#pwGo').addEventListener('click', go);
+  $('#pw').addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
+  $('#pw').focus();
+}
+
+/* ----- first run: ask the learner's name once, so the owner view has something to call them ----- */
+function askName() {
+  if (S.who.name || S.who.asked) return;
+  S.who.asked = true; save();
+  const el = document.createElement('div');
+  el.className = 'bigtoast in namebox';
+  el.innerHTML = `<div class="pic">${companion('lola', 92)}</div><div><b>¡Hola! What should we call you?</b><p>Just a first name — it labels your progress so it doesn't get mixed up with anyone else's.</p><div class="btn-row"><input type="text" id="nameIn" maxlength="24" placeholder="Nat" autocomplete="given-name"><button type="button" class="btn sm rose" id="nameGo">That's me</button></div></div>`;
+  document.body.appendChild(el);
+  stackToasts();
+  const go = () => { const v = $('#nameIn').value.trim(); if (v) { S.who.name = v; logAct('name', v); save(); Cloud.push(true); } el.remove(); render(); };
+  $('#nameGo').addEventListener('click', go);
+  $('#nameIn').addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
+}
+
 /* ----- boot ----- */
+initCloud();
+startClock();
 render();
+setTimeout(askName, 1200);
 </script>
 </html>
