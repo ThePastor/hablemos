@@ -997,6 +997,104 @@ img, svg { max-width: 100%; }
   .orecent summary { min-height: 44px; display: flex; align-items: center; }
 }
 
+/* =========================== v8: verb trainer, translation, checkpoints, causes =========================== */
+.causenote { display: block; margin-top: 8px; padding: 9px 12px; border-radius: 12px; background: var(--sand); border-left: 3px solid var(--pink-4); font-size: .84rem; line-height: 1.5; color: var(--ink-2); }
+.causenote b { color: var(--ink); display: block; font-size: .8rem; }
+.causeboard { margin-top: 18px; border: 1px solid var(--line); border-radius: 16px; padding: 12px 14px; background: var(--surface); }
+.causerow { border-bottom: 1px solid var(--line); }
+.causerow:last-child { border-bottom: 0; }
+.causerow summary { cursor: pointer; display: flex; justify-content: space-between; gap: 10px; padding: 9px 0; font-size: .9rem; }
+.causerow p { padding-bottom: 8px; color: var(--ink-2); }
+
+/* verb trainer */
+.vctrl { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; align-items: end; margin: 12px 0; }
+.vctrl label { display: grid; gap: 4px; min-width: 0; }
+.vctrl select { width: 100%; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+.seg button { border: 0; background: none; padding: 9px 15px; cursor: pointer; font-family: var(--font-mono); font-size: .64rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+.seg button.on { background: var(--pink-3); color: var(--pink-ink); }
+.notice.tint .mono { text-transform: none; letter-spacing: 0; font-size: .84rem; }
+.notice.tint { background: var(--sand); border: 1px solid var(--line); border-radius: 14px; padding: 11px 14px; font-size: .88rem; line-height: 1.5; }
+.vdrill { margin-top: 14px; border: 1px solid var(--line); border-radius: 20px; padding: 20px; background: var(--surface); }
+.vq { text-align: center; padding-bottom: 12px; }
+.vinf { font-family: var(--font-display); font-size: 2.2rem; letter-spacing: -0.04em; line-height: 1.1; }
+.vinf .muted { display: block; font-family: var(--font-body); font-size: .9rem; font-weight: 400; color: var(--ink-3); letter-spacing: 0; }
+.vperson { margin-top: 10px; font-size: 1.15rem; font-weight: 600; }
+.vperson .muted { display: block; }
+.vin { display: flex; gap: 8px; margin-top: 6px; }
+.vin input { flex: 1 1 auto; min-width: 0; padding: 13px 14px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); font: inherit; font-size: 1.15rem; text-align: center; }
+.vhint { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 10px; }
+.vres { margin-top: 14px; border-radius: 16px; padding: 14px; background: var(--sand); }
+.vres.good { background: var(--ok-soft); }
+.vres.bad { background: var(--bad-soft); }
+.vres b { font-family: var(--font-display); font-size: 1.1rem; }
+.vans { font-size: 1.3rem; margin: 6px 0; }
+.vans b { font-family: var(--font-body); font-weight: 700; }
+.vtables { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 14px; margin-top: 14px; }
+.vtable { border: 1px solid var(--line); border-radius: 16px; padding: 12px 14px; background: var(--surface); }
+.vth { display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px; }
+.vth b { font-family: var(--font-display); font-size: 1.1rem; }
+.vth .btn { margin-left: auto; }
+.vtable table { width: 100%; border-collapse: collapse; }
+.vtable td { padding: 4px 0; font-size: .92rem; vertical-align: baseline; }
+.vtable td.p { color: var(--ink-3); font-size: .78rem; white-space: nowrap; padding-right: 8px; }
+.vtable td.f { font-weight: 600; text-align: right; }
+.vtable td.f.odd { color: var(--pink-5); }
+.vtable td.f.odd::after { content: ' •'; color: var(--pink-4); }
+
+/* typed translation */
+.tdrill { margin-top: 14px; border: 1px solid var(--line); border-radius: 20px; padding: 20px; background: var(--surface); }
+.tprompt { font-family: var(--font-display); font-size: 1.5rem; line-height: 1.3; letter-spacing: -0.02em; margin: 6px 0 12px; display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.tdrill textarea { width: 100%; padding: 13px 14px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); font: inherit; font-size: 1.05rem; resize: vertical; }
+.tres { margin-top: 14px; border-radius: 16px; padding: 14px; background: var(--sand); }
+.tres.good { background: var(--ok-soft); }
+.tres.mid { background: var(--sand); }
+.tres.bad { background: var(--bad-soft); }
+.tres b { font-family: var(--font-display); font-size: 1.1rem; }
+.tmarks { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+.tm { padding: 4px 9px; border-radius: 999px; font-size: .9rem; background: var(--surface); border: 1px solid var(--line); }
+.tm.ok { background: var(--ok-soft); border-color: var(--sage); }
+.tm.acc { background: var(--sand); border-color: var(--tan); text-decoration: underline dotted; }
+.tm.bad { background: var(--bad-soft); border-color: var(--bad); text-decoration: line-through; }
+.tm.miss { background: var(--surface); border-style: dashed; color: var(--ink-3); }
+.tanswer { margin-top: 8px; }
+.tanswer .es { font-size: 1.15rem; font-weight: 600; }
+
+/* checkpoints */
+.checkpoint { padding: 20px 48px 44px; }
+.checkpoint .quiz { display: grid; gap: 12px; }
+.cpq { position: relative; }
+.cpq .lvtag { position: absolute; right: 12px; top: 12px; font-family: var(--font-mono); font-size: .58rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+.cpin { width: 100%; margin-top: 10px; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); font: inherit; font-size: 1.02rem; }
+.cpresult { display: flex; gap: 18px; align-items: center; margin-top: 20px; border-radius: 20px; padding: 20px; background: var(--sand); border: 1px solid var(--line); }
+.cpresult.pass { background: var(--ok-soft); }
+.cpresult.fail { background: var(--bad-soft); }
+.cpbig { font-family: var(--font-display); font-size: 3.4rem; font-weight: 800; letter-spacing: -0.05em; line-height: 1; }
+.cpbig small { font-size: 1.3rem; }
+.cpresult b { font-family: var(--font-display); font-size: 1.15rem; }
+.cpbanner { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 18px; background: var(--pink-1); border: 1px solid var(--pink-3); text-decoration: none; color: var(--ink); }
+.cpbanner .ic { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--pink-4); color: var(--pink-ink); font-weight: 800; flex: 0 0 auto; }
+.cpbanner .arr { margin-left: auto; }
+.cpbanner b { font-family: var(--font-display); }
+.levelrow button.locked { opacity: .55; }
+
+@media (max-width: 1100px) { .checkpoint { padding-left: 32px; padding-right: 32px; } }
+@media (max-width: 760px) {
+  .checkpoint { padding: 14px 18px 34px; }
+  .vctrl { grid-template-columns: 1fr; }
+  .vctrl .seg { justify-self: start; }
+  .vinf { font-size: 1.8rem; }
+  .tprompt { font-size: 1.25rem; }
+  .cpresult { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .vdrill, .tdrill { padding: 15px; }
+  .vtables { grid-template-columns: 1fr; }
+}
+@media (pointer: coarse) {
+  .vin input, .cpin, .tdrill textarea, .vctrl select { min-height: 44px; font-size: 16px !important; }
+  .seg button { min-height: 44px; }
+  .causerow summary { min-height: 44px; align-items: center; }
+}
+
 </style>
 
 <header class="topbar">
@@ -1023,7 +1121,7 @@ img, svg { max-width: 100%; }
   <a href="#speaking" data-sec="speaking"><span class="mi">¡!</span>Speak</a>
   <a href="#reading" data-sec="reading"><span class="mi">Aa</span>Read</a>
   <a href="#hunt" data-sec="hunt"><span class="mi">ñ</span>Hunt</a>
-  <a href="#review" data-sec="review"><span class="mi">♥</span>Review</a>
+  <a href="#review" data-sec="review"><span class="mi">✎</span>Practice</a>
   <a href="#casita" data-sec="casita"><span class="mi">⌂♥</span>Casita</a>
 </nav>
 
@@ -3298,6 +3396,462 @@ function setOwnerPass(p) { try { p ? localStorage.setItem(OWNER_KEY, p) : localS
 function ownerUnlocked() { try { return sessionStorage.getItem(OWNER_KEY + '.ok') === '1'; } catch (e) { return false; } }
 function setOwnerUnlocked(v) { try { v ? sessionStorage.setItem(OWNER_KEY + '.ok', '1') : sessionStorage.removeItem(OWNER_KEY + '.ok'); } catch (e) {} }
 
+/* =========================== TEACHING ENGINE =========================== */
+/* Verb conjugation, error diagnosis, grammar concept cards, translation bank,
+   checkpoints and placement. Defines only — part4 calls into it. */
+
+/* ----------------------------------------------------------------------
+   1 · VERBS
+   Persons: yo, tú, vos, él/ella/usted, nosotros, ellos/ustedes.
+   No vosotros — nobody in Guatemala uses it, and it doubles the memorising.
+   vos IS included: it is what Nat will actually hear there.
+   ---------------------------------------------------------------------- */
+const PERSONS = [
+  { k: 'y', t: 'yo', en: 'I' },
+  { k: 't', t: 'tú', en: 'you' },
+  { k: 'v', t: 'vos', en: 'you (Guatemala)', vos: true },
+  { k: 'e', t: 'él/ella/usted', en: 'he/she/you formal' },
+  { k: 'n', t: 'nosotros', en: 'we' },
+  { k: 's', t: 'ellos/ustedes', en: 'they/you all' },
+];
+const PK = PERSONS.map(p => p.k);
+
+const TENSES = [
+  { k: 'pres', t: 'Presente', en: 'Present', level: 1, ex: 'hablo — I speak', blurb: 'What happens now, or usually. The one you use most.' },
+  { k: 'pret', t: 'Pretérito', en: 'Preterite', level: 3, ex: 'hablé — I spoke', blurb: 'Finished actions in the past: yesterday, last year, once.' },
+  { k: 'imperf', t: 'Imperfecto', en: 'Imperfect', level: 4, ex: 'hablaba — I used to speak', blurb: 'Habits and backgrounds in the past: used to, was ‑ing.' },
+  { k: 'fut', t: 'Futuro', en: 'Future', level: 4, ex: 'hablaré — I will speak', blurb: 'Will do. Built on the whole infinitive — no endings to chop.' },
+  { k: 'cond', t: 'Condicional', en: 'Conditional', level: 5, ex: 'hablaría — I would speak', blurb: 'Would do. Same stem as the future, imperfect endings.' },
+  { k: 'perf', t: 'Presente perfecto', en: 'Present perfect', level: 4, ex: 'he hablado — I have spoken', blurb: 'Have done. haber + the participle.' },
+  { k: 'subj', t: 'Presente de subjuntivo', en: 'Present subjunctive', level: 5, ex: 'que hable — that I speak', blurb: 'Wishes, doubts, feelings. Take the yo form and swap the vowel.' },
+  { k: 'imp', t: 'Imperativo', en: 'Commands', level: 5, ex: '¡hablá! — speak!', blurb: 'Telling someone to do something. vos commands are everywhere in Guatemala.' },
+];
+const TENSE_BY_K = Object.fromEntries(TENSES.map(t => [t.k, t]));
+const IMP_PERSONS = ['t', 'v', 'e', 's'];
+
+/* Verb records.
+   type: ar|er|ir · stem: present stem change · irr: explicit forms per tense
+   futStem: irregular future/conditional stem · part: irregular participle
+   pretStem: strong preterite stem · irStem: -ir stem change used in 3rd person preterite */
+const VERBS = [
+  /* --- fully irregular, highest frequency --- */
+  { inf: 'ser', en: 'to be (permanent)', type: 'er', lvl: 1, tags: ['irr', 'core'],
+    irr: { pres: ['soy', 'eres', 'sos', 'es', 'somos', 'son'], imperf: ['era', 'eras', 'eras', 'era', 'éramos', 'eran'],
+           pret: ['fui', 'fuiste', 'fuiste', 'fue', 'fuimos', 'fueron'], subj: ['sea', 'seas', 'seás', 'sea', 'seamos', 'sean'],
+           imp: { t: 'sé', v: 'sé', e: 'sea', s: 'sean' } } },
+  { inf: 'estar', en: 'to be (right now, in a place)', type: 'ar', lvl: 1, tags: ['irr', 'core'],
+    irr: { pres: ['estoy', 'estás', 'estás', 'está', 'estamos', 'están'], subj: ['esté', 'estés', 'estés', 'esté', 'estemos', 'estén'] },
+    pretStem: 'estuv' },
+  { inf: 'ir', en: 'to go', type: 'ir', lvl: 1, tags: ['irr', 'core'],
+    irr: { pres: ['voy', 'vas', 'vas', 'va', 'vamos', 'van'], imperf: ['iba', 'ibas', 'ibas', 'iba', 'íbamos', 'iban'],
+           pret: ['fui', 'fuiste', 'fuiste', 'fue', 'fuimos', 'fueron'], subj: ['vaya', 'vayas', 'vayás', 'vaya', 'vayamos', 'vayan'],
+           imp: { t: 've', v: 'andá', e: 'vaya', s: 'vayan' } }, part: 'ido' },
+  { inf: 'haber', en: 'to have (helper verb)', type: 'er', lvl: 4, tags: ['irr'],
+    irr: { pres: ['he', 'has', 'has', 'ha', 'hemos', 'han'], subj: ['haya', 'hayas', 'hayás', 'haya', 'hayamos', 'hayan'] },
+    pretStem: 'hub', futStem: 'habr' },
+  { inf: 'tener', en: 'to have', type: 'er', lvl: 1, tags: ['irr', 'core'],
+    irr: { pres: ['tengo', 'tienes', 'tenés', 'tiene', 'tenemos', 'tienen'], imp: { t: 'ten', v: 'tené', e: 'tenga', s: 'tengan' } },
+    pretStem: 'tuv', futStem: 'tendr', yo: 'tengo' },
+  { inf: 'hacer', en: 'to do, to make', type: 'er', lvl: 2, tags: ['irr', 'core'],
+    irr: { pres: ['hago', 'haces', 'hacés', 'hace', 'hacemos', 'hacen'],
+           pret: ['hice', 'hiciste', 'hiciste', 'hizo', 'hicimos', 'hicieron'], imp: { t: 'haz', v: 'hacé', e: 'haga', s: 'hagan' } },
+    futStem: 'har', part: 'hecho', yo: 'hago' },
+  { inf: 'decir', en: 'to say, to tell', type: 'ir', lvl: 3, tags: ['irr', 'core'],
+    irr: { pres: ['digo', 'dices', 'decís', 'dice', 'decimos', 'dicen'], imp: { t: 'di', v: 'decí', e: 'diga', s: 'digan' } },
+    pretStem: 'dij', futStem: 'dir', part: 'dicho', yo: 'digo' },
+  { inf: 'ver', en: 'to see', type: 'er', lvl: 2, tags: ['irr', 'core'],
+    irr: { pres: ['veo', 'ves', 'ves', 've', 'vemos', 'ven'], imperf: ['veía', 'veías', 'veías', 'veía', 'veíamos', 'veían'],
+           pret: ['vi', 'viste', 'viste', 'vio', 'vimos', 'vieron'] }, part: 'visto', yo: 'veo' },
+  { inf: 'dar', en: 'to give', type: 'ar', lvl: 3, tags: ['irr'],
+    irr: { pres: ['doy', 'das', 'das', 'da', 'damos', 'dan'], pret: ['di', 'diste', 'diste', 'dio', 'dimos', 'dieron'],
+           subj: ['dé', 'des', 'dés', 'dé', 'demos', 'den'] }, yo: 'doy' },
+  { inf: 'saber', en: 'to know (a fact)', type: 'er', lvl: 2, tags: ['irr', 'core'],
+    irr: { pres: ['sé', 'sabes', 'sabés', 'sabe', 'sabemos', 'saben'], subj: ['sepa', 'sepas', 'sepás', 'sepa', 'sepamos', 'sepan'] },
+    pretStem: 'sup', futStem: 'sabr', yo: 'sé' },
+  { inf: 'poder', en: 'to be able to, can', type: 'er', lvl: 2, tags: ['irr', 'stem', 'core'], stem: ['o', 'ue'],
+    pretStem: 'pud', futStem: 'podr' },
+  { inf: 'poner', en: 'to put', type: 'er', lvl: 3, tags: ['irr'],
+    irr: { imp: { t: 'pon', v: 'poné', e: 'ponga', s: 'pongan' } }, yo: 'pongo', pretStem: 'pus', futStem: 'pondr', part: 'puesto' },
+  { inf: 'venir', en: 'to come', type: 'ir', lvl: 2, tags: ['irr', 'core'],
+    irr: { pres: ['vengo', 'vienes', 'venís', 'viene', 'venimos', 'vienen'], imp: { t: 'ven', v: 'vení', e: 'venga', s: 'vengan' } },
+    yo: 'vengo', pretStem: 'vin', futStem: 'vendr' },
+  { inf: 'salir', en: 'to leave, to go out', type: 'ir', lvl: 2, tags: ['irr'],
+    irr: { imp: { t: 'sal', v: 'salí', e: 'salga', s: 'salgan' } }, yo: 'salgo', futStem: 'saldr' },
+  { inf: 'querer', en: 'to want, to love', type: 'er', lvl: 1, tags: ['irr', 'stem', 'core'], stem: ['e', 'ie'],
+    pretStem: 'quis', futStem: 'querr' },
+  { inf: 'traer', en: 'to bring', type: 'er', lvl: 3, tags: ['irr'], yo: 'traigo', pretStem: 'traj', part: 'traído' },
+  { inf: 'oír', en: 'to hear', type: 'ir', lvl: 3, tags: ['irr'],
+    irr: { pres: ['oigo', 'oyes', 'oís', 'oye', 'oímos', 'oyen'], pret: ['oí', 'oíste', 'oíste', 'oyó', 'oímos', 'oyeron'] },
+    yo: 'oigo', part: 'oído' },
+  { inf: 'conocer', en: 'to know (a person, a place)', type: 'er', lvl: 2, tags: ['irr', 'core'], yo: 'conozco' },
+  /* --- stem-changing --- */
+  { inf: 'pensar', en: 'to think', type: 'ar', lvl: 2, tags: ['stem'], stem: ['e', 'ie'] },
+  { inf: 'empezar', en: 'to begin', type: 'ar', lvl: 2, tags: ['stem', 'spell'], stem: ['e', 'ie'] },
+  { inf: 'entender', en: 'to understand', type: 'er', lvl: 2, tags: ['stem', 'core'], stem: ['e', 'ie'] },
+  { inf: 'cerrar', en: 'to close', type: 'ar', lvl: 2, tags: ['stem'], stem: ['e', 'ie'] },
+  { inf: 'volver', en: 'to return, to go back', type: 'er', lvl: 3, tags: ['stem'], stem: ['o', 'ue'], part: 'vuelto' },
+  { inf: 'dormir', en: 'to sleep', type: 'ir', lvl: 3, tags: ['stem'], stem: ['o', 'ue'], irStem: ['o', 'u'] },
+  { inf: 'contar', en: 'to count, to tell', type: 'ar', lvl: 3, tags: ['stem'], stem: ['o', 'ue'] },
+  { inf: 'costar', en: 'to cost', type: 'ar', lvl: 2, tags: ['stem'], stem: ['o', 'ue'] },
+  { inf: 'jugar', en: 'to play', type: 'ar', lvl: 2, tags: ['stem', 'spell'], stem: ['u', 'ue'] },
+  { inf: 'pedir', en: 'to ask for, to order', type: 'ir', lvl: 3, tags: ['stem', 'core'], stem: ['e', 'i'], irStem: ['e', 'i'] },
+  { inf: 'servir', en: 'to serve', type: 'ir', lvl: 3, tags: ['stem'], stem: ['e', 'i'], irStem: ['e', 'i'] },
+  { inf: 'seguir', en: 'to follow, to keep on', type: 'ir', lvl: 4, tags: ['stem'], stem: ['e', 'i'], irStem: ['e', 'i'], yo: 'sigo' },
+  { inf: 'sentir', en: 'to feel', type: 'ir', lvl: 4, tags: ['stem'], stem: ['e', 'ie'], irStem: ['e', 'i'] },
+  { inf: 'preferir', en: 'to prefer', type: 'ir', lvl: 3, tags: ['stem'], stem: ['e', 'ie'], irStem: ['e', 'i'] },
+  { inf: 'encontrar', en: 'to find', type: 'ar', lvl: 3, tags: ['stem'], stem: ['o', 'ue'] },
+  /* --- spelling-change --- */
+  { inf: 'llegar', en: 'to arrive', type: 'ar', lvl: 2, tags: ['spell', 'core'] },
+  { inf: 'buscar', en: 'to look for', type: 'ar', lvl: 2, tags: ['spell'] },
+  { inf: 'pagar', en: 'to pay', type: 'ar', lvl: 2, tags: ['spell'] },
+  { inf: 'sacar', en: 'to take out', type: 'ar', lvl: 3, tags: ['spell'] },
+  { inf: 'leer', en: 'to read', type: 'er', lvl: 2, tags: ['spell'],
+    irr: { pret: ['leí', 'leíste', 'leíste', 'leyó', 'leímos', 'leyeron'] }, part: 'leído' },
+  /* --- regular workhorses --- */
+  { inf: 'hablar', en: 'to speak, to talk', type: 'ar', lvl: 1, tags: ['reg', 'core'] },
+  { inf: 'comer', en: 'to eat', type: 'er', lvl: 1, tags: ['reg', 'core'] },
+  { inf: 'vivir', en: 'to live', type: 'ir', lvl: 1, tags: ['reg', 'core'] },
+  { inf: 'trabajar', en: 'to work', type: 'ar', lvl: 1, tags: ['reg'] },
+  { inf: 'estudiar', en: 'to study', type: 'ar', lvl: 1, tags: ['reg'] },
+  { inf: 'caminar', en: 'to walk', type: 'ar', lvl: 1, tags: ['reg'] },
+  { inf: 'comprar', en: 'to buy', type: 'ar', lvl: 2, tags: ['reg'] },
+  { inf: 'tomar', en: 'to take, to drink', type: 'ar', lvl: 1, tags: ['reg'] },
+  { inf: 'necesitar', en: 'to need', type: 'ar', lvl: 2, tags: ['reg'] },
+  { inf: 'aprender', en: 'to learn', type: 'er', lvl: 1, tags: ['reg'] },
+  { inf: 'beber', en: 'to drink', type: 'er', lvl: 1, tags: ['reg'] },
+  { inf: 'escribir', en: 'to write', type: 'ir', lvl: 2, tags: ['reg'], part: 'escrito' },
+  { inf: 'abrir', en: 'to open', type: 'ir', lvl: 2, tags: ['reg'], part: 'abierto' },
+  { inf: 'recibir', en: 'to receive', type: 'ir', lvl: 3, tags: ['reg'] },
+  { inf: 'ayudar', en: 'to help', type: 'ar', lvl: 2, tags: ['reg'] },
+  { inf: 'esperar', en: 'to wait, to hope', type: 'ar', lvl: 2, tags: ['reg'] },
+];
+const VERB_BY_INF = Object.fromEntries(VERBS.map(v => [v.inf, v]));
+
+/* ----- the conjugator ----- */
+const ENDINGS = {
+  pres: { ar: ['o', 'as', 'ás', 'a', 'amos', 'an'], er: ['o', 'es', 'és', 'e', 'emos', 'en'], ir: ['o', 'es', 'ís', 'e', 'imos', 'en'] },
+  pret: { ar: ['é', 'aste', 'aste', 'ó', 'amos', 'aron'], er: ['í', 'iste', 'iste', 'ió', 'imos', 'ieron'], ir: ['í', 'iste', 'iste', 'ió', 'imos', 'ieron'] },
+  imperf: { ar: ['aba', 'abas', 'abas', 'aba', 'ábamos', 'aban'], er: ['ía', 'ías', 'ías', 'ía', 'íamos', 'ían'], ir: ['ía', 'ías', 'ías', 'ía', 'íamos', 'ían'] },
+  fut: { all: ['é', 'ás', 'ás', 'á', 'emos', 'án'] },
+  cond: { all: ['ía', 'ías', 'ías', 'ía', 'íamos', 'ían'] },
+  subj: { ar: ['e', 'es', 'és', 'e', 'emos', 'en'], er: ['a', 'as', 'ás', 'a', 'amos', 'an'], ir: ['a', 'as', 'ás', 'a', 'amos', 'an'] },
+  strong: ['e', 'iste', 'iste', 'o', 'imos', 'ieron'],
+};
+const HABER = ['he', 'has', 'has', 'ha', 'hemos', 'han'];
+/* the four persons whose stem changes (never nosotros, never vos) */
+const STEM_IDX = [0, 1, 3, 5];
+
+function vStem(v) { return v.inf.replace(/(ar|er|ir|ír)$/, ''); }
+function applyStem(stem, change) {
+  if (!change) return stem;
+  const [from, to] = change;
+  const i = stem.lastIndexOf(from);
+  return i < 0 ? stem : stem.slice(0, i) + to + stem.slice(i + 1);
+}
+function participle(v) {
+  if (v.part) return v.part;
+  const s = vStem(v);
+  if (v.type === 'ar') return s + 'ado';
+  return s + (/[aeiou]$/.test(s) ? 'ído' : 'ido');
+}
+/* -car/-gar/-zar keep their sound: busqué, llegué, empecé — and all through the subjunctive */
+function spellFix(stem, v, vowel) {
+  if (!/^[ei]/.test(vowel)) return stem;
+  if (/c$/.test(v.inf.slice(0, -2)) && /car$/.test(v.inf)) return stem.replace(/c$/, 'qu');
+  if (/gar$/.test(v.inf)) return stem.replace(/g$/, 'gu');
+  if (/zar$/.test(v.inf)) return stem.replace(/z$/, 'c');
+  if (/guir$/.test(v.inf)) return stem.replace(/gu$/, 'g');
+  return stem;
+}
+function conj(verb, tense, pk) {
+  const v = typeof verb === 'string' ? VERB_BY_INF[verb] : verb;
+  if (!v) return '';
+  const i = PK.indexOf(pk);
+  if (i < 0) return '';
+  const irr = v.irr || {};
+  if (tense === 'imp') {
+    const table = irr.imp || {};
+    if (table[pk]) return table[pk];
+    const s = vStem(v);
+    if (pk === 'v') return (v.type === 'ar' ? s + 'á' : v.type === 'er' ? s + 'é' : s + 'í');
+    if (pk === 't') return conj(v, 'pres', 'e');
+    if (pk === 'e') return conj(v, 'subj', 'e');
+    if (pk === 's') return conj(v, 'subj', 's');
+    return '';
+  }
+  if (irr[tense]) return irr[tense][i];
+  const s = vStem(v);
+  if (tense === 'pres') {
+    if (i === 0 && v.yo) return v.yo;
+    const stem = STEM_IDX.indexOf(i) >= 0 ? applyStem(s, v.stem) : s;
+    return stem + ENDINGS.pres[v.type][i];
+  }
+  if (tense === 'pret') {
+    if (v.pretStem) {
+      let e = ENDINGS.strong[i];
+      if (i === 5 && /j$/.test(v.pretStem)) e = 'eron';
+      return v.pretStem + e;
+    }
+    let stem = s, end = ENDINGS.pret[v.type][i];
+    if (i === 0 && v.type === 'ar') stem = spellFix(s, v, 'e');
+    if (v.irStem && (i === 3 || i === 5)) stem = applyStem(s, v.irStem);
+    return stem + end;
+  }
+  if (tense === 'imperf') return s + ENDINGS.imperf[v.type][i];
+  if (tense === 'fut') return (v.futStem || v.inf) + ENDINGS.fut.all[i];
+  if (tense === 'cond') return (v.futStem || v.inf) + ENDINGS.cond.all[i];
+  if (tense === 'perf') return HABER[i] + ' ' + participle(v);
+  if (tense === 'subj') {
+    const yo = conj(v, 'pres', 'y');
+    let stem = /o$/.test(yo) ? yo.slice(0, -1) : s;
+    const end = ENDINGS.subj[v.type][i];
+    stem = spellFix(stem, v, end[0]);
+    /* -ir stem-changers keep the change in nosotros — from the plain stem, not the
+       diphthong: dormir -> durmamos, never duermamos */
+    if (v.irStem && i === 4) stem = spellFix(applyStem(s, v.irStem), v, end[0]);
+    return stem + end;
+  }
+  return '';
+}
+function conjTable(verb, tense) {
+  const persons = tense === 'imp' ? IMP_PERSONS : PK;
+  return persons.map(k => ({ k, person: PERSONS.find(p => p.k === k), form: conj(verb, tense, k) }));
+}
+/* which part of the form is unexpected — so the table can highlight it */
+function regularForm(v, tense, pk) {
+  const plain = { inf: v.inf, type: v.type };
+  return conj(plain, tense, pk);
+}
+function isIrregularAt(v, tense, pk) { return conj(v, tense, pk) !== regularForm(v, tense, pk); }
+const tensesForLevel = (lv) => TENSES.filter(t => t.level <= Math.max(1, lv));
+const verbsForLevel = (lv) => VERBS.filter(v => v.lvl <= Math.max(1, lv));
+
+/* ----------------------------------------------------------------------
+   2 · ERROR DIAGNOSIS — say WHY it was wrong, not just that it was
+   ---------------------------------------------------------------------- */
+const CAUSES = {
+  accent: { t: 'Accent mark', tip: 'The right word, but the accent decides which syllable is stressed — and sometimes the meaning (el/él, si/sí, hablo/habló).' },
+  gender: { t: 'Gender agreement', tip: 'Articles and adjectives copy the noun: el libro rojo, la casa roja.' },
+  plural: { t: 'Plural agreement', tip: 'When the noun goes plural, so do its article and its adjective: las casas blancas.' },
+  serestar: { t: 'ser vs estar', tip: 'ser = what something IS (permanent, identity). estar = how or where it is right now.' },
+  verbform: { t: 'Verb form', tip: 'Right verb, wrong person. Check who is doing it — yo, vos, ellos each get their own ending.' },
+  tense: { t: 'Tense', tip: 'Right verb and person, wrong time. Finished yesterday = pretérito; used to = imperfecto.' },
+  article: { t: 'Article', tip: 'Spanish uses el/la/los/las far more than English uses "the" — with likes, generalisations, days and body parts.' },
+  preposition: { t: 'Preposition', tip: 'por vs para, a vs en, de vs desde — these rarely map one-to-one onto English.' },
+  pronoun: { t: 'Pronoun', tip: 'me/te/le/se and the personal a. Spanish puts these before the verb: me gusta, la veo.' },
+  order: { t: 'Word order', tip: 'Adjectives usually follow the noun, and questions do not need "do".' },
+  spelling: { t: 'Spelling', tip: 'Very close — check the letters. b/v, ll/y, h and double letters are the usual suspects.' },
+  vocab: { t: 'Vocabulary', tip: 'A different word was needed. Add it to your flashcards and it will come back.' },
+  missing: { t: 'Missing word', tip: 'Something was left out. Read your answer back against the Spanish out loud.' },
+  extra: { t: 'Extra word', tip: 'One word too many — Spanish often needs fewer than English.' },
+};
+const ARTICLES = ['el', 'la', 'los', 'las', 'un', 'una', 'unos', 'unas', 'lo', 'al', 'del'];
+const PREPS = ['a', 'de', 'en', 'con', 'por', 'para', 'sin', 'sobre', 'hasta', 'desde', 'entre', 'hacia'];
+const PRONOUNS = ['me', 'te', 'se', 'le', 'les', 'lo', 'la', 'los', 'las', 'nos', 'mi', 'tu', 'su', 'yo', 'vos', 'él', 'ella', 'usted', 'nosotros', 'ellos', 'ustedes'];
+const SER_ESTAR = ['ser', 'estar'];
+
+/* every form of every verb we know, so a wrong ending can be recognised as the same verb */
+let FORM_INDEX = null, FORM_EXACT = null;
+function formIndex() {
+  if (FORM_INDEX) return FORM_INDEX;
+  FORM_INDEX = {}; FORM_EXACT = {};
+  VERBS.forEach(v => {
+    TENSES.forEach(t => {
+      (t.k === 'imp' ? IMP_PERSONS : PK).forEach(k => {
+        const f = conj(v, t.k, k);
+        if (!f) return;
+        f.split(' ').forEach(word => {
+          const n = norm(word);
+          if (!n || n === 'he' || n === 'has' || n === 'ha' || n === 'hemos' || n === 'han') return;
+          const rec = { inf: v.inf, tense: t.k, person: k };
+          (FORM_INDEX[n] = FORM_INDEX[n] || []).push(rec);
+          (FORM_EXACT[word.toLowerCase()] = FORM_EXACT[word.toLowerCase()] || []).push(rec);
+        });
+      });
+    });
+    FORM_INDEX[norm(v.inf)] = (FORM_INDEX[norm(v.inf)] || []).concat([{ inf: v.inf, tense: 'inf', person: '-' }]);
+  });
+  return FORM_INDEX;
+}
+/* a learner without a Spanish keyboard types n for ñ and e for é — same class of slip */
+const loose = (s) => norm(s).replace(/\u00f1/g, 'n');
+const sameWordNoAccent = (a, b) => a !== b && loose(a) === loose(b);
+/* the accent-exact reading of a verb form wins over the accent-blind one:
+   "hablo" is the present, even though "habló" also normalises to "hablo" */
+function formsOf(word) {
+  formIndex();
+  return FORM_EXACT[String(word).toLowerCase()] || FORM_INDEX[norm(word)] || null;
+}
+function diagnosePair(got, want) {
+  const g = norm(got), w = norm(want);
+  if (!g) return 'missing';
+  if (sameWordNoAccent(got, want)) return 'accent';
+  const gf = formsOf(got), wf = formsOf(want);
+  if (gf && wf) {
+    const shared = gf.find(a => wf.some(b => b.inf === a.inf));
+    if (shared) {
+      const gt = new Set(gf.filter(a => wf.some(b => b.inf === a.inf)).map(a => a.tense));
+      const wt = new Set(wf.filter(b => gf.some(a => a.inf === b.inf)).map(b => b.tense));
+      const sameTense = [...gt].some(t => wt.has(t));
+      return sameTense ? 'verbform' : 'tense';
+    }
+    const gi = new Set(gf.map(a => a.inf)), wi = new Set(wf.map(b => b.inf));
+    if ([...gi].some(x => SER_ESTAR.includes(x)) && [...wi].some(x => SER_ESTAR.includes(x))) return 'serestar';
+  }
+  if (ARTICLES.includes(g) && ARTICLES.includes(w)) return g.replace(/s$/, '') === w.replace(/s$/, '') ? 'plural' : 'gender';
+  if (PREPS.includes(g) && PREPS.includes(w)) return 'preposition';
+  if (PRONOUNS.includes(g) && PRONOUNS.includes(w)) return 'pronoun';
+  if (g.replace(/s$/, '') === w.replace(/s$/, '')) return 'plural';
+  if (g.replace(/[oa]s?$/, '') === w.replace(/[oa]s?$/, '') && g.replace(/[oa]s?$/, '').length > 2) return 'gender';
+  if (similarity(g, w) >= 0.7) return 'spelling';
+  return 'vocab';
+}
+/* align the two answers word by word, then name the first real difference */
+function diagnose(got, want) {
+  const G = String(got).trim().split(/\s+/).filter(Boolean);
+  const W = String(want).trim().split(/\s+/).filter(Boolean);
+  const n = G.length, m = W.length;
+  const L = Array.from({ length: n + 1 }, () => new Array(m + 1).fill(0));
+  for (let i = n - 1; i >= 0; i--) for (let j = m - 1; j >= 0; j--)
+    L[i][j] = loose(G[i]) === loose(W[j]) ? 1 + L[i + 1][j + 1] : Math.max(L[i + 1][j], L[i][j + 1]);
+  const diffs = []; let i = 0, j = 0;
+  const marks = [];
+  while (i < n && j < m) {
+    if (loose(G[i]) === loose(W[j])) {
+      marks.push({ w: G[i], ok: true, want: W[j], accent: G[i] !== W[j] && sameWordNoAccent(G[i], W[j]) });
+      if (G[i] !== W[j] && sameWordNoAccent(G[i], W[j])) diffs.push({ cause: 'accent', got: G[i], want: W[j] });
+      i++; j++;
+    } else if (L[i + 1][j] >= L[i][j + 1]) {
+      /* G[i] is wrong or extra — is the next want-word a better partner? */
+      const c = diagnosePair(G[i], W[j]);
+      if (c === 'vocab' && L[i + 1][j] > L[i][j + 1]) { marks.push({ w: G[i], ok: false, cause: 'extra' }); diffs.push({ cause: 'extra', got: G[i], want: '' }); i++; }
+      else { marks.push({ w: G[i], ok: false, want: W[j], cause: c }); diffs.push({ cause: c, got: G[i], want: W[j] }); i++; j++; }
+    } else { marks.push({ w: W[j], ok: false, cause: 'missing', missing: true }); diffs.push({ cause: 'missing', got: '', want: W[j] }); j++; }
+  }
+  while (i < n) { marks.push({ w: G[i], ok: false, cause: 'extra' }); diffs.push({ cause: 'extra', got: G[i++], want: '' }); }
+  while (j < m) { marks.push({ w: W[j], ok: false, cause: 'missing', missing: true }); diffs.push({ cause: 'missing', got: '', want: W[j++] }); }
+  const real = diffs.filter(d => d.cause !== 'accent');
+  const exact = String(got).trim() === String(want).trim();
+  const clean = diffs.length === 0;
+  const closeEnough = real.length === 0;                    /* only accents differ */
+  const almost = real.length === 1 && n >= 2;               /* one word out */
+  const main = (real[0] || diffs[0] || {}).cause || null;
+  /* word order: same bag of words, different sequence */
+  const bagG = G.map(loose).sort().join(' '), bagW = W.map(loose).sort().join(' ');
+  const cause = (!clean && bagG === bagW && bagG.length) ? 'order' : main;
+  return { exact, clean, closeEnough, almost, cause, diffs, marks, pct: Math.round(similarity(G.join(' '), W.join(' ')) * 100) };
+}
+/* remember what keeps going wrong */
+function noteCause(cause, detail, lessonId) {
+  if (!cause) return;
+  if (!S.causes) S.causes = {};
+  const c = S.causes[cause] || { n: 0, last: null, eg: [] };
+  c.n++; c.last = todayStr();
+  if (detail && c.eg.length < 6 && !c.eg.includes(detail)) c.eg.push(detail);
+  S.causes[cause] = c;
+  logAct('slip', CAUSES[cause] ? CAUSES[cause].t : cause);
+}
+function topCauses(n) {
+  return Object.entries(S.causes || {}).filter(([k]) => CAUSES[k]).sort((a, b) => b[1].n - a[1].n).slice(0, n || 4)
+    .map(([k, v]) => ({ k, t: CAUSES[k].t, tip: CAUSES[k].tip, n: v.n, eg: v.eg }));
+}
+
+/* ----------------------------------------------------------------------
+   3 · GRAMMAR CONCEPT CARDS — lessons come back, not just words
+   ---------------------------------------------------------------------- */
+const allLessons = () => Object.entries(GRAMMAR).flatMap(([lv, ls]) => ls.map(l => Object.assign({ level: Number(lv) }, l)));
+const lessonById = (id) => allLessons().find(l => l.id === id);
+function initConcepts() {
+  if (!S.gcards) S.gcards = {};
+  /* anything already finished but never scheduled joins the rotation today */
+  Object.keys(S.done).filter(k => /^g\d/.test(k)).forEach(id => { if (!S.gcards[id]) S.gcards[id] = { box: 1, due: addDays(1) }; });
+}
+function scheduleConcept(id, ok) {
+  const c = S.gcards[id] || { box: 0, due: todayStr() };
+  c.box = ok ? Math.min(BOX_DAYS.length - 1, c.box + 1) : 0;
+  c.due = addDays(BOX_DAYS[c.box]);
+  S.gcards[id] = c;
+}
+function dueConcepts() {
+  initConcepts();
+  const t = todayStr();
+  return Object.keys(S.gcards).filter(id => S.gcards[id].due <= t && lessonById(id)).sort((a, b) => S.gcards[a].due < S.gcards[b].due ? -1 : 1);
+}
+
+/* ----------------------------------------------------------------------
+   4 · TRANSLATION BANK — production, not recognition
+   ---------------------------------------------------------------------- */
+let TBANK = null;
+function transBank() {
+  if (TBANK) return TBANK;
+  const out = [], seen = new Set();
+  const add = (es, en, level, src) => {
+    if (!es || !en) return;
+    const words = String(es).trim().split(/\s+/).length;
+    if (words < 2 || words > 12) return;
+    const key = norm(es);
+    if (seen.has(key)) return;
+    seen.add(key);
+    out.push({ es: String(es).trim(), en: String(en).trim(), level: level || 1, src });
+  };
+  Object.entries(SPEAKING || {}).forEach(([lv, ph]) => (ph || []).forEach(p => add(p.es, p.en, Number(lv), 'phrase')));
+  Object.entries(DIALOGUES || {}).forEach(([lv, ds]) => (ds || []).forEach(d => (d.lines || []).forEach(l => add(l.es, l.en, Number(lv), 'dialogue'))));
+  (DICT || []).forEach(d => { if (d.ex && d.exEn) add(d.ex, d.exEn, d.level || 1, 'example'); });
+  TBANK = out;
+  return out;
+}
+function transForLevel(lv, dir) {
+  const bank = transBank().filter(b => b.level <= lv);
+  return bank.length ? bank : transBank();
+}
+/* grade a typed translation */
+function gradeTranslation(typed, target) {
+  const d = diagnose(typed, target);
+  const verdict = d.exact ? 'perfect' : d.clean ? 'perfect' : d.closeEnough ? 'accents' : d.almost ? 'almost' : d.pct >= 55 ? 'close' : 'no';
+  return Object.assign(d, { verdict, ok: verdict === 'perfect' || verdict === 'accents' });
+}
+
+/* ----------------------------------------------------------------------
+   5 · CHECKPOINTS AND PLACEMENT
+   ---------------------------------------------------------------------- */
+const CHECK_PASS = 75;
+function pickN(arr, n) { return shuffle(arr).slice(0, n); }
+function levelExercises(lv) {
+  return (GRAMMAR[lv] || []).flatMap(l => (lessonExercises(l) || []).map(ex => ({ ex, lessonId: l.id, title: l.title })));
+}
+function buildCheckpoint(lv) {
+  const qs = [];
+  pickN(levelExercises(lv), 4).forEach(x => qs.push({ kind: 'ex', ex: x.ex, lessonId: x.lessonId, from: x.title }));
+  pickN(transBank().filter(b => b.level === lv), 4).forEach(b => qs.push({ kind: 'trans', es: b.es, en: b.en }));
+  pickN((SPEAKING[lv] || []), 2).forEach(p => qs.push({ kind: 'listen', es: p.es, en: p.en }));
+  const vs = verbsForLevel(lv), ts = tensesForLevel(lv);
+  pickN(vs, 2).forEach(v => {
+    const t = ts[Math.floor(Math.random() * ts.length)];
+    const k = PK[Math.floor(Math.random() * PK.length)];
+    qs.push({ kind: 'conj', inf: v.inf, en: v.en, tense: t.k, person: k, answer: conj(v, t.k, k) });
+  });
+  return shuffle(qs.filter(q => q.kind !== 'conj' || q.answer)).slice(0, 12);
+}
+function buildPlacement() {
+  const qs = [];
+  [1, 1, 2, 2, 3, 3, 4, 5].forEach(lv => {
+    const pool = levelExercises(lv);
+    if (pool.length) { const x = pickN(pool, 1)[0]; qs.push({ level: lv, kind: 'ex', ex: x.ex, lessonId: x.lessonId }); }
+  });
+  [1, 2, 3, 4, 5].forEach(lv => {
+    const pool = transBank().filter(b => b.level === lv);
+    if (pool.length) { const b = pickN(pool, 1)[0]; qs.push({ level: lv, kind: 'trans', es: b.es, en: b.en }); }
+  });
+  [2, 4].forEach(lv => {
+    const v = pickN(verbsForLevel(lv), 1)[0], t = pickN(tensesForLevel(lv), 1)[0], k = PK[Math.floor(Math.random() * PK.length)];
+    if (v && t) qs.push({ level: lv, kind: 'conj', inf: v.inf, en: v.en, tense: t.k, person: k, answer: conj(v, t.k, k) });
+  });
+  return qs.sort((a, b) => a.level - b.level);
+}
+function initChecks() { if (!S.checks) S.checks = {}; }
+const levelPassed = (lv) => !!(S.checks && S.checks[lv] && S.checks[lv].passed);
+const levelUnlocked = (lv) => lv <= 1 || levelPassed(lv - 1) || (S.placed || 0) >= lv;
+
 /* =========================== APP =========================== */
 const $ = (s, el = document) => el.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
@@ -3307,7 +3861,7 @@ const gridForm = (w) => stripAccents(String(w).toUpperCase()).replace(/[^A-Z\u00
 const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const DICT_BY_ES = Object.fromEntries(DICT.map(d => [d.es, d]));
 const KEY = 'hablemos.v1';
-const BUILD = { v: 'v7', date: '31 August 2026' };
+const BUILD = { v: 'v8', date: '31 August 2026' };
 const todayStr = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 const addDays = (n) => { const d = new Date(); d.setDate(d.getDate() + n); return todayStr(d); };
 const XP = { lesson: 15, perfect: 5, phrase: 5, passage: 15, huntWord: 2, hunt: 10, card: 1, mistake: 3, dialogue: 10, listen: 3 };
@@ -3319,6 +3873,8 @@ function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e
 load();
 initRewards();
 initProfile();
+initConcepts();
+initChecks();
 const LV = () => LEVELS.find(l => l.id === S.level) || LEVELS[0];
 const learnedCount = () => Object.keys(S.learned).length;
 const lessonsDone = () => Object.keys(S.done).filter(k => k.startsWith('g')).length;
@@ -3786,6 +4342,7 @@ function pathItems(level) {
   if (ph.length) out.push({ kind: 'Listening', t: 'Type what you hear', href: '#speaking/listen', done: ph.every(p => S.listen[p.es]), xp: XP.listen * ph.length, icon: '♪' });
   (READING[level] || []).filter(r => r.qs.length).forEach(r => out.push({ kind: 'Reading', t: r.title, href: '#reading/' + r.id, done: !!S.done[r.id], xp: XP.passage, icon: 'A' }));
   (HUNTS[level] || []).forEach((h, i) => out.push({ kind: 'Word Hunt', t: h.theme, href: '#hunt/' + i, done: !!S.done['h' + level + '-' + h.theme], xp: XP.hunt + XP.huntWord * h.words.length, icon: 'ñ' }));
+  if (out.length) out.push({ kind: 'Checkpoint', t: 'Level ' + level + ' checkpoint', href: '#checkpoint/' + level, done: levelPassed(level), xp: 60, icon: '✓', check: true });
   return out;
 }
 
@@ -3803,6 +4360,8 @@ function render() {
   else if (page === 'reading') renderReading(id);
   else if (page === 'hunt') renderHunt(id);
   else if (page === 'review') renderReview(id);
+  else if (page === 'checkpoint') renderCheckpoint(id);
+  else if (page === 'placement') renderPlacement();
   else if (page === 'casita') renderCasita(id);
   else if (page === 'shop') renderShop(id);
   else if (page === 'collection') renderCollection();
@@ -3814,7 +4373,7 @@ function render() {
   foldSides();
 }
 function paintMobNav(page) {
-  const map = { home: 'home', grammar: 'grammar', speaking: 'speaking', reading: 'reading', hunt: 'hunt', review: 'review', casita: 'casita', shop: 'casita', collection: 'casita', owner: 'home', about: 'home' };
+  const map = { home: 'home', grammar: 'grammar', speaking: 'speaking', reading: 'reading', hunt: 'hunt', review: 'review', casita: 'casita', shop: 'casita', collection: 'casita', checkpoint: 'review', placement: 'home', owner: 'home', about: 'home' };
   document.querySelectorAll('.mobnav a').forEach(a => a.classList.toggle('on', a.dataset.sec === (map[page] || 'home')));
 }
 /* on a phone the page intro + side panel fill the first screen — fold them so the lesson starts at the top */
@@ -3862,7 +4421,7 @@ function renderHome() {
         <a class="btn primary" href="${curIdx >= 0 ? items[curIdx].href : '#grammar'}">${curIdx >= 0 ? 'Continue: ' + esc(items[curIdx].kind) : 'Level ' + lv.id + ' complete'} <span class="arr">→</span></a>
         <a class="btn" href="#hunt">Play Word Hunt <span class="arr">→</span></a>
       </div>
-      <p class="why">“Hablemos” means “let's talk”. <a href="#about">About the app and its cast →</a></p>
+      <p class="why">“Hablemos” means “let's talk”. <a href="#about">About the app and its cast →</a>${(S.xp || 0) < 40 && !S.placed ? ' · <a href="#placement">Not a beginner? Take the placement test →</a>' : ''}</p>
     </div>
     <div class="stage">
       <span class="blob"></span>
@@ -3893,14 +4452,14 @@ function renderHome() {
 
   <section class="hsec">
     <div class="hhead"><div><span class="eyebrow">Learn</span><h2>Pick a section</h2><p>Each one follows the level you choose here.</p></div>
-      <div class="levelrow">${LEVELS.map(l => `<button type="button" class="${l.id === lv.id ? 'on' : ''}" data-level="${l.id}" title="${esc(l.grade)}"><i class="${levelProgress(l.id) >= 100 ? 'full' : ''}"></i>${l.id} · ${esc(l.name)}</button>`).join('')}</div>
+      <div class="levelrow">${LEVELS.map(l => `<button type="button" class="${l.id === lv.id ? 'on' : ''} ${levelUnlocked(l.id) ? '' : 'locked'}" data-level="${l.id}" title="${levelUnlocked(l.id) ? esc(l.grade) : 'Pass the level ' + (l.id - 1) + ' checkpoint to open this'}"><i class="${levelPassed(l.id) || levelProgress(l.id) >= 100 ? 'full' : ''}"></i>${levelUnlocked(l.id) ? '' : '○ '}${l.id} · ${esc(l.name)}</button>`).join('')}</div>
     </div>
     <div class="hbody cards5">
       <a class="lcard t-pink" href="#grammar"><span class="glyph">¿?</span>${mascot('nopalito', 72)}<h3>Grammar</h3><p>Short rules, then a few exercises.</p><span class="foot"><span>${(GRAMMAR[lv.id] || []).filter(l => S.done[l.id]).length}/${(GRAMMAR[lv.id] || []).length} done</span><span>→</span></span></a>
       <a class="lcard t-pink2" href="#speaking"><span class="glyph">¡!</span>${mascot('lola', 72)}<h3>Speaking</h3><p>Phrases, dialogues, listen &amp; type.</p><span class="foot"><span>${(SPEAKING[lv.id] || []).length} phrases</span><span>→</span></span></a>
       <a class="lcard t-sage" href="#reading"><span class="glyph">Aa</span>${mascot('nube', 72)}<h3>Reading</h3><p>Passages read aloud, tap any word.</p><span class="foot"><span>${(READING[lv.id] || []).filter(r => r.qs.length).length} passages</span><span>→</span></span></a>
       <a class="lcard t-pink3" href="#hunt"><span class="glyph">ñ</span>${mascot('mota', 72)}<h3>Word Hunt</h3><p>Find the word, learn its meaning.</p><span class="foot"><span>${(HUNTS[lv.id] || []).length} puzzles</span><span>→</span></span></a>
-      <a class="lcard t-sand" href="#review"><span class="glyph">♥</span>${mascot('nube', 72)}<h3>Review</h3><p>Flashcards and the mistakes you owe.</p><span class="foot"><span>${due} due</span><span>→</span></span></a>
+      <a class="lcard t-sand" href="#review"><span class="glyph">♥</span>${mascot('nube', 72)}<h3>Practice</h3><p>Words, grammar, verbs and translation.</p><span class="foot"><span>${due + dueConcepts().length} due</span><span>→</span></span></a>
       <a class="lcard t-pink2" href="#casita"><span class="glyph">⌂</span>${companion(buddy().id, 72)}<h3>Casita</h3><p>Your friends, their outfits and the shop.</p><span class="foot"><span>${COIN} ${S.coins || 0}${chestReady('daily') || chestReady('weekly') ? ' · chest ready' : ''}</span><span>→</span></span></a>
     </div>
   </section>
@@ -3917,6 +4476,7 @@ function renderHome() {
     </div>
   </section>
 
+  ${curIdx < 0 && items.length && !levelPassed(lv.id) ? `<section class="hsec"><div class="hbody"><a class="cpbanner" href="#checkpoint/${lv.id}"><span class="ic">✓</span><span><b>Level ${lv.id} checkpoint is ready</b><br><span class="small">You have finished everything in ${esc(lv.name)}. Pass it to open level ${lv.id + 1}.</span></span><span class="arr">→</span></a></div></section>` : ''}
   <section class="hsec">
     <div class="hhead"><div><span class="eyebrow">Your path</span><h2>${curIdx >= 0 ? 'Up next' : 'Level ' + lv.id + ' complete'}</h2><p>${curIdx >= 0 ? 'One step at a time — lessons first, then talking, then reading, then the games.' : 'Pick the next level above, or replay anything below.'}</p></div><span class="mono muted">${items.filter(i => i.done).length}/${items.length} done</span></div>
     <div class="hbody">
@@ -3956,7 +4516,8 @@ function renderAbout() {
       ${LEVELS.map(l => `<p><b>${l.id} · ${esc(l.name)}</b> — ${esc(l.grade)} (${esc(l.cefr)}). ${esc(l.blurb)}</p>`).join('')}
       <h2 style="margin-top:20px">What's in, what's next</h2>
       <p><b>In now:</b> levels 1–3 filled in (previews for 4–6); a ${DICT.length}-word dictionary; streak, XP and daily goal; a unit path; spaced-repetition flashcards; a mistakes queue; dialogues; listen-and-type; sentence building; a Latin-American Spanish voice with play and pause; and the <a href="#casita">Casita</a> — companions that grow, ${ITEMS.length} cosmetics, ${DECOR.length} pieces of decor and daily chests, all paid for with the XP you earn.</p>
-      <p><b>Next:</b> levels 4–6 filled in, verb drills, stories with audio, a “hearts” mode for quizzes.</p>
+      <p><b>Also in now:</b> a <a href="#review/verbs">verb trainer</a> covering ${TENSES.length} tenses across ${VERBS.length} verbs (including Guatemalan <em>vos</em>), typed <a href="#review/translate">translation drills</a> in both directions, finished lessons that come back on the same spaced schedule as words, end-of-level <a href="#checkpoint/${S.level}">checkpoints</a>, a <a href="#placement">placement test</a>, and mistakes that tell you <em>why</em> they were wrong — gender, tense, ser vs estar and ten other causes.</p>
+      <p><b>Next:</b> levels 4–6 filled in, illustrated stories with audio, a “hearts” mode for quizzes, streak repair and weekly quests.</p>
       <p><b>Later:</b> an AI conversation partner, native audio clips, writing correction.</p>
       <p class="small">Progress is saved in this browser, and — if cloud sync is switched on — mirrored to your own Supabase project so the <a href="#owner">Owner</a> page can see it. Built with ♥ for Nat ♥</p>
       <p class="small buildstamp">Version <b>${esc(BUILD.v)}</b> · built ${esc(BUILD.date)}<br>If this copy is on a web address, compare this line with the one in the Claude version to check it is up to date.</p>
@@ -4001,6 +4562,20 @@ function exerciseHTML(ex, qi) {
   if (ex.t === 'blank') return `<div class="q blank" data-q="${qi}"><div class="prompt">${qi + 1}. Fill the blank</div><div class="sentence">${esc(ex.s).replace('___', '<span class="slot" data-slot>___</span>')}</div><div class="chips">${shuffle(ex.o).map(o => `<button type="button" data-o="${esc(o)}">${esc(o)}</button>`).join('')}</div><div class="why" hidden>${esc(ex.why)}</div></div>`;
   return `<div class="q" data-q="${qi}"><div class="prompt">${qi + 1}. ${esc(ex.q)}</div><div class="opts">${ex.o.map((o, oi) => `<button type="button" data-o="${oi}">${esc(o)}</button>`).join('')}</div><div class="why" hidden>${esc(ex.why)}</div></div>`;
 }
+/* name the cause of a wrong answer, remember it, and append the tip to the explanation */
+function tagSlip(got, want, whyEl) {
+  try {
+    const d = diagnose(String(got || ''), String(want || ''));
+    if (!d.cause) return null;
+    noteCause(d.cause, String(want).slice(0, 40));
+    if (whyEl) whyEl.insertAdjacentHTML('beforeend', causeNoteHTML(d.cause));
+    return d.cause;
+  } catch (e) { return null; }
+}
+function causeNoteHTML(cause) {
+  const c = CAUSES[cause]; if (!c) return '';
+  return `<span class="causenote"><b>${esc(c.t)}</b> ${esc(c.tip)}</span>`;
+}
 /* wires one exercise element; calls done(correct:boolean) once */
 function wireExercise(qEl, ex, done) {
   const why = qEl.querySelector('.why');
@@ -4017,6 +4592,7 @@ function wireExercise(qEl, ex, done) {
       if (qEl.classList.contains('locked')) return;
       const built = picked.map(i => tiles[i]).join(' ');
       const ok = norm(built) === norm(ex.es);
+      if (!ok) tagSlip(built, ex.es, why);
       qEl.classList.add('locked', ok ? 'right' : 'wrong');
       why.hidden = false; why.textContent = (ok ? '¡Correcto! ' : `Correct answer: “${ex.es}”. `) + ex.why;
       qEl.querySelector('[data-act="say"]').hidden = false; qEl.querySelector('[data-act="check"]').disabled = true;
@@ -4027,7 +4603,7 @@ function wireExercise(qEl, ex, done) {
       if (qEl.classList.contains('locked')) return; qEl.classList.add('locked');
       const ok = b.dataset.o === ex.a;
       qEl.querySelectorAll('.chips button').forEach(x => { x.disabled = true; if (x.dataset.o === ex.a) x.classList.add('right'); });
-      if (!ok) b.classList.add('wrong');
+      if (!ok) { b.classList.add('wrong'); tagSlip(b.dataset.o, ex.a, why); }
       qEl.querySelector('[data-slot]').textContent = ex.a; why.hidden = false; done(ok);
     }));
   } else {
@@ -4035,7 +4611,7 @@ function wireExercise(qEl, ex, done) {
       if (qEl.classList.contains('locked')) return; qEl.classList.add('locked');
       const oi = Number(b.dataset.o), ok = oi === ex.a;
       qEl.querySelectorAll('.opts button').forEach(x => { x.disabled = true; if (Number(x.dataset.o) === ex.a) x.classList.add('right'); });
-      if (!ok) b.classList.add('wrong');
+      if (!ok) { b.classList.add('wrong'); tagSlip(ex.o[oi], ex.o[ex.a], why); }
       why.hidden = false; done(ok);
     }));
   }
@@ -4471,22 +5047,32 @@ function wireHuntInput() {
 const BOX_DAYS = [1, 2, 4, 7, 15, 30];
 function dueCards() { return Object.keys(S.learned).filter(es => DICT_BY_ES[es]).map(es => { if (!S.cards[es]) S.cards[es] = { box: 0, due: todayStr() }; return es; }).filter(es => S.cards[es].due <= todayStr()); }
 function renderReview(id) {
-  crumb([{ t: 'Review' }]);
+  crumb([{ t: 'Practice' }]);
   const due = dueCards(); const total = Object.keys(S.learned).filter(es => DICT_BY_ES[es]).length;
-  const tab = id === 'mistakes' ? 'mistakes' : 'cards';
+  const TABS = ['cards', 'grammar', 'verbs', 'translate', 'mistakes'];
+  const tab = TABS.indexOf(id) >= 0 ? id : 'cards';
+  const gdue = dueConcepts();
   const weak = {}; S.mistakes.forEach(m => { weak[m.lessonId] = (weak[m.lessonId] || 0) + 1; });
   const weakList = Object.entries(weak).sort((a, b) => b[1] - a[1]).map(([lid, n]) => { const l = Object.values(GRAMMAR).flat().find(x => x.id === lid); const r = Object.values(READING).flat().find(x => x.id === lid); return { lid, n, t: l ? l.title : r ? r.title : lid, href: l ? '#grammar/' + lid : '#reading/' + lid }; });
   app.innerHTML = `
   <section class="pagehead">
-    <div class="title"><span class="label">05 · Review</span><h1>Review</h1><p>Words come back on a spaced schedule — 1, 2, 4, 7, 15 then 30 days apart — until you really know them. Questions you missed wait here until you get them right.</p></div>
-    <div class="side pink"><span class="label">Due today</span><div class="es" style="font-size:2rem">${due.length}<span class="muted" style="font-size:1rem">/${total} words</span></div><span class="small muted">${S.mistakes.length} mistake${S.mistakes.length === 1 ? '' : 's'} to fix</span></div>
+    <div class="title"><span class="label">05 · Practice</span><h1>Practice</h1><p>Everything comes back on a spaced schedule — 1, 2, 4, 7, 15 then 30 days apart — until you really know it. Words, whole lessons, verb endings, and the sentences you have to build yourself.</p></div>
+    <div class="side pink"><span class="label">Due today</span><div class="es" style="font-size:2rem">${due.length + gdue.length}</div><span class="small muted">${due.length} word${due.length === 1 ? '' : 's'} · ${gdue.length} lesson${gdue.length === 1 ? '' : 's'} · ${S.mistakes.length} mistake${S.mistakes.length === 1 ? '' : 's'}</span></div>
   </section>
-  <nav class="tabs"><a href="#review" class="${tab === 'cards' ? 'on' : ''}">Flashcards${due.length ? ` (${due.length})` : ''}</a><a href="#review/mistakes" class="${tab === 'mistakes' ? 'on' : ''}">Mistakes${S.mistakes.length ? ` (${S.mistakes.length})` : ''}</a></nav>
+  <nav class="tabs">
+    <a href="#review" class="${tab === 'cards' ? 'on' : ''}">Words${due.length ? ` (${due.length})` : ''}</a>
+    <a href="#review/grammar" class="${tab === 'grammar' ? 'on' : ''}">Grammar${gdue.length ? ` (${gdue.length})` : ''}</a>
+    <a href="#review/verbs" class="${tab === 'verbs' ? 'on' : ''}">Verbs</a>
+    <a href="#review/translate" class="${tab === 'translate' ? 'on' : ''}">Translate</a>
+    <a href="#review/mistakes" class="${tab === 'mistakes' ? 'on' : ''}">Mistakes${S.mistakes.length ? ` (${S.mistakes.length})` : ''}</a>
+  </nav>
   <section class="review-grid">
     <div id="reviewMain"></div>
     <div>
-      <span class="label">Target weak areas</span>
-      ${weakList.length ? `<div class="weak">${weakList.map(w => `<a href="${w.href}"><span>${esc(w.t)}</span><span class="mono muted">${w.n} miss${w.n === 1 ? '' : 'es'}</span></a>`).join('')}</div>` : '<p class="muted small">No weak spots yet. Misses in Grammar and Reading will show up here so you can revisit the lesson.</p>'}
+      <span class="label">What trips you up</span>
+      ${topCauses(5).length ? `<div class="weak">${topCauses(5).map(c => `<a href="#review/mistakes" title="${esc(c.tip)}"><span>${esc(c.t)}</span><span class="mono muted">${c.n}\u00d7</span></a>`).join('')}</div>` : '<p class="muted small">Nothing repeated yet. Once a mistake happens twice, its cause shows up here.</p>'}
+      <span class="label" style="margin-top:10px">Lessons to revisit</span>
+      ${weakList.length ? `<div class="weak">${weakList.slice(0, 5).map(w => `<a href="${w.href}"><span>${esc(w.t)}</span><span class="mono muted">${w.n} miss${w.n === 1 ? '' : 'es'}</span></a>`).join('')}</div>` : '<p class="muted small">No weak spots yet. Misses in Grammar and Reading show up here so you can revisit the lesson.</p>'}
       <span class="label" style="margin-top:10px">Your words by strength</span>
       <div class="boxes" title="Boxes 1–6: how well you know your words">${BOX_DAYS.map((d, i) => `<i class="${Object.values(S.cards).some(c => c.box === i) ? 'on' : ''}" title="${d}-day interval"></i>`).join('')}</div>
       <p class="muted small">${[0, 1, 2, 3, 4, 5].map(i => `${Object.entries(S.cards).filter(([es, c]) => S.learned[es] && c.box === i).length} in box ${i + 1}`).join(' · ')}</p>
@@ -4494,7 +5080,11 @@ function renderReview(id) {
       <details class="tipsbox" open><summary>How review works</summary><ul>${REVIEW_TIPS.map(t => `<li>${esc(t)}</li>`).join('')}</ul></details>
     </div>
   </section>`;
-  if (tab === 'cards') renderCards(due); else renderMistakes();
+  if (tab === 'cards') renderCards(due);
+  else if (tab === 'grammar') renderConceptCards(gdue);
+  else if (tab === 'verbs') renderVerbs();
+  else if (tab === 'translate') renderTranslate();
+  else renderMistakes();
 }
 function renderCards(due) {
   const main = $('#reviewMain');
@@ -4519,10 +5109,358 @@ function renderCards(due) {
 }
 function renderMistakes() {
   const main = $('#reviewMain');
-  if (!S.mistakes.length) { main.innerHTML = `<span class="label">Mistakes</span><div class="card flipped" style="cursor:default"><div class="cw">All clear</div><div class="cdef">Questions you get wrong in Grammar and Reading land here. Answer them right once and they leave.</div></div>`; return; }
+  const causes = topCauses(6);
+  const causeBoard = causes.length ? `<div class="causeboard"><span class="label">Why you have been slipping</span>${causes.map(c => `<details class="causerow"><summary><span>${esc(c.t)}</span><span class="mono muted">${c.n}×</span></summary><p class="small">${esc(c.tip)}</p>${c.eg && c.eg.length ? `<p class="small muted">Came up in: ${c.eg.map(e => '“' + esc(e) + '”').join(', ')}</p>` : ''}</details>`).join('')}</div>` : '';
+  if (!S.mistakes.length) { main.innerHTML = `<span class="label">Mistakes</span><div class="card flipped" style="cursor:default"><div class="cw">All clear</div><div class="cdef">Questions you get wrong anywhere in the app land here, tagged with the reason. Answer one right and it leaves.</div></div>${causeBoard}`; return; }
   const m = S.mistakes[0];
-  main.innerHTML = `<div class="row between"><span class="label">Mistakes · ${S.mistakes.length} left</span><span class="mono muted">from ${esc(m.lessonId)}</span></div><div class="quiz" id="mq">${exerciseHTML(m.ex, 0)}<div class="qfoot"><span class="muted small">Right answer = it leaves the queue (+${XP.mistake} XP). Wrong = it goes to the back.</span><button type="button" class="btn sm rose" id="mNext" hidden>Next →</button></div></div>`;
+  main.innerHTML = `<div class="row between"><span class="label">Mistakes · ${S.mistakes.length} left</span><span class="mono muted">from ${esc(m.lessonId)}</span></div><div class="quiz" id="mq">${exerciseHTML(m.ex, 0)}<div class="qfoot"><span class="muted small">Right answer = it leaves the queue (+${XP.mistake} XP). Wrong = it goes to the back.</span><button type="button" class="btn sm rose" id="mNext" hidden>Next →</button></div></div>${causeBoard}`;
   wireExercise($('#mq .q'), m.ex, (ok) => { if (ok) { clearMistake(m.key); addXP(XP.mistake, 'mistake fixed'); } else { S.mistakes.push(S.mistakes.shift()); save(); } const b = $('#mNext'); b.hidden = false; b.addEventListener('click', () => renderReview('mistakes')); });
+}
+
+
+/* =========================== PRACTICE: GRAMMAR CONCEPT CARDS =========================== */
+function renderConceptCards(dueList) {
+  const main = $('#reviewMain');
+  initConcepts();
+  const scheduled = Object.keys(S.gcards).length;
+  const queue = dueList.slice(0, 12);
+  let i = 0, right = 0, asked = 0;
+  const paint = () => {
+    if (i >= queue.length) {
+      main.innerHTML = `<span class="label">Grammar review</span>
+        <div class="card flipped" style="cursor:default"><div class="cw">${asked ? '¡Listo!' : scheduled ? 'Nothing due' : 'Not started'}</div>
+        <div class="cdef">${asked ? `${right} of ${asked} right. The ones you missed come back tomorrow; the rest wait longer each time.`
+          : scheduled ? 'Every lesson you have finished is scheduled for later. Come back tomorrow.'
+          : 'Finish a lesson in Grammar and it starts coming back here on a schedule, so rules stick instead of fading.'}</div></div>
+        <div class="btn-row"><a class="btn rose" href="#grammar">Grammar →</a><a class="btn ghost" href="#review">Words →</a></div>`;
+      return;
+    }
+    const id = queue[i], l = lessonById(id);
+    const exs = lessonExercises(l) || [];
+    if (!exs.length) { i++; paint(); return; }
+    const ex = exs[Math.floor(Math.random() * exs.length)];
+    const box = (S.gcards[id] || {}).box || 0;
+    main.innerHTML = `<div class="row between"><span class="label">Grammar · ${i + 1} of ${queue.length}</span><span class="mono muted">box ${box + 1}</span></div>
+      <div class="quiz" id="gq"><div class="qhead"><span class="label">From “${esc(l.title)}”</span><a class="small" href="#grammar/${esc(id)}">Re-read the lesson →</a></div>
+      ${exerciseHTML(ex, 0)}
+      <div class="qfoot"><span class="muted small">Right = this lesson waits longer before returning. Wrong = tomorrow, and it joins your mistakes.</span><button type="button" class="btn sm rose" id="gNext" hidden>Next →</button></div></div>`;
+    wireExercise($('#gq .q'), ex, (ok) => {
+      asked++; if (ok) right++;
+      scheduleConcept(id, ok);
+      if (!ok) { recordMistake(id, 0, ex); }
+      if (ok) addXP(XP.card, 'grammar recalled'); else save();
+      logAct('gramcard', l.title, { s: ok ? 100 : 0 });
+      const b = $('#gNext'); b.hidden = false; b.addEventListener('click', () => { i++; paint(); });
+    });
+  };
+  paint();
+}
+
+/* =========================== PRACTICE: VERB TRAINER =========================== */
+const VERB_SETS = [
+  { k: 'core', t: 'The essential ones', pick: (vs) => vs.filter(v => (v.tags || []).includes('core')) },
+  { k: 'reg', t: 'Regular', pick: (vs) => vs.filter(v => (v.tags || []).includes('reg')) },
+  { k: 'stem', t: 'Stem-changing', pick: (vs) => vs.filter(v => (v.tags || []).includes('stem')) },
+  { k: 'irr', t: 'Irregular', pick: (vs) => vs.filter(v => (v.tags || []).includes('irr')) },
+  { k: 'weak', t: 'The ones I miss', pick: (vs) => { const w = Object.keys(S.vstats || {}).filter(k => { const st = S.vstats[k]; return st.n >= 2 && st.ok / st.n < 0.7; }).map(k => k.split('|')[0]); return vs.filter(v => w.includes(v.inf)); } },
+  { k: 'all', t: 'Everything', pick: (vs) => vs },
+];
+function vkey(inf, tense, person) { return inf + '|' + tense + '|' + person; }
+function noteVerb(inf, tense, person, ok) {
+  if (!S.vstats) S.vstats = {};
+  const k = vkey(inf, tense, person);
+  const st = S.vstats[k] || { n: 0, ok: 0 };
+  st.n++; if (ok) st.ok++;
+  S.vstats[k] = st;
+}
+function verbAccuracy() {
+  const all = Object.values(S.vstats || {});
+  const n = all.reduce((a, b) => a + b.n, 0), ok = all.reduce((a, b) => a + b.ok, 0);
+  return { n, pct: n ? Math.round(ok / n * 100) : null };
+}
+function renderVerbs() {
+  const main = $('#reviewMain');
+  const lv = S.level;
+  const tenses = tensesForLevel(lv);
+  if (!S.verbPrefs) S.verbPrefs = { tense: 'pres', set: 'core', mode: 'drill' };
+  if (!tenses.some(t => t.k === S.verbPrefs.tense)) S.verbPrefs.tense = 'pres';
+  const T = TENSE_BY_K[S.verbPrefs.tense];
+  const setDef = VERB_SETS.find(s => s.k === S.verbPrefs.set) || VERB_SETS[0];
+  let pool = setDef.pick(verbsForLevel(lv));
+  if (!pool.length) pool = verbsForLevel(lv).filter(v => (v.tags || []).includes('core'));
+  const acc = verbAccuracy();
+  main.innerHTML = `
+    <div class="row between"><span class="label">Verb trainer</span><span class="mono muted">${acc.pct == null ? 'no attempts yet' : acc.pct + '% right · ' + acc.n + ' attempts'}</span></div>
+    <div class="vctrl">
+      <label><span class="label">Tense</span><select id="vTense">${tenses.map(t => `<option value="${t.k}" ${t.k === T.k ? 'selected' : ''}>${esc(t.t)} · ${esc(t.en)}</option>`).join('')}</select></label>
+      <label><span class="label">Verbs</span><select id="vSet">${VERB_SETS.map(x => `<option value="${x.k}" ${x.k === setDef.k ? 'selected' : ''}>${esc(x.t)}</option>`).join('')}</select></label>
+      <div class="seg"><button type="button" data-mode="drill" class="${S.verbPrefs.mode === 'drill' ? 'on' : ''}">Drill</button><button type="button" data-mode="table" class="${S.verbPrefs.mode === 'table' ? 'on' : ''}">Tables</button></div>
+    </div>
+    <div class="notice tint"><b>${esc(T.t)}</b> — ${esc(T.blurb)} <span class="mono muted">${esc(T.ex)}</span></div>
+    <div id="vBody"></div>`;
+  $('#vTense').addEventListener('change', e => { S.verbPrefs.tense = e.target.value; save(); renderVerbs(); });
+  $('#vSet').addEventListener('change', e => { S.verbPrefs.set = e.target.value; save(); renderVerbs(); });
+  main.querySelectorAll('[data-mode]').forEach(b => b.addEventListener('click', () => { S.verbPrefs.mode = b.dataset.mode; save(); renderVerbs(); }));
+  if (S.verbPrefs.mode === 'table') paintVerbTables(pool, T);
+  else paintVerbDrill(pool, T);
+}
+function paintVerbTables(pool, T) {
+  const body = $('#vBody');
+  body.innerHTML = `<div class="vtables">${pool.slice(0, 14).map(v => {
+    const rows = conjTable(v, T.k);
+    return `<div class="vtable">
+      <div class="vth"><b>${esc(v.inf)}</b><span class="muted small">${esc(v.en)}</span><button type="button" class="btn sm ghost" data-sayv="${esc(rows.map(r => r.form).join('. '))}">◉</button></div>
+      <table><tbody>${rows.map(r => `<tr><td class="p">${esc(r.person.t)}</td><td class="f ${isIrregularAt(v, T.k, r.k) ? 'odd' : ''}">${esc(r.form)}</td></tr>`).join('')}</tbody></table>
+      ${(v.tags || []).includes('stem') && v.stem ? `<p class="small muted">Stem change ${esc(v.stem[0])} → ${esc(v.stem[1])} — never in <b>nosotros</b>, and never in <b>vos</b>.</p>` : ''}
+    </div>`;
+  }).join('')}</div>
+  <p class="small muted">Highlighted forms are the ones that break the regular pattern — those are the ones worth memorising.</p>`;
+  body.querySelectorAll('[data-sayv]').forEach(b => b.addEventListener('click', () => speak(b.dataset.sayv, true)));
+}
+function paintVerbDrill(pool, T) {
+  const body = $('#vBody');
+  const persons = T.k === 'imp' ? IMP_PERSONS : PK;
+  let asked = 0, right = 0, streak = 0, cur = null;
+  const next = () => {
+    const v = pool[Math.floor(Math.random() * pool.length)];
+    const pk = persons[Math.floor(Math.random() * persons.length)];
+    const answer = conj(v, T.k, pk);
+    if (!answer) return next();
+    cur = { v, pk, answer, person: PERSONS.find(p => p.k === pk) };
+    body.innerHTML = `
+      <div class="vdrill">
+        <div class="vq">
+          <span class="label">${esc(T.t)}</span>
+          <div class="vinf">${esc(v.inf)}<span class="muted">${esc(v.en)}</span></div>
+          <div class="vperson">${esc(cur.person.t)}<span class="muted small">${esc(cur.person.en)}</span></div>
+        </div>
+        <div class="vin">
+          <input type="text" id="vAns" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="${T.k === 'perf' ? 'two words' : 'type the form'}" aria-label="Your answer">
+          <button type="button" class="btn rose" id="vGo">Check</button>
+        </div>
+        <div class="vhint"><button type="button" class="btn sm ghost" id="vHint">Show me</button><span class="mono muted" id="vScore">${asked ? right + '/' + asked + (streak > 1 ? ' · ' + streak + ' in a row' : '') : 'accents optional'}</span></div>
+        <div id="vRes"></div>
+      </div>`;
+    const inp = $('#vAns'); inp.focus();
+    const check = () => {
+      const typed = inp.value.trim();
+      if (!typed) return;
+      const d = diagnose(typed, cur.answer);
+      const ok = d.clean || d.closeEnough;
+      asked++; if (ok) { right++; streak++; } else streak = 0;
+      noteVerb(v.inf, T.k, pk, ok);
+      if (!ok) noteCause(d.cause === 'spelling' || d.cause === 'vocab' ? 'verbform' : d.cause, v.inf + ' · ' + cur.person.t);
+      logAct('verb', v.inf + ' ' + T.t + ' (' + cur.person.t + ')', { s: ok ? 100 : 0 });
+      if (ok) addXP(XP.card, 'verb form'); else save();
+      $('#vRes').innerHTML = `<div class="vres ${ok ? 'good' : 'bad'}">
+        <b>${ok ? (d.closeEnough && !d.clean ? '¡Casi perfecto!' : '¡Correcto!') : 'Not quite'}</b>
+        <div class="vans">${esc(cur.person.t)} <b>${esc(cur.answer)}</b>${isIrregularAt(v, T.k, pk) ? ' <span class="pill">irregular</span>' : ''}</div>
+        ${d.closeEnough && !d.clean ? '<span class="small muted">The accent matters — it decides which syllable is stressed.</span>' : ''}
+        ${!ok ? `<span class="small muted">You wrote “${esc(typed)}”.</span>${causeNoteHTML(d.cause === 'spelling' || d.cause === 'vocab' ? 'verbform' : d.cause)}` : ''}
+        <div class="btn-row"><button type="button" class="btn sm ghost" id="vSay">◉ Hear it</button><button type="button" class="btn sm rose" id="vNext">Next →</button></div>
+      </div>`;
+      $('#vSay').addEventListener('click', () => speak(cur.person.t + ' ' + cur.answer, true));
+      $('#vNext').addEventListener('click', next);
+      $('#vNext').focus();
+      inp.disabled = true; $('#vGo').disabled = true; $('#vHint').disabled = true;
+    };
+    $('#vGo').addEventListener('click', check);
+    inp.addEventListener('keydown', e => { if (e.key === 'Enter') check(); });
+    $('#vHint').addEventListener('click', () => {
+      noteVerb(v.inf, T.k, pk, false); save();
+      $('#vRes').innerHTML = `<div class="vres"><div class="vans">${esc(cur.person.t)} <b>${esc(cur.answer)}</b></div><div class="btn-row"><button type="button" class="btn sm ghost" id="vSay">◉ Hear it</button><button type="button" class="btn sm rose" id="vNext">Next →</button></div></div>`;
+      $('#vSay').addEventListener('click', () => speak(cur.person.t + ' ' + cur.answer, true));
+      $('#vNext').addEventListener('click', next);
+      inp.disabled = true; $('#vGo').disabled = true;
+    });
+  };
+  next();
+}
+
+/* =========================== PRACTICE: TYPED TRANSLATION =========================== */
+function renderTranslate() {
+  const main = $('#reviewMain');
+  if (!S.transDir) S.transDir = 'es';
+  const dir = S.transDir;
+  const bank = transForLevel(S.level, dir);
+  let asked = 0, right = 0, cur = null;
+  main.innerHTML = `
+    <div class="row between"><span class="label">Build it yourself</span>
+      <div class="seg"><button type="button" data-dir="es" class="${dir === 'es' ? 'on' : ''}">EN → ES</button><button type="button" data-dir="en" class="${dir === 'en' ? 'on' : ''}">ES → EN</button></div>
+    </div>
+    <p class="small muted">Typing it out is what makes it stick — recognising the right answer in a list is much easier than producing it. Accents are optional here; you will be told when one is missing.</p>
+    <div id="tBody"></div>`;
+  main.querySelectorAll('[data-dir]').forEach(b => b.addEventListener('click', () => { S.transDir = b.dataset.dir; save(); renderTranslate(); }));
+  const body = $('#tBody');
+  const next = () => {
+    cur = bank[Math.floor(Math.random() * bank.length)];
+    const prompt = dir === 'es' ? cur.en : cur.es;
+    const target = dir === 'es' ? cur.es : cur.en;
+    body.innerHTML = `
+      <div class="tdrill">
+        <span class="label">${dir === 'es' ? 'Say this in Spanish' : 'What does this mean?'}</span>
+        <div class="tprompt">${esc(prompt)}${dir === 'en' ? `<button type="button" class="btn sm ghost" id="tSay">◉</button>` : ''}</div>
+        <textarea id="tAns" rows="2" autocomplete="off" autocapitalize="sentences" spellcheck="false" placeholder="${dir === 'es' ? 'Escribe en español…' : 'Type it in English…'}" aria-label="Your translation"></textarea>
+        <div class="btn-row"><button type="button" class="btn rose" id="tGo">Check</button><button type="button" class="btn ghost" id="tSkip">Show me</button><span class="mono muted" style="margin-left:auto">${asked ? right + '/' + asked : ''}</span></div>
+        <div id="tRes"></div>
+      </div>`;
+    const say = $('#tSay'); if (say) say.addEventListener('click', () => speak(cur.es));
+    const ta = $('#tAns'); ta.focus();
+    const grade = () => {
+      const typed = ta.value.trim();
+      if (!typed) return;
+      const g = gradeTranslation(typed, target);
+      asked++; if (g.ok) right++;
+      if (!g.ok && g.cause) noteCause(g.cause, target.slice(0, 40));
+      logAct('translate', target.slice(0, 34), { s: g.pct });
+      if (g.ok) addXP(XP.phrase, 'translated'); else save();
+      const label = { perfect: '¡Perfecto!', accents: 'Right — just the accents', almost: '¡Casi! One word out', close: 'Close, but not there', no: 'Not this time' }[g.verdict];
+      body.querySelector('#tRes').innerHTML = `
+        <div class="tres ${g.ok ? 'good' : g.verdict === 'almost' ? 'mid' : 'bad'}">
+          <b>${label}</b>
+          <div class="tmarks">${g.marks.map(m => `<span class="tm ${m.ok ? (m.accent ? 'acc' : 'ok') : m.missing ? 'miss' : 'bad'}" ${m.want && m.want !== m.w ? `title="should be: ${esc(m.want)}"` : ''}>${esc(m.w)}</span>`).join('')}</div>
+          <div class="tanswer"><span class="label">The answer</span><div class="es">${esc(target)}</div></div>
+          ${!g.ok && g.cause ? causeNoteHTML(g.cause) : ''}
+          <div class="btn-row"><button type="button" class="btn sm ghost" id="tHear">◉ Hear the Spanish</button><button type="button" class="btn sm rose" id="tNext">Next →</button></div>
+        </div>`;
+      $('#tHear').addEventListener('click', () => speak(cur.es, true));
+      $('#tNext').addEventListener('click', next);
+      $('#tNext').focus();
+      ta.disabled = true; $('#tGo').disabled = true; $('#tSkip').disabled = true;
+    };
+    $('#tGo').addEventListener('click', grade);
+    ta.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); grade(); } });
+    $('#tSkip').addEventListener('click', () => { ta.value = target; grade(); });
+  };
+  next();
+}
+
+/* =========================== CHECKPOINTS AND PLACEMENT =========================== */
+function checkpointQuestionHTML(q, i) {
+  if (q.kind === 'ex') return `<div class="cpq" data-i="${i}">${exerciseHTML(q.ex, i)}</div>`;
+  if (q.kind === 'trans') return `<div class="cpq" data-i="${i}"><div class="q"><div class="prompt">${i + 1}. Say this in Spanish: <span class="muted" style="font-weight:400">“${esc(q.en)}”</span></div><input type="text" class="cpin" autocomplete="off" spellcheck="false" aria-label="Your answer"><div class="why" hidden></div></div></div>`;
+  if (q.kind === 'listen') return `<div class="cpq" data-i="${i}"><div class="q"><div class="prompt">${i + 1}. Type what you hear <button type="button" class="btn sm ghost cpsay">◉ Play</button></div><input type="text" class="cpin" autocomplete="off" spellcheck="false" aria-label="Your answer"><div class="why" hidden></div></div></div>`;
+  const p = PERSONS.find(x => x.k === q.person);
+  return `<div class="cpq" data-i="${i}"><div class="q"><div class="prompt">${i + 1}. <b>${esc(q.inf)}</b> <span class="muted" style="font-weight:400">(${esc(q.en)})</span> — ${esc(TENSE_BY_K[q.tense].t)}, <b>${esc(p.t)}</b></div><input type="text" class="cpin" autocomplete="off" spellcheck="false" aria-label="Your answer"><div class="why" hidden></div></div></div>`;
+}
+function gradeCheckpointQ(el, q) {
+  /* returns true/false, and shows the answer inline */
+  const why = el.querySelector('.why');
+  if (q.kind === 'ex') return null; /* wired separately */
+  const inp = el.querySelector('.cpin');
+  const target = q.kind === 'trans' ? q.es : q.kind === 'listen' ? q.es : q.answer;
+  const d = diagnose(inp.value.trim(), target);
+  const ok = d.clean || d.closeEnough;
+  inp.disabled = true;
+  el.querySelector('.q').classList.add('locked', ok ? 'right' : 'wrong');
+  why.hidden = false;
+  why.innerHTML = ok ? `¡Correcto! <b>${esc(target)}</b>` : `Answer: <b>${esc(target)}</b>` + causeNoteHTML(d.cause);
+  if (!ok && d.cause) noteCause(d.cause, target.slice(0, 40));
+  return ok;
+}
+function renderCheckpoint(lvRaw) {
+  initChecks();
+  const lv = Math.max(1, Math.min(6, Number(lvRaw) || S.level));
+  const L = LEVELS.find(x => x.id === lv) || LEVELS[0];
+  crumb([{ t: 'Checkpoint' }]);
+  const prev = S.checks[lv];
+  const qs = buildCheckpoint(lv);
+  app.innerHTML = `
+  <section class="pagehead">
+    <div class="title"><span class="label">Checkpoint · Level ${lv}</span><h1>${esc(L.name)} checkpoint</h1><p>${qs.length} questions drawn from everything in this level — grammar, translation, listening and verbs. ${CHECK_PASS}% passes and opens level ${lv + 1}. You can retake it as often as you like.</p></div>
+    <div class="side tint">
+      <span class="label">By the end of this level you can</span>
+      ${L.cando ? `<ul class="cando">${L.cando.map(c => `<li>${esc(c)}</li>`).join('')}</ul>` : '<p class="small muted">Show that the level has stuck.</p>'}
+      ${prev ? `<p class="small muted">Best so far: <b>${prev.best}%</b>${prev.passed ? ' — passed ✓' : ''}</p>` : ''}
+    </div>
+  </section>
+  <div class="checkpoint">
+    <div class="quiz" id="cpQuiz">${qs.map((q, i) => checkpointQuestionHTML(q, i)).join('')}</div>
+    <div class="qfoot"><span class="muted small" id="cpProgress">0 of ${qs.length} answered</span><button type="button" class="btn rose" id="cpDone">Finish and score</button></div>
+    <div id="cpResult"></div>
+  </div>`;
+  const results = new Array(qs.length).fill(null);
+  const bump = () => { $('#cpProgress').textContent = `${results.filter(r => r !== null).length} of ${qs.length} answered`; };
+  qs.forEach((q, i) => {
+    const el = app.querySelector(`.cpq[data-i="${i}"]`);
+    if (q.kind === 'ex') { wireExercise(el.querySelector('.q'), q.ex, (ok) => { results[i] = ok; if (!ok) recordMistake(q.lessonId || ('cp' + lv), i, q.ex); bump(); }); return; }
+    if (q.kind === 'listen') { el.querySelector('.cpsay').addEventListener('click', () => speak(q.es, true)); }
+    const inp = el.querySelector('.cpin');
+    inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); const n = app.querySelector(`.cpq[data-i="${i + 1}"] .cpin`); if (n) n.focus(); } });
+  });
+  $('#cpDone').addEventListener('click', () => {
+    qs.forEach((q, i) => {
+      if (q.kind === 'ex') return;
+      const el = app.querySelector(`.cpq[data-i="${i}"]`);
+      if (el.querySelector('.cpin').disabled) return;
+      results[i] = gradeCheckpointQ(el, q);
+    });
+    qs.forEach((q, i) => { if (q.kind === 'ex' && q.lessonId && S.gcards && S.gcards[q.lessonId] && results[i] === false) scheduleConcept(q.lessonId, false); });
+    const answered = results.filter(r => r !== null).length;
+    const score = Math.round(results.filter(r => r === true).length / qs.length * 100);
+    const passed = score >= CHECK_PASS;
+    const before = S.checks[lv] || { best: 0, passed: false };
+    S.checks[lv] = { best: Math.max(before.best, score), passed: before.passed || passed, at: todayStr() };
+    logAct('checkpoint', 'Level ' + lv, { s: score });
+    save();
+    if (passed && !before.passed) { addXP(60, 'checkpoint passed'); }
+    $('#cpDone').disabled = true;
+    $('#cpResult').innerHTML = `
+      <div class="cpresult ${passed ? 'pass' : 'fail'}">
+        <div class="cpbig">${score}<small>%</small></div>
+        <div>
+          <b>${passed ? '¡Aprobado! Level ' + lv + ' is complete.' : 'Not yet — ' + CHECK_PASS + '% is the pass mark.'}</b>
+          <p class="small muted">${results.filter(r => r === true).length} right out of ${qs.length}${answered < qs.length ? ` (${qs.length - answered} left blank counted as wrong)` : ''}. ${passed ? `Level ${lv + 1} is open. Any lesson questions you missed are waiting in your mistakes queue.` : 'The lesson questions you missed are in your mistakes queue — clear those, then try again.'}</p>
+          <div class="btn-row">${passed && lv < 6 ? `<button type="button" class="btn rose" id="cpGo">Start level ${lv + 1} →</button>` : ''}<a class="btn ghost" href="#review/mistakes">See my mistakes →</a><a class="btn ghost" href="#checkpoint/${lv}">Retake</a></div>
+        </div>
+      </div>`;
+    const go = $('#cpGo'); if (go) go.addEventListener('click', () => { S.level = lv + 1; save(); location.hash = '#home'; });
+    $('#cpResult').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+}
+function renderPlacement() {
+  crumb([{ t: 'Placement' }]);
+  const qs = buildPlacement();
+  app.innerHTML = `
+  <section class="pagehead">
+    <div class="title"><span class="label">Placement</span><h1>Where should you start?</h1><p>${qs.length} questions that get harder as you go. Answer what you can and leave the rest — guessing does not help you. At the end you get a suggested level; you can always change it later.</p></div>
+    <div class="side pink" style="align-items:center">${mascot('nopalito', 110)}</div>
+  </section>
+  <div class="checkpoint">
+    <div class="quiz" id="cpQuiz">${qs.map((q, i) => `<div class="cpq" data-i="${i}"><span class="lvtag">Level ${q.level}</span>${checkpointQuestionHTML(q, i).replace(/^<div class="cpq"[^>]*>/, '').replace(/<\/div>$/, '')}</div>`).join('')}</div>
+    <div class="qfoot"><span class="muted small">Leave anything you do not know.</span><button type="button" class="btn rose" id="cpDone">Score me</button></div>
+    <div id="cpResult"></div>
+  </div>`;
+  const results = new Array(qs.length).fill(null);
+  qs.forEach((q, i) => {
+    const el = app.querySelector(`.cpq[data-i="${i}"]`);
+    if (q.kind === 'ex') { wireExercise(el.querySelector('.q'), q.ex, (ok) => { results[i] = ok; }); return; }
+    if (q.kind === 'listen') { const s = el.querySelector('.cpsay'); if (s) s.addEventListener('click', () => speak(q.es, true)); }
+  });
+  $('#cpDone').addEventListener('click', () => {
+    qs.forEach((q, i) => {
+      if (q.kind === 'ex') return;
+      const el = app.querySelector(`.cpq[data-i="${i}"]`);
+      const inp = el.querySelector('.cpin');
+      if (!inp || inp.disabled) return;
+      results[i] = inp.value.trim() ? gradeCheckpointQ(el, q) : false;
+    });
+    /* highest level where at least half the questions were right */
+    const byLevel = {};
+    qs.forEach((q, i) => { (byLevel[q.level] = byLevel[q.level] || []).push(results[i] === true); });
+    let level = 1;
+    Object.keys(byLevel).map(Number).sort((a, b) => a - b).forEach(lv => {
+      const r = byLevel[lv]; const pct = r.filter(Boolean).length / r.length;
+      if (pct >= 0.5) level = Math.min(6, lv + (pct === 1 ? 1 : 0));
+    });
+    const L = LEVELS.find(x => x.id === level) || LEVELS[0];
+    S.placed = level; S.level = level;
+    logAct('placement', 'Level ' + level);
+    save();
+    $('#cpDone').disabled = true;
+    $('#cpResult').innerHTML = `<div class="cpresult pass"><div class="cpbig">${level}</div><div><b>Start at level ${level} · ${esc(L.name)}</b><p class="small muted">${esc(L.blurb || '')} Everything below it is unlocked too, so you can drop back any time. Your level has been set.</p><div class="btn-row"><a class="btn rose" href="#home">Take me there →</a></div></div></div>`;
+    $('#cpResult').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
 }
 
 /* =========================== CASITA · SHOP · COLLECTION =========================== */
