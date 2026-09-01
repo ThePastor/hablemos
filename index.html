@@ -1,6 +1,12 @@
 <!doctype html><html lang="en"><meta charset="utf-8">
 <title>Hablemos</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Hablemos">
+<meta name="theme-color" content="#FEFAE0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1E1519" media="(prefers-color-scheme: dark)">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap">
 <style>
 /* ---------- Hablemos — visual system (hairline grid, sage/cream ground, pink celebration) ---------- */
@@ -1155,6 +1161,154 @@ img, svg { max-width: 100%; }
   .cprow .cpreset { min-height: 44px; }
 }
 
+/* =========================== v10: APP MODE — phones and iPad (≤1100px) =========================== */
+/* Tuned for iPhone 13 (390), iPhone 17 Pro Max (440) and the 2025 iPad (820 portrait). Later rules win. */
+.topbar .gear { display: none; }
+.topbar .goal .streakm { display: none; }
+.crumbm { display: none; }
+.learnhead { padding: 22px 48px 6px; display: grid; gap: 8px; }
+.learnhead h1 { font-size: clamp(2rem, 6vw, 3rem); letter-spacing: -0.04em; line-height: 1.05; }
+.learnhead .levelrow { margin-top: 8px; }
+.levelrow.big { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; width: 100%; }
+.levelrow.big button { display: grid; justify-items: center; gap: 2px; padding: 10px 4px; border-radius: 14px; font-size: 1.05rem; font-weight: 700; min-height: 60px; }
+.levelrow.big button .ln { font-size: .62rem; font-weight: 500; letter-spacing: .02em; text-transform: none; font-family: var(--font-body); opacity: .8; }
+.levelrow.big button i { display: none; }
+.levelrow.big button.on { background: var(--pink-4); color: var(--pink-ink); border-color: var(--pink-5); }
+.learncards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 16px 48px 24px; border-bottom: 1px solid var(--line); }
+.learncard { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; padding: 16px; border-radius: 18px; text-decoration: none; color: var(--ink); border: 1px solid var(--line); }
+.learncard.t-pink { background: var(--pink-1); } .learncard.t-pink2 { background: var(--pink-2); color: var(--pink-ink); } .learncard.t-sage { background: var(--sage-soft); }
+.learncard b { display: block; font-family: var(--font-display); font-size: 1.2rem; letter-spacing: -0.02em; }
+.learncard span:not(.arr) { font-size: .85rem; opacity: .8; }
+.learncard .arr { font-size: 1.2rem; }
+.settings { padding: 12px 48px 40px; display: grid; gap: 14px; max-width: 720px; }
+.settings > * { min-width: 0; }
+.setcard { min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 16px; display: grid; gap: 10px; }
+.setcard .seg.wide { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; width: 100%; }
+.setcard .seg.wide { min-width: 0; }
+.setcard .seg.wide button { min-width: 0; overflow: hidden; display: grid; gap: 1px; padding: 10px 6px; font-family: var(--font-body); font-size: .95rem; font-weight: 600; text-transform: none; letter-spacing: 0; min-height: 52px; }
+.setcard .seg.wide button small { font-size: .68rem; font-weight: 400; opacity: .75; }
+.setrow { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; min-height: 44px; }
+.setrow input { flex: 1 1 140px; min-width: 0; max-width: 260px; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); font: inherit; }
+.setcard.links { padding: 6px 16px; gap: 0; }
+.setcard.links a { display: flex; justify-content: space-between; align-items: center; padding: 13px 0; border-bottom: 1px solid var(--line-soft); text-decoration: none; color: var(--ink); font-weight: 500; min-height: 48px; }
+.setcard.links a:last-child { border-bottom: 0; }
+
+@media (max-width: 1200px) {
+  /* --- type: one size up everywhere, iOS-sized controls --- */
+  html { font-size: 17px; }
+  body { font-size: 1rem; line-height: 1.5; }
+  .label, .hsec .hhead .eyebrow, .lcard .foot, .mobnav a, .sidefold > summary, .moretog { font-size: .74rem; }
+  .small { font-size: .88rem; }
+  .btn { font-size: .88rem; min-height: 48px; padding: 11px 20px; }
+  .btn.sm { font-size: .8rem; min-height: 42px; padding: 8px 16px; }
+  select, input, textarea, .select { font-size: 17px !important; }
+  .opts button { padding: 14px 16px; font-size: 1rem; }
+  .chips button, .order .tileb, .wchip { font-size: 1rem; padding: 10px 16px; min-height: 44px; }
+  .tabs a { font-size: .8rem; padding: 12px 16px; }
+  .pill { font-size: .74rem; }
+  .cpill { font-size: .7rem; }
+  h1 { letter-spacing: -0.035em; }
+  .pagehead .title h1 { font-size: clamp(2.1rem, 7.5vw, 3rem); }
+  .pagehead .title p { font-size: 1.02rem; }
+  .hsec .hhead h2 { font-size: 1.65rem; }
+  .hsec .hhead p { font-size: 1rem; }
+  .lcard h3 { font-size: 1.3rem; }
+  .lcard p { font-size: .92rem; }
+  .rule, .rule p, .passage, .dlg .bubble, .phrase .es, .tip, .cdef { font-size: 1.02rem; }
+  .cw { font-size: 1.9rem; }
+
+  /* --- top bar: wordmark · streak · coins · settings. Nothing else. --- */
+  .topbar { grid-template-columns: 1fr auto auto auto !important; min-height: 60px; padding-top: env(safe-area-inset-top, 0px); padding-left: env(safe-area-inset-left, 0px); padding-right: env(safe-area-inset-right, 0px); align-items: center; }
+  .topbar > * { border-right: 0 !important; padding: 0 6px; }
+  .topbar .lvl, .topbar .crumb, .topbar .theme, .topbar .cta { display: none !important; }
+  .topbar .wordmark { font-size: 1.5rem; padding: 0 16px; min-height: 60px; }
+  .topbar .goal { display: flex !important; justify-content: center; gap: 6px; padding: 6px 12px 6px 8px; margin: 0 4px; border-radius: 999px; background: var(--pink-1); min-height: 40px; }
+  .topbar .goal .ring { width: 26px; height: 26px; }
+  .topbar .goal .streak { display: none !important; }
+  .topbar .goal .streakm { display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-body); font-weight: 700; font-size: .98rem; color: var(--ink); }
+  .topbar .goal .streakm .hrt { color: var(--pink-5); }
+  .topbar .coins { display: flex; gap: 5px; padding: 6px 12px; margin: 0 4px; border-radius: 999px; background: var(--sand); font-family: var(--font-body); font-size: .98rem; font-weight: 700; min-height: 40px; }
+  .topbar .coins .coin { font-size: 1.05rem; }
+  .topbar .coins.ready::after { font-size: .95rem; }
+  .topbar .gear { display: grid; place-items: center; width: 44px; height: 44px; margin: 0 8px 0 2px; border-radius: 50%; color: var(--ink-2); text-decoration: none; }
+  .topbar .gear:active { background: var(--pink-1); }
+
+  /* back row under the bar */
+  .crumbm { display: flex; align-items: center; gap: 12px; padding: 10px 18px; border-bottom: 1px solid var(--line); background: var(--surface); font-size: .95rem; }
+  .crumbm[hidden] { display: none; }
+  .crumbm .back { color: var(--pink-5); text-decoration: none; font-weight: 600; white-space: nowrap; min-height: 32px; display: inline-flex; align-items: center; }
+  .crumbm strong { font-weight: 500; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* --- bottom bar: five roomy tabs --- */
+  .mobnav {
+    display: grid; grid-template-columns: repeat(5, 1fr); position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+    background: var(--surface); border-top: 1px solid var(--line);
+    padding: 4px 0 env(safe-area-inset-bottom, 0px);
+    box-shadow: 0 -8px 24px -18px rgba(0,0,0,.5);
+  }
+  .mobnav a { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; padding: 6px 4px 8px; min-height: 64px; text-decoration: none; color: var(--ink-3); font-family: var(--font-body); font-size: .74rem; font-weight: 600; letter-spacing: 0; text-transform: none; }
+  .mobnav a .mi { display: grid; place-items: center; width: 52px; height: 32px; border-radius: 12px; font-family: var(--font-display); font-weight: 800; font-size: 1.3rem; line-height: 1; transition: background .15s; }
+  .mobnav a.on { color: var(--pink-5); background: none; }
+  .mobnav a.on .mi { background: var(--pink-2); color: var(--pink-ink); }
+  body { padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
+  .xp-toast { bottom: calc(88px + env(safe-area-inset-bottom, 0px)); right: 12px; left: 12px; text-align: center; }
+  #toast { bottom: calc(88px + env(safe-area-inset-bottom, 0px)) !important; }
+  .bigtoast { right: 10px; left: 10px; bottom: calc(84px + env(safe-area-inset-bottom, 0px)); max-width: none; }
+  .bagbar { bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
+  .foot { padding-bottom: 18px; }
+
+  /* --- pages --- */
+  .learnhead { padding: 22px 24px 6px; }
+  .learncards { padding: 14px 24px 22px; }
+  .settings { padding: 12px 24px 40px; }
+  .home-hero .copy .btn-row .btn:nth-child(2) { display: none; } /* Word Hunt has its own tab now */
+  #app.has-item .pagehead { display: none; }
+  #app.has-item .two > .list, #app.has-item .readwrap > .list { border-top: 0; }
+}
+@media (max-width: 760px) {
+  .learncards { grid-template-columns: 1fr; padding: 12px 18px 20px; }
+  .learnhead { padding: 18px 18px 4px; }
+  .settings { padding: 10px 18px 36px; }
+  .levelrow.big { grid-template-columns: repeat(3, 1fr); }
+  .home-hero .copy { padding: 26px 18px 22px; }
+  .home-hero .copy h1 { font-size: clamp(3rem, 16vw, 4.2rem); }
+  .home-hero .stage { padding: 18px 16px 22px; }
+  .home-hero .stage .mascot { width: 140px !important; height: 140px !important; }
+  .cards5 { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .lcard { min-height: 172px; }
+  .lcard .mascot { width: 52px !important; height: 52px !important; }
+  .stats3 .big-stat { font-size: 1.6rem; }
+  .stats3 .label { font-size: .66rem; }
+  .vinf { font-size: 2rem; }
+}
+@media (max-width: 360px) {
+  html { font-size: 16px; }
+  .setcard .seg.wide button { padding: 8px 2px; font-size: .82rem; min-width: 0; }
+  .setcard .seg.wide button small { font-size: .6rem; }
+  .levelrow.big button { padding: 8px 2px; min-height: 54px; }
+  .topbar .wordmark { font-size: 1.3rem; padding: 0 12px; }
+  .topbar .goal, .topbar .coins { padding: 5px 9px; margin: 0 2px; font-size: .9rem; }
+  .topbar .gear { margin-right: 4px; }
+  .mobnav a { font-size: .68rem; }
+  .mobnav a .mi { width: 44px; }
+}
+@media (pointer: coarse) { .topbar .crumb a { min-height: 44px; display: inline-flex; align-items: center; } }
+@media (min-width: 761px) and (max-width: 1200px) {
+  /* iPad: more air, still the app chrome */
+  .topbar { min-height: 64px; }
+  .topbar .wordmark { padding: 0 24px; }
+  .topbar .gear { margin-right: 16px; }
+  .crumbm { padding: 10px 32px; }
+  .mobnav a { min-height: 68px; font-size: .78rem; }
+  .mobnav a .mi { width: 64px; height: 34px; }
+  .cards5 { grid-template-columns: repeat(3, 1fr); }
+  .pagehead { grid-template-columns: 1fr 300px; }
+  .home-hero { grid-template-columns: 1.1fr 1fr; }
+  .home-hero .stage { padding: 24px 20px; }
+  .home-hero .stage .mascot { width: 200px !important; height: 200px !important; }
+  .home-hero .copy h1 { font-size: clamp(3.4rem, 9vw, 5rem); }
+}
+
 </style>
 
 <header class="topbar">
@@ -1166,23 +1320,23 @@ img, svg { max-width: 100%; }
   <div class="crumb" id="crumb"><a href="#home">Home</a></div>
   <a class="goal" id="goalWidget" href="#home" aria-label="Daily goal and streak" style="text-decoration:none">
     <svg class="ring" viewBox="0 0 36 36" aria-hidden="true"><circle class="track" cx="18" cy="18" r="15"></circle><circle class="fill" id="ringFill" cx="18" cy="18" r="15" stroke-dasharray="94.2" stroke-dashoffset="94.2"></circle></svg>
-    <span class="streak" id="streakTxt"></span>
+    <span class="streak" id="streakTxt"></span><span class="streakm" id="streakM"></span>
   </a>
   <a class="coins" id="coinWidget" href="#casita" aria-label="Your quetzalitos and companion"><span class="coin" aria-hidden="true">◕</span><b id="coinTxt">0</b></a>
   <div class="theme"><button id="themeBtn" type="button" aria-label="Toggle light or dark theme">Dark</button></div>
   <div class="cta"><a class="btn" href="#hunt">Word Hunt <span class="arr">→</span></a></div>
+  <a class="gear" id="gearBtn" href="#settings" aria-label="Settings"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></a>
 </header>
+<div class="crumbm" id="crumbM" hidden></div>
 
 <main id="app" class="page"></main>
 
 <nav class="mobnav" id="mobnav" aria-label="Sections">
   <a href="#home" data-sec="home"><span class="mi">⌂</span>Home</a>
-  <a href="#grammar" data-sec="grammar"><span class="mi">¿?</span>Grammar</a>
-  <a href="#speaking" data-sec="speaking"><span class="mi">¡!</span>Speak</a>
-  <a href="#reading" data-sec="reading"><span class="mi">Aa</span>Read</a>
+  <a href="#learn" data-sec="learn"><span class="mi">¿?</span>Learn</a>
   <a href="#hunt" data-sec="hunt"><span class="mi">ñ</span>Hunt</a>
   <a href="#review" data-sec="review"><span class="mi">✎</span>Practice</a>
-  <a href="#casita" data-sec="casita"><span class="mi">⌂♥</span>Casita</a>
+  <a href="#casita" data-sec="casita"><span class="mi">♥</span>Casita</a>
 </nav>
 
 <footer class="foot page">
@@ -4032,7 +4186,7 @@ const gridForm = (w) => stripAccents(String(w).toUpperCase()).replace(/[^A-Z\u00
 const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const DICT_BY_ES = Object.fromEntries(DICT.map(d => [d.es, d]));
 const KEY = 'hablemos.v1';
-const BUILD = { v: 'v9', date: '1 September 2026' };
+const BUILD = { v: 'v10', date: '1 September 2026' };
 const todayStr = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 const addDays = (n) => { const d = new Date(); d.setDate(d.getDate() + n); return todayStr(d); };
 const XP = { lesson: 15, perfect: 5, phrase: 5, passage: 15, huntWord: 2, hunt: 10, card: 1, mistake: 3, dialogue: 10, listen: 3 };
@@ -4091,11 +4245,13 @@ function applyTheme(t) {
   try { new MutationObserver(() => { $('#themeBtn').textContent = isDark() ? 'Light' : 'Dark'; }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] }); } catch (e) {}
   try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => applyTheme(null)); } catch (e) {}
 })();
-$('#themeBtn').addEventListener('click', () => {
-  const next = isDark() ? 'light' : 'dark';
-  try { localStorage.setItem(KEY + '.theme', next); } catch (e) {}
-  applyTheme(next);
-});
+function setTheme(t) {
+  try { if (t === 'system') localStorage.removeItem(KEY + '.theme'); else localStorage.setItem(KEY + '.theme', t); } catch (e) {}
+  if (t === 'system') { const root = document.documentElement; delete root.dataset.theme; root.style.colorScheme = ''; $('#themeBtn').textContent = isDark() ? 'Light' : 'Dark'; }
+  else applyTheme(t);
+}
+function themePref() { try { return localStorage.getItem(KEY + '.theme') || 'system'; } catch (e) { return 'system'; } }
+$('#themeBtn').addEventListener('click', () => setTheme(isDark() ? 'light' : 'dark'));
 
 /* ----- voices: prefer a female Latin-American Spanish voice (es-MX is the closest engine to Guatemalan Spanish) ----- */
 const FEMALE = /paulina|sabina|dalia|renata|larissa|angelica|angélica|ximena|camila|lupe|marina|mónica|monica|elvira|lucia|lucía|laura|helena|esperanza|isabela|francisca|carmen|sofia|sofía|valentina|female|mujer|\(f\)/i;
@@ -4495,6 +4651,7 @@ function updateStat() {
   const pct = Math.min(1, xpToday() / S.goal);
   $('#ringFill').setAttribute('stroke-dashoffset', (94.2 * (1 - pct)).toFixed(1));
   $('#streakTxt').innerHTML = `<b>♥ ${streakAlive()}</b> day${streakAlive() === 1 ? '' : 's'} · <b>${xpToday()}</b>/${S.goal} XP`;
+  const sm = $('#streakM'); if (sm) sm.innerHTML = `<span class="hrt">♥</span>${streakAlive()}`;
   $('#footStat').textContent = `${learnedCount()} words · ${S.xp || 0} XP total`;
   const ct = $('#coinTxt'); if (ct) ct.textContent = String(S.coins || 0);
   const cw = $('#coinWidget'); if (cw) cw.classList.toggle('ready', chestReady('daily') || chestReady('weekly'));
@@ -4502,6 +4659,13 @@ function updateStat() {
 }
 function crumb(parts) {
   $('#crumb').innerHTML = `<a href="#home">Home</a>` + parts.map(p => `<span class="sep">/</span>${p.href ? `<a href="${p.href}">${esc(p.t)}</a>` : `<strong>${esc(p.t)}</strong>`}`).join('');
+  /* phones and tablets: a slim back row under the top bar instead of a breadcrumb trail */
+  const m = $('#crumbM'); if (!m) return;
+  if (!parts.length) { m.hidden = true; m.innerHTML = ''; return; }
+  const back = parts.length > 1 ? parts[parts.length - 2] : { t: 'Home', href: '#home' };
+  const here = parts[parts.length - 1];
+  m.hidden = false;
+  m.innerHTML = `<a class="back" href="${back.href || '#home'}">‹ ${esc(back.t)}</a><strong>${esc(here.t)}</strong>`;
 }
 
 /* ----- path (Duolingo-style unit path) ----- */
@@ -4526,11 +4690,15 @@ function render() {
   Player.stop(); LineAudio.stop();
   if (activeHunt && page !== 'hunt') { activeHunt = null; }
   updateStat();
+  /* on phones and tablets a chosen lesson or passage hides the big section header — the back row carries the title */
+  app.classList.toggle('has-item', !!id && (page === 'grammar' || page === 'reading'));
   if (page === 'grammar') renderGrammar(id);
   else if (page === 'speaking') renderSpeaking(id, sub);
   else if (page === 'reading') renderReading(id);
   else if (page === 'hunt') renderHunt(id);
   else if (page === 'review') renderReview(id);
+  else if (page === 'learn') renderLearn();
+  else if (page === 'settings') renderSettings();
   else if (page === 'checkpoint') renderCheckpoint(id);
   else if (page === 'placement') renderPlacement();
   else if (page === 'casita') renderCasita(id);
@@ -4545,7 +4713,7 @@ function render() {
   foldSides();
 }
 function paintMobNav(page) {
-  const map = { home: 'home', grammar: 'grammar', speaking: 'speaking', reading: 'reading', hunt: 'hunt', review: 'review', casita: 'casita', shop: 'casita', checkout: 'casita', collection: 'casita', checkpoint: 'review', placement: 'home', owner: 'home', about: 'home' };
+  const map = { home: 'home', learn: 'learn', grammar: 'learn', speaking: 'learn', reading: 'learn', hunt: 'hunt', review: 'review', casita: 'casita', shop: 'casita', checkout: 'casita', collection: 'casita', checkpoint: 'review', placement: 'home', owner: 'home', about: 'home', settings: 'home' };
   document.querySelectorAll('.mobnav a').forEach(a => a.classList.toggle('on', a.dataset.sec === (map[page] || 'home')));
 }
 /* on a phone the page intro + side panel fill the first screen — fold them so the lesson starts at the top */
@@ -4662,6 +4830,88 @@ function renderHome() {
   app.querySelectorAll('.levelrow button').forEach(b => b.addEventListener('click', () => { S.level = Number(b.dataset.level); save(); render(); }));
   $('#goalSel').addEventListener('change', (e) => { S.goal = Number(e.target.value); save(); renderHome(); });
   const pm = $('#pathMore'); if (pm) pm.addEventListener('click', () => { S.showAllPath = !S.showAllPath; save(); renderHome(); });
+}
+
+/* =========================== LEARN (phone/tablet hub) =========================== */
+function pathListHTML(items, curIdx, showAll) {
+  const start = Math.max(0, curIdx < 0 ? 0 : curIdx - 1);
+  const visible = showAll ? items : items.slice(start, start + 4);
+  return `<div class="pathlist">
+    ${visible.map((it) => { const i = items.indexOf(it); return `<a class="node ${it.done ? 'done' : ''} ${i === curIdx ? 'current' : ''}" href="${it.href}"><span class="dot">${it.done ? '✓' : esc(it.icon)}</span><span><span class="t">${esc(it.t)}</span><br><span class="s">${esc(it.kind)}${i === curIdx ? ' · up next' : ''}</span></span><span class="xp">+${it.xp} XP</span></a>`; }).join('')}
+    ${items.length ? '' : '<p class="muted" style="padding:14px 0">This level\'s content arrives in a later version.</p>'}
+    ${items.length > 4 ? `<button type="button" class="btn sm ghost more" id="pathMore">${showAll ? 'Show fewer' : `Show all ${items.length} steps`}</button>` : ''}
+  </div>`;
+}
+function renderLearn() {
+  crumb([{ t: 'Learn' }]);
+  const lv = LV();
+  const items = pathItems(lv.id);
+  const curIdx = items.findIndex(i => !i.done);
+  const g = GRAMMAR[lv.id] || [], sp = SPEAKING[lv.id] || [], rd = (READING[lv.id] || []).filter(r => r.qs.length), dl = DIALOGUES[lv.id] || [];
+  app.innerHTML = `
+  <section class="learnhead">
+    <span class="label">Learn · Level ${lv.id}</span>
+    <h1>${esc(lv.name)}</h1>
+    <p class="muted">${esc(lv.grade)} · ${esc(lv.cefr)}. ${esc(lv.blurb || '')}</p>
+    <div class="levelrow big">${LEVELS.map(l => `<button type="button" class="${l.id === lv.id ? 'on' : ''} ${levelUnlocked(l.id) ? '' : 'locked'}" data-level="${l.id}" aria-label="Level ${l.id} ${esc(l.name)}"><i class="${levelPassed(l.id) || levelProgress(l.id) >= 100 ? 'full' : ''}"></i>${levelUnlocked(l.id) ? '' : '○ '}${l.id}<span class="ln">${esc(l.name)}</span></button>`).join('')}</div>
+  </section>
+  <section class="learncards">
+    <a class="learncard t-pink" href="#grammar">${mascot('nopalito', 64)}<div><b>Grammar</b><span>${g.filter(l => S.done[l.id]).length} of ${g.length} lessons done</span></div><span class="arr">→</span></a>
+    <a class="learncard t-pink2" href="#speaking">${mascot('lola', 64)}<div><b>Speaking</b><span>${sp.length} phrases · ${dl.length} dialogues</span></div><span class="arr">→</span></a>
+    <a class="learncard t-sage" href="#reading">${mascot('nube', 64)}<div><b>Reading</b><span>${rd.filter(r => S.done[r.id]).length} of ${rd.length} passages done</span></div><span class="arr">→</span></a>
+  </section>
+  ${curIdx < 0 && items.length && !levelPassed(lv.id) ? `<section class="hsec"><div class="hbody"><a class="cpbanner" href="#checkpoint/${lv.id}"><span class="ic">✓</span><span><b>Level ${lv.id} checkpoint is ready</b><br><span class="small">Pass it to open level ${lv.id + 1}.</span></span><span class="arr">→</span></a></div></section>` : ''}
+  <section class="hsec">
+    <div class="hhead"><div><span class="eyebrow">Your path</span><h2>${curIdx >= 0 ? 'Up next' : 'Level ' + lv.id + ' complete'}</h2></div><span class="mono muted">${items.filter(i => i.done).length}/${items.length} done</span></div>
+    <div class="hbody">${pathListHTML(items, curIdx, !!S.showAllPath)}</div>
+  </section>`;
+  app.querySelectorAll('.levelrow button').forEach(b => b.addEventListener('click', () => { S.level = Number(b.dataset.level); save(); renderLearn(); }));
+  const pm = $('#pathMore'); if (pm) pm.addEventListener('click', () => { S.showAllPath = !S.showAllPath; save(); renderLearn(); });
+}
+
+/* =========================== SETTINGS =========================== */
+function renderSettings() {
+  crumb([{ t: 'Settings' }]);
+  const lv = LV(), pref = themePref();
+  app.innerHTML = `
+  <section class="learnhead">
+    <span class="label">Settings</span>
+    <h1>Make it yours</h1>
+  </section>
+  <div class="settings">
+    <section class="setcard">
+      <span class="label">Level</span>
+      <p class="small muted">Every section follows the level you pick here.</p>
+      <div class="levelrow big">${LEVELS.map(l => `<button type="button" class="${l.id === lv.id ? 'on' : ''} ${levelUnlocked(l.id) ? '' : 'locked'}" data-level="${l.id}"><i class="${levelPassed(l.id) || levelProgress(l.id) >= 100 ? 'full' : ''}"></i>${levelUnlocked(l.id) ? '' : '○ '}${l.id}<span class="ln">${esc(l.name)}</span></button>`).join('')}</div>
+      <p class="small muted">Locked levels open when you pass the checkpoint before them — or <a href="#placement">take the placement test</a>.</p>
+    </section>
+    <section class="setcard">
+      <span class="label">Daily goal</span>
+      <div class="seg wide">${[10, 20, 30, 50].map(g => `<button type="button" data-goal="${g}" class="${g === S.goal ? 'on' : ''}">${g} XP<small>${{ 10: 'casual', 20: 'regular', 30: 'serious', 50: 'intense' }[g]}</small></button>`).join('')}</div>
+    </section>
+    <section class="setcard">
+      <span class="label">Appearance</span>
+      <div class="seg wide">${[['light', 'Light'], ['dark', 'Dark'], ['system', 'Match device']].map(([k, t]) => `<button type="button" data-theme="${k}" class="${pref === k ? 'on' : ''}">${t}</button>`).join('')}</div>
+    </section>
+    <section class="setcard">
+      <span class="label">You</span>
+      <label class="setrow"><span>Your name</span><input type="text" id="setName" maxlength="24" placeholder="Nat" value="${esc(S.who.name || '')}"></label>
+      <div class="setrow"><span>Cloud sync</span><span class="cpill" data-cloudstate></span></div>
+      <p class="small muted">Paste a setup code and connect on the <a href="#casita">Casita</a> page, under “Your name and sync”.</p>
+    </section>
+    <section class="setcard links">
+      <a href="#about">About Hablemos and the cast <span class="arr">→</span></a>
+      <a href="#placement">Placement test <span class="arr">→</span></a>
+      <a href="#collection">Collection <span class="arr">→</span></a>
+      <a href="#owner">Owner view <span class="arr">→</span></a>
+    </section>
+    <p class="small muted buildstamp">Version <b>${esc(BUILD.v)}</b> · built ${esc(BUILD.date)} · ${learnedCount()} words · ${S.xp || 0} XP total</p>
+  </div>`;
+  document.querySelectorAll('[data-cloudstate]').forEach(paintCloudPill);
+  app.querySelectorAll('.levelrow button').forEach(b => b.addEventListener('click', () => { S.level = Number(b.dataset.level); save(); renderSettings(); }));
+  app.querySelectorAll('[data-goal]').forEach(b => b.addEventListener('click', () => { S.goal = Number(b.dataset.goal); save(); renderSettings(); }));
+  app.querySelectorAll('[data-theme]').forEach(b => b.addEventListener('click', () => { setTheme(b.dataset.theme); renderSettings(); }));
+  $('#setName').addEventListener('change', () => { const v = $('#setName').value.trim(); if (v) { S.who.name = v; S.who.asked = true; save(); Cloud.push(true); toast('Saved'); } });
 }
 
 /* =========================== ABOUT =========================== */
