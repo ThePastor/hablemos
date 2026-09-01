@@ -1095,6 +1095,66 @@ img, svg { max-width: 100%; }
   .causerow summary { min-height: 44px; align-items: center; }
 }
 
+/* =========================== v9: select-then-check, reset, swatches, bag, checkout =========================== */
+.opts button.sel, .chips button.sel { background: var(--pink-2); border-color: var(--pink-5); color: var(--pink-ink); box-shadow: inset 0 0 0 1px var(--pink-5); }
+.qact { display: flex; gap: 8px; margin-top: 10px; }
+.qact .btn:disabled { opacity: .45; cursor: default; }
+.cprow { display: flex; gap: 8px; align-items: center; margin-top: 10px; }
+.cprow .cpin { margin-top: 0; flex: 1 1 auto; min-width: 0; }
+.cprow .cpreset { flex: 0 0 auto; min-width: 40px; }
+
+/* colour swatches on a shop card */
+.swatches { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin: 2px 0 4px; }
+.sw { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--swb); background: var(--sw); cursor: pointer; padding: 0; position: relative; }
+.sw.on { box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--ink); }
+.sw.have::after { content: '✓'; position: absolute; inset: 0; display: grid; place-items: center; font-size: .6rem; color: #fff; text-shadow: 0 0 2px rgba(0,0,0,.6); }
+.shopcard.fam .btn { margin-top: 2px; }
+.shopcard .btn { max-width: 100%; white-space: normal; text-align: center; line-height: 1.3; }
+
+/* the bag bar */
+.bagbar { position: sticky; bottom: 12px; margin: 16px 48px 24px; display: flex; align-items: center; gap: 14px; padding: 12px 16px; border-radius: 18px; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow); z-index: 5; }
+.bagbar.has { background: var(--pink-1); border-color: var(--pink-3); }
+.bagbar .bagic { font-size: 1.5rem; line-height: 1; }
+.bagbar .bagtxt { flex: 1 1 auto; min-width: 0; line-height: 1.35; }
+.bagbar .btn { flex: 0 0 auto; }
+
+/* checkout */
+.checkout { padding: 20px 48px 44px; display: grid; grid-template-columns: 1fr 340px; gap: 18px; align-items: start; }
+.bagitems { display: grid; gap: 10px; }
+.bagline { display: grid; grid-template-columns: auto 1fr auto auto; gap: 14px; align-items: center; padding: 10px 14px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); }
+.bagline .bthumb { display: grid; place-items: center; width: 80px; }
+.bagline .bname { min-width: 0; }
+.bagline .bname b { display: block; }
+.bagline .bprice { font-family: var(--font-mono); font-size: .85rem; white-space: nowrap; }
+.bagsum { position: sticky; top: 72px; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 18px; display: grid; gap: 10px; }
+.bagsum .row.between { padding: 6px 0; border-bottom: 1px solid var(--line-soft); }
+.bagsum .row.short b { color: var(--bad); }
+.bagsum .btn-row { margin-top: 6px; }
+.bagempty { grid-column: 1 / -1; text-align: center; padding: 30px 20px; display: grid; justify-items: center; gap: 8px; }
+.bagempty h2 { font-size: 1.6rem; letter-spacing: -0.03em; }
+.bagempty p { max-width: 46ch; }
+.receipt { grid-column: 1 / -1; display: grid; gap: 16px; background: var(--ok-soft); border: 1px solid var(--sage); border-radius: 22px; padding: 22px; }
+.receipt .rhead { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.receipt h2 { font-size: 2rem; letter-spacing: -0.04em; }
+.receipt .rlines { display: grid; gap: 8px; }
+.receipt .bagline { grid-template-columns: auto 1fr auto auto; }
+
+@media (max-width: 1100px) { .checkout { grid-template-columns: 1fr; padding-left: 32px; padding-right: 32px; } .bagsum { position: static; } .bagbar { margin-left: 32px; margin-right: 32px; } }
+@media (max-width: 760px) {
+  .checkout { padding: 14px 18px 34px; }
+  .bagbar { margin: 12px 18px 18px; bottom: calc(70px + env(safe-area-inset-bottom, 0px)); padding: 10px 12px; gap: 10px; }
+  .bagline { grid-template-columns: auto 1fr; }
+  .bagline .bprice { grid-column: 2; }
+  .bagline .btn { grid-column: 2; justify-self: start; }
+  .receipt .bagline { grid-template-columns: auto 1fr; }
+  .receipt .bagline .pill { grid-column: 2; justify-self: start; }
+  .qact { flex-wrap: wrap; }
+}
+@media (pointer: coarse) {
+  .sw { width: 30px; height: 30px; }
+  .cprow .cpreset { min-height: 44px; }
+}
+
 </style>
 
 <header class="topbar">
@@ -3004,66 +3064,138 @@ const STAGE_SCALE = [0.78, 0.86, 0.94, 1, 1.04];
 /* ----- cosmetics ----- */
 /* Each item draws centred on (0,0) so it can be dropped on any companion's anchor point. */
 const RARITY = { comun: { t: 'Común', p: 60 }, rara: { t: 'Rara', p: 140 }, legendaria: { t: 'Legendaria', p: 300 } };
-const ITEMS = [
-  /* --- head --- */
-  { id: 'bow-pink', slot: 'head', r: 'comun', es: 'Moño rosado', en: 'Pink bow',
-    svg: `<g><path d="M0 0l-26-14v28zM0 0l26-14v28z" fill="#FF8FAB" stroke="#FB6F92" stroke-width="2"/><circle r="7" fill="#FFC2D1" stroke="#FB6F92" stroke-width="2"/></g>` },
-  { id: 'bow-red', slot: 'head', r: 'comun', es: 'Moño rojo', en: 'Red bow',
-    svg: `<g><path d="M0 0l-26-14v28zM0 0l26-14v28z" fill="#D6455F" stroke="#9E2A40" stroke-width="2"/><circle r="7" fill="#E8697F" stroke="#9E2A40" stroke-width="2"/></g>` },
-  { id: 'beanie', slot: 'head', r: 'comun', es: 'Gorrito', en: 'Beanie',
-    svg: `<g><path d="M-30 6a30 26 0 0 1 60 0z" fill="#CCD5AE" stroke="#9FB27A" stroke-width="2"/><rect x="-33" y="4" width="66" height="10" rx="5" fill="#E9EDC9" stroke="#9FB27A" stroke-width="2"/><circle cy="-22" r="8" fill="#FFC2D1" stroke="#9FB27A" stroke-width="2"/></g>` },
-  { id: 'party-hat', slot: 'head', r: 'comun', es: 'Gorro de fiesta', en: 'Party hat',
-    svg: `<g><path d="M0-34l16 30h-32z" fill="#FFB3C6" stroke="#FB6F92" stroke-width="2"/><path d="M-10-14h20M-13-4h26" stroke="#FEFAE0" stroke-width="3" stroke-linecap="round"/><circle cy="-36" r="6" fill="#FAEDCD" stroke="#FB6F92" stroke-width="2"/></g>` },
+
+/* ----- colours: every colourable item comes in these. a = body, b = outline/shade, c = highlight ----- */
+const HUES = {
+  pink:  { t: 'Pink',     es: ['rosado', 'rosada', 'rosados', 'rosadas'], a: '#FF8FAB', b: '#FB6F92', c: '#FFC2D1' },
+  rose:  { t: 'Fuchsia',  es: ['fucsia', 'fucsia', 'fucsia', 'fucsia'],   a: '#FB6F92', b: '#D6455F', c: '#FFB3C6' },
+  red:   { t: 'Red',      es: ['rojo', 'roja', 'rojos', 'rojas'],         a: '#D6455F', b: '#9E2A40', c: '#E8697F' },
+  lilac: { t: 'Lilac',    es: ['lila', 'lila', 'lila', 'lila'],           a: '#C9B6E4', b: '#9C82C4', c: '#E6DAF5' },
+  sky:   { t: 'Sky blue', es: ['celeste', 'celeste', 'celestes', 'celestes'], a: '#9FD0EA', b: '#5FA8CF', c: '#D2EAF5' },
+  mint:  { t: 'Mint',     es: ['menta', 'menta', 'menta', 'menta'],       a: '#B7E0C8', b: '#7FBF9A', c: '#DFF3E7' },
+  sage:  { t: 'Sage',     es: ['verde', 'verde', 'verdes', 'verdes'],     a: '#CCD5AE', b: '#9FB27A', c: '#E9EDC9' },
+  cream: { t: 'Cream',    es: ['crema', 'crema', 'crema', 'crema'],       a: '#FAEDCD', b: '#D4A373', c: '#FEFAE0' },
+  gold:  { t: 'Gold',     es: ['dorado', 'dorada', 'dorados', 'doradas'], a: '#F0C674', b: '#C9922F', c: '#FBE7B0' },
+  black: { t: 'Black',    es: ['negro', 'negra', 'negros', 'negras'],     a: '#3A2230', b: '#1F1118', c: '#6B4A58' },
+  white: { t: 'White',    es: ['blanco', 'blanca', 'blancos', 'blancas'], a: '#FFFDF3', b: '#D9CFC4', c: '#FFFFFF' },
+};
+const HUE_ORDER = ['pink', 'rose', 'red', 'lilac', 'sky', 'mint', 'sage', 'cream', 'gold', 'black', 'white'];
+
+/* ----- templates: a drawing that takes a hue. g = grammatical gender/number index into HUES.es ----- */
+const TPL = {
+  bow: { slot: 'head', r: 'comun', es: 'Moño', en: 'bow', g: 0, hues: HUE_ORDER,
+    svg: h => `<g><path d="M0 0l-26-14v28zM0 0l26-14v28z" fill="${h.a}" stroke="${h.b}" stroke-width="2"/><circle r="7" fill="${h.c}" stroke="${h.b}" stroke-width="2"/></g>` },
+  scarf: { slot: 'neck', r: 'comun', es: 'Bufanda', en: 'scarf', g: 1, hues: ['pink', 'sage', 'red', 'lilac', 'sky', 'cream', 'black'],
+    svg: h => `<g><path d="M-30 0q30 14 60 0 2 10-6 14-24 8-48 0-8-4-6-14z" fill="${h.a}" stroke="${h.b}" stroke-width="2"/><path d="M18 10l10 26 10-4-8-24z" fill="${h.c}" stroke="${h.b}" stroke-width="2"/></g>` },
+  beanie: { slot: 'head', r: 'comun', es: 'Gorrito', en: 'beanie', g: 0, hues: ['sage', 'pink', 'lilac', 'sky', 'cream'],
+    svg: h => `<g><path d="M-30 6a30 26 0 0 1 60 0z" fill="${h.a}" stroke="${h.b}" stroke-width="2"/><rect x="-33" y="4" width="66" height="10" rx="5" fill="${h.c}" stroke="${h.b}" stroke-width="2"/><circle cy="-22" r="8" fill="${h.c}" stroke="${h.b}" stroke-width="2"/></g>` },
+  partyhat: { slot: 'head', r: 'comun', es: 'Gorro de fiesta', en: 'party hat', g: 0, hues: ['pink', 'sky', 'mint', 'gold'],
+    svg: h => `<g><path d="M0-34l16 30h-32z" fill="${h.a}" stroke="${h.b}" stroke-width="2"/><path d="M-10-14h20M-13-4h26" stroke="${h.c}" stroke-width="3" stroke-linecap="round"/><circle cy="-36" r="6" fill="${h.c}" stroke="${h.b}" stroke-width="2"/></g>` },
+  catears: { slot: 'head', r: 'rara', es: 'Orejitas de gato', en: 'cat-ear headband', g: 3, hues: ['pink', 'black', 'white', 'lilac'],
+    svg: h => `<g><path d="M-34 10q34-10 68 0" fill="none" stroke="${h.b}" stroke-width="4"/><path d="M-30 8l-6-30 22 16z" fill="${h.a}" stroke="${h.b}" stroke-width="2" stroke-linejoin="round"/><path d="M30 8l6-30-22 16z" fill="${h.a}" stroke="${h.b}" stroke-width="2" stroke-linejoin="round"/><path d="M-27 4l-3-17 12 10z" fill="${h.c}"/><path d="M27 4l3-17-12 10z" fill="${h.c}"/></g>` },
+  beret: { slot: 'head', r: 'comun', es: 'Boina', en: 'beret', g: 1, hues: ['red', 'black', 'pink', 'sage'],
+    svg: h => `<g><ellipse cx="4" cy="-4" rx="34" ry="14" fill="${h.a}" stroke="${h.b}" stroke-width="2"/><path d="M-26 4q30 8 58-2" fill="none" stroke="${h.b}" stroke-width="3"/><circle cx="6" cy="-18" r="3" fill="${h.b}"/></g>` },
+  bowtie: { slot: 'neck', r: 'comun', es: 'Corbatín', en: 'bow tie', g: 0, hues: ['red', 'black', 'pink', 'sky', 'gold'],
+    svg: h => `<g transform="translate(0 6)"><path d="M0 0l-20-11v22zM0 0l20-11v22z" fill="${h.a}" stroke="${h.b}" stroke-width="2"/><rect x="-5" y="-6" width="10" height="12" rx="3" fill="${h.c}" stroke="${h.b}" stroke-width="2"/></g>` },
+  collar: { slot: 'neck', r: 'rara', es: 'Collar con cascabel', en: 'bell collar', g: 0, hues: ['pink', 'red', 'sky', 'gold'],
+    svg: h => `<g><path d="M-30 -2q30 14 60 0" fill="none" stroke="${h.a}" stroke-width="9"/><path d="M-30 -2q30 14 60 0" fill="none" stroke="${h.b}" stroke-width="1.5"/><circle cy="14" r="8" fill="#F0C674" stroke="#C9922F" stroke-width="2"/><path d="M-4 14h8M0 14v5" stroke="#C9922F" stroke-width="2"/></g>` },
+  balloon: { slot: 'held', r: 'rara', es: 'Globo', en: 'balloon', g: 0, hues: ['pink', 'red', 'sky', 'lilac', 'gold'],
+    svg: h => `<g><path d="M0 6q-3 6-1 24" stroke="#5C2E45" stroke-width="2" fill="none"/><ellipse cy="-14" rx="17" ry="21" fill="${h.a}" stroke="${h.b}" stroke-width="2"/><path d="M-3 4l3 4 3-4z" fill="${h.b}"/><ellipse cx="-6" cy="-22" rx="4" ry="6" fill="${h.c}" opacity=".8" transform="rotate(-20 -6 -22)"/></g>` },
+  heartglasses: { slot: 'face', r: 'rara', es: 'Lentes de corazón', en: 'heart glasses', g: 2, hues: ['pink', 'red', 'lilac'],
+    svg: h => `<g fill="${h.a}" stroke="${h.b}" stroke-width="2">${[-19, 19].map(x => `<path transform="translate(${x} 0) scale(1.15)" d="M0 10C-14 0-18-10-11-15-6-19 0-14 0-9c0-5 6-10 11-6 7 5 3 15-11 25z"/>`).join('')}<path d="M-6 -2h12M-32 -4l-10-4M32 -4l10-4" fill="none"/></g>` },
+  tiara: { slot: 'head', r: 'legendaria', es: 'Tiara', en: 'tiara', g: 1, hues: ['gold', 'white', 'pink'],
+    svg: h => `<g><path d="M-30 6q30-8 60 0" fill="none" stroke="${h.b}" stroke-width="4"/><path d="M-22 4l4-16 8 10 10-22 10 22 8-10 4 16z" fill="${h.a}" stroke="${h.b}" stroke-width="2" stroke-linejoin="round"/><circle cy="-14" r="4" fill="#FFC2D1"/><circle cx="-16" cy="-6" r="2.5" fill="#FEFAE0"/><circle cx="16" cy="-6" r="2.5" fill="#FEFAE0"/></g>` },
+  headphones: { slot: 'head', r: 'rara', es: 'Audífonos', en: 'headphones', g: 2, hues: ['pink', 'black', 'sky'],
+    svg: h => `<g><path d="M-36 30a36 36 0 0 1 72 0" fill="none" stroke="${h.b}" stroke-width="6"/><rect x="-44" y="22" width="16" height="26" rx="7" fill="${h.a}" stroke="${h.b}" stroke-width="2"/><rect x="28" y="22" width="16" height="26" rx="7" fill="${h.a}" stroke="${h.b}" stroke-width="2"/></g>` },
+  barrilete: { slot: 'held', r: 'rara', es: 'Barrilete', en: 'kite', g: 0, hues: ['pink', 'sky', 'gold'],
+    svg: h => `<g><path d="M0 8q-2 10 4 18t-4 12" fill="none" stroke="#5C2E45" stroke-width="1.5"/><circle r="22" cy="-14" fill="${h.a}" stroke="${h.b}" stroke-width="2"/><circle r="15" cy="-14" fill="${h.c}"/><circle r="8" cy="-14" fill="${h.b}"/><g stroke="${h.b}" stroke-width="1.5"><path d="M-22-14h44M0-36v44M-15-29l30 30M-15 1l30-30"/></g><path d="M-6 6l6 3 6-3" fill="none" stroke="#5C2E45" stroke-width="1.5"/></g>` },
+  icecream: { slot: 'held', r: 'comun', es: 'Helado', en: 'ice cream', g: 0, hues: ['pink', 'mint', 'cream', 'lilac'],
+    svg: h => `<g><path d="M-12 0l12 30 12-30z" fill="#FAEDCD" stroke="#D4A373" stroke-width="2"/><path d="M-8 6h16M-5 14h10" stroke="#D4A373" stroke-width="1.5"/><circle cy="-6" r="14" fill="${h.a}" stroke="${h.b}" stroke-width="2"/><circle cx="-5" cy="-11" r="4" fill="${h.c}" opacity=".8"/><circle cy="-22" r="4" fill="#D6455F"/></g>` },
+  umbrella: { slot: 'held', r: 'rara', es: 'Sombrilla', en: 'umbrella', g: 1, hues: ['pink', 'sky', 'red', 'cream'],
+    svg: h => `<g><path d="M0-2v34q0 6-6 6" fill="none" stroke="#5C2E45" stroke-width="2.5"/><path d="M-30-2a30 24 0 0 1 60 0z" fill="${h.a}" stroke="${h.b}" stroke-width="2"/><path d="M-30-2q7-10 15 0 8-10 15 0 7-10 15 0 8-10 15 0" fill="none" stroke="${h.b}" stroke-width="1.5"/><path d="M0-26v-6" stroke="${h.b}" stroke-width="3"/></g>` },
+};
+/* ids that existed before colours arrived keep their old id so saved outfits still load */
+const LEGACY_ID = { 'bow:pink': 'bow-pink', 'bow:red': 'bow-red', 'scarf:pink': 'scarf-pink', 'scarf:sage': 'scarf-sage', 'beanie:sage': 'beanie', 'partyhat:pink': 'party-hat', 'balloon:pink': 'balloon' };
+
+/* ----- one-off items ----- */
+const ONE_OFFS = [
   { id: 'sombrero', slot: 'head', r: 'rara', es: 'Sombrero', en: 'Sun hat',
     svg: `<g><ellipse cy="6" rx="42" ry="12" fill="#FAEDCD" stroke="#D4A373" stroke-width="2"/><path d="M-20 6a20 20 0 0 1 40 0z" fill="#FAEDCD" stroke="#D4A373" stroke-width="2"/><path d="M-21 2h42" stroke="#FF8FAB" stroke-width="5"/></g>` },
   { id: 'flower-crown', slot: 'head', r: 'rara', es: 'Corona de flores', en: 'Flower crown',
     svg: `<g>${[-30, -15, 0, 15, 30].map((x, i) => `<g transform="translate(${x} ${i % 2 ? 2 : -2})"><g fill="${i % 2 ? '#FFB3C6' : '#FF8FAB'}"><circle cx="0" cy="-7" r="5"/><circle cx="6" cy="-1" r="5"/><circle cx="4" cy="6" r="5"/><circle cx="-4" cy="6" r="5"/><circle cx="-6" cy="-1" r="5"/></g><circle r="3.5" fill="#FEFAE0"/></g>`).join('')}</g>` },
+  { id: 'star-clip', slot: 'head', r: 'comun', es: 'Clip de estrella', en: 'Star hair clip',
+    svg: `<g transform="translate(22 -6)"><path d="M0-12l3.5 7.6 8.3 1-6 5.8 1.5 8.2L0 6.7-7.3 10.6l1.5-8.2-6-5.8 8.3-1z" fill="#F0C674" stroke="#C9922F" stroke-width="1.5"/></g>` },
   { id: 'crown', slot: 'head', r: 'legendaria', es: 'Corona', en: 'Crown',
     svg: `<g><path d="M-28 8l-4-30 14 12 18-20 18 20 14-12-4 30z" fill="#F0C674" stroke="#C9922F" stroke-width="2.5" stroke-linejoin="round"/><circle cx="0" cy="-4" r="5" fill="#FF8FAB"/><circle cx="-17" cy="0" r="4" fill="#CCD5AE"/><circle cx="17" cy="0" r="4" fill="#CCD5AE"/></g>` },
   { id: 'halo', slot: 'head', r: 'legendaria', es: 'Aureola', en: 'Halo',
     svg: `<g><ellipse cy="-14" rx="26" ry="8" fill="none" stroke="#F0C674" stroke-width="6"/><ellipse cy="-14" rx="26" ry="8" fill="none" stroke="#FEFAE0" stroke-width="2"/></g>` },
-  /* --- face --- */
   { id: 'glasses', slot: 'face', r: 'comun', es: 'Lentes', en: 'Glasses',
     svg: `<g fill="none" stroke="#5C2E45" stroke-width="3"><circle cx="-19" r="13"/><circle cx="19" r="13"/><path d="M-6 0h12M-32 -4l-10-4M32 -4l10-4"/></g>` },
   { id: 'sunglasses', slot: 'face', r: 'rara', es: 'Lentes de sol', en: 'Sunglasses',
     svg: `<g><path d="M-34-8h28v12a10 10 0 0 1-20 2z" fill="#3A2230"/><path d="M34-8H6v12a10 10 0 0 0 20 2z" fill="#3A2230"/><path d="M-6-4h12" stroke="#3A2230" stroke-width="4"/><path d="M-12-9l6-3 6 3" stroke="#FFC2D1" stroke-width="2" fill="none"/></g>` },
   { id: 'blush-hearts', slot: 'face', r: 'comun', es: 'Corazones', en: 'Heart cheeks',
     svg: `<g fill="#FB6F92">${[-30, 30].map(x => `<path transform="translate(${x} 12) scale(.55)" d="M0 10C-14 0-18-10-11-15-6-19 0-14 0-9c0-5 6-10 11-6 7 5 3 15-11 25z"/>`).join('')}</g>` },
+  { id: 'freckles', slot: 'face', r: 'comun', es: 'Pecas', en: 'Freckles',
+    svg: `<g fill="#B9553B" opacity=".7">${[[-30, 10], [-24, 15], [-34, 16], [30, 10], [24, 15], [34, 16], [-27, 20], [27, 20]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="1.8"/>`).join('')}</g>` },
   { id: 'mask', slot: 'face', r: 'rara', es: 'Antifaz', en: 'Masquerade mask',
     svg: `<g><path d="M-34-8q14-8 28 0 6 4 12 0 14-8 28 0 2 16-12 20-12 3-16-8-4 11-16 8-14-4-12-20z" transform="translate(-2 0)" fill="#5C2E45" stroke="#3A2230" stroke-width="2"/><circle cx="-19" cy="2" r="7" fill="#FFC2D1" opacity=".35"/><circle cx="17" cy="2" r="7" fill="#FFC2D1" opacity=".35"/></g>` },
-  /* --- neck --- */
-  { id: 'scarf-pink', slot: 'neck', r: 'comun', es: 'Bufanda rosada', en: 'Pink scarf',
-    svg: `<g><path d="M-30 0q30 14 60 0 2 10-6 14-24 8-48 0-8-4-6-14z" fill="#FF8FAB" stroke="#FB6F92" stroke-width="2"/><path d="M18 10l10 26 10-4-8-24z" fill="#FFB3C6" stroke="#FB6F92" stroke-width="2"/></g>` },
-  { id: 'scarf-sage', slot: 'neck', r: 'comun', es: 'Bufanda verde', en: 'Sage scarf',
-    svg: `<g><path d="M-30 0q30 14 60 0 2 10-6 14-24 8-48 0-8-4-6-14z" fill="#CCD5AE" stroke="#9FB27A" stroke-width="2"/><path d="M18 10l10 26 10-4-8-24z" fill="#E9EDC9" stroke="#9FB27A" stroke-width="2"/></g>` },
   { id: 'bandana', slot: 'neck', r: 'comun', es: 'Pañuelo', en: 'Bandana',
     svg: `<g><path d="M-26 0q26 12 52 0l-26 26z" fill="#FAEDCD" stroke="#D4A373" stroke-width="2"/><path d="M-14 6l6 8M0 10l6 8M12 8l6 8" stroke="#D4A373" stroke-width="2"/></g>` },
   { id: 'pearls', slot: 'neck', r: 'rara', es: 'Collar de perlas', en: 'Pearl necklace',
     svg: `<g fill="#FEFAE0" stroke="#EBD3DA" stroke-width="1.5">${[-28, -20, -11, 0, 11, 20, 28].map((x, i) => `<circle cx="${x}" cy="${[2, 8, 13, 15, 13, 8, 2][i]}" r="5"/>`).join('')}</g>` },
+  { id: 'heart-necklace', slot: 'neck', r: 'rara', es: 'Collar de corazón', en: 'Heart necklace',
+    svg: `<g><path d="M-26 0q26 16 52 0" fill="none" stroke="#C9922F" stroke-width="2"/><path transform="translate(0 14) scale(.6)" d="M0 10C-14 0-18-10-11-15-6-19 0-14 0-9c0-5 6-10 11-6 7 5 3 15-11 25z" fill="#FB6F92" stroke="#D6455F" stroke-width="2"/></g>` },
   { id: 'medal', slot: 'neck', r: 'legendaria', es: 'Medalla de oro', en: 'Gold medal',
     svg: `<g><path d="M-14-4l10 20M14-4L4 16" stroke="#FF8FAB" stroke-width="5"/><circle cy="24" r="13" fill="#F0C674" stroke="#C9922F" stroke-width="2.5"/><path d="M0 17l3 6 6 1-4.5 4 1 6-5.5-3-5.5 3 1-6L-9 24l6-1z" fill="#FEFAE0"/></g>` },
-  /* --- held --- */
   { id: 'book', slot: 'held', r: 'comun', es: 'Libro', en: 'Book',
     svg: `<g><path d="M-18-14h34a4 4 0 0 1 4 4v28a4 4 0 0 1-4 4h-34z" fill="#FFC2D1" stroke="#FB6F92" stroke-width="2"/><path d="M-18-14v36l-8-4v-28z" fill="#FB6F92"/><path d="M-8-4h20M-8 4h20M-8 12h14" stroke="#FEFAE0" stroke-width="2.5" stroke-linecap="round"/></g>` },
   { id: 'coffee', slot: 'held', r: 'comun', es: 'Café', en: 'Coffee',
     svg: `<g><path d="M-14-8h26l-3 26a5 5 0 0 1-5 4h-10a5 5 0 0 1-5-4z" fill="#FEFAE0" stroke="#D4A373" stroke-width="2"/><path d="M12-2q10 0 10 8t-11 7" fill="none" stroke="#D4A373" stroke-width="2.5"/><path d="M-12-8h22l-1 8h-20z" fill="#8A5A3B"/><path d="M-4-20q4-6 0-10M6-20q4-6 0-10" stroke="#EBD3DA" stroke-width="2.5" fill="none" stroke-linecap="round"/></g>` },
+  { id: 'lollipop', slot: 'held', r: 'comun', es: 'Paleta', en: 'Lollipop',
+    svg: `<g><rect x="-2" y="0" width="4" height="30" rx="2" fill="#FEFAE0" stroke="#D4A373" stroke-width="1"/><circle cy="-10" r="14" fill="#FF8FAB" stroke="#FB6F92" stroke-width="2"/><path d="M-8-10a8 8 0 0 1 16 0a4 4 0 0 1-8 0" fill="none" stroke="#FEFAE0" stroke-width="3"/></g>` },
   { id: 'maraca', slot: 'held', r: 'rara', es: 'Maraca', en: 'Maraca',
     svg: `<g><rect x="-3" y="4" width="6" height="26" rx="3" fill="#D4A373"/><ellipse cy="-6" rx="15" ry="17" fill="#FF8FAB" stroke="#FB6F92" stroke-width="2"/><path d="M-13-6h26" stroke="#FAEDCD" stroke-width="3"/><g fill="#FEFAE0"><circle cx="-6" cy="-13" r="2.5"/><circle cx="5" cy="-14" r="2.5"/><circle cx="0" cy="2" r="2.5"/></g></g>` },
-  { id: 'balloon', slot: 'held', r: 'rara', es: 'Globo', en: 'Balloon',
-    svg: `<g><path d="M0 6q-3 6-1 24" stroke="#5C2E45" stroke-width="2" fill="none"/><ellipse cy="-14" rx="17" ry="21" fill="#FFB3C6" stroke="#FB6F92" stroke-width="2"/><path d="M-3 4l3 4 3-4z" fill="#FB6F92"/><ellipse cx="-6" cy="-22" rx="4" ry="6" fill="#FEFAE0" opacity=".7" transform="rotate(-20 -6 -22)"/></g>` },
+  { id: 'bouquet', slot: 'held', r: 'rara', es: 'Ramo de flores', en: 'Bouquet',
+    svg: `<g><path d="M-8 6l8 26 8-26z" fill="#CCD5AE" stroke="#9FB27A" stroke-width="2"/><path d="M-9 12h18" stroke="#FB6F92" stroke-width="3"/>${[[-10, -8, '#FF8FAB'], [0, -16, '#FFC2D1'], [10, -8, '#F0C674'], [0, -2, '#FB6F92']].map(([x, y, c]) => `<g transform="translate(${x} ${y})"><g fill="${c}"><circle cx="0" cy="-6" r="4.5"/><circle cx="5.5" cy="-1" r="4.5"/><circle cx="3.5" cy="5.5" r="4.5"/><circle cx="-3.5" cy="5.5" r="4.5"/><circle cx="-5.5" cy="-1" r="4.5"/></g><circle r="3" fill="#FEFAE0"/></g>`).join('')}</g>` },
   { id: 'flag-gt', slot: 'held', r: 'rara', es: 'Banderita', en: 'Little flag',
     svg: `<g><rect x="-2" y="-24" width="4" height="52" rx="2" fill="#D4A373"/><path d="M2-22h34v22H2z" fill="#8FC5E8" stroke="#5C2E45" stroke-width="1.5"/><path d="M13-22h12v22H13z" fill="#FEFAE0"/><path d="M19-15l3 5-3 5-3-5z" fill="#9FB27A"/></g>` },
-  /* --- aura (drawn behind the companion) --- */
+  /* --- auras (absolute 200×200 coordinates, drawn behind) --- */
   { id: 'sparkles', slot: 'aura', r: 'rara', es: 'Chispitas', en: 'Sparkles',
     svg: `<g fill="#F0C674">${[[34, 40, 1], [166, 58, .8], [42, 132, .7], [160, 128, 1], [100, 26, .6]].map(([x, y, s]) => `<path transform="translate(${x} ${y}) scale(${s})" d="M0-14l3.5 10.5L14 0 3.5 3.5 0 14l-3.5-10.5L-14 0l10.5-3.5z"/>`).join('')}</g>` },
   { id: 'hearts', slot: 'aura', r: 'rara', es: 'Corazoncitos', en: 'Floating hearts',
     svg: `<g fill="#FF8FAB" opacity=".85">${[[36, 52, 1], [164, 44, .8], [46, 138, .7], [158, 134, .9]].map(([x, y, s]) => `<path transform="translate(${x} ${y}) scale(${s})" d="M0 10C-14 0-18-10-11-15-6-19 0-14 0-9c0-5 6-10 11-6 7 5 3 15-11 25z"/>`).join('')}</g>` },
+  { id: 'bubbles', slot: 'aura', r: 'rara', es: 'Burbujas', en: 'Bubbles',
+    svg: `<g fill="none" stroke="#9FD0EA" stroke-width="2">${[[34, 50, 9], [168, 40, 7], [40, 130, 6], [166, 126, 10], [98, 22, 5], [150, 80, 4]].map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}"/><circle cx="${x - r * .35}" cy="${y - r * .35}" r="${r * .22}" fill="#FEFAE0" stroke="none"/>`).join('')}</g>` },
+  { id: 'butterflies', slot: 'aura', r: 'rara', es: 'Mariposas', en: 'Butterflies',
+    svg: `<g>${[[36, 46, 1, '#C9B6E4'], [164, 60, .8, '#FF8FAB'], [44, 134, .7, '#F0C674'], [160, 130, .9, '#9FD0EA']].map(([x, y, s, c]) => `<g transform="translate(${x} ${y}) scale(${s})"><path d="M0 0q-12-14-14-2 0 8 14 4M0 0q12-14 14-2 0 8-14 4M0 0q-10 12-12 4 0-6 12-4M0 0q10 12 12 4 0-6-12-4" fill="${c}" stroke="#5C2E45" stroke-width="1"/><path d="M0-4v10" stroke="#5C2E45" stroke-width="2"/></g>`).join('')}</g>` },
+  { id: 'notes', slot: 'aura', r: 'rara', es: 'Notas musicales', en: 'Music notes',
+    svg: `<g fill="#5C2E45">${[[38, 48, 1], [166, 40, .9], [42, 132, .8], [162, 128, 1]].map(([x, y, s]) => `<g transform="translate(${x} ${y}) scale(${s})"><ellipse cx="-4" cy="8" rx="5" ry="3.5" transform="rotate(-20 -4 8)"/><path d="M0 7v-20q0-2 2-2l10-3v4l-9 3v18" /></g>`).join('')}</g>` },
+  { id: 'petals', slot: 'aura', r: 'legendaria', es: 'Pétalos', en: 'Falling petals',
+    svg: `<g fill="#FFB3C6" opacity=".9">${[[30, 40, 0], [60, 24, 30], [150, 30, -20], [172, 70, 40], [36, 120, 60], [166, 128, -50], [100, 18, 15], [126, 46, -35]].map(([x, y, r]) => `<ellipse cx="${x}" cy="${y}" rx="6" ry="3.5" transform="rotate(${r} ${x} ${y})"/>`).join('')}</g>` },
   { id: 'stars', slot: 'aura', r: 'legendaria', es: 'Estrellitas', en: 'Stars',
     svg: `<g fill="#FFC2D1" stroke="#FB6F92" stroke-width="1.5">${[[30, 44, 1], [170, 50, .85], [38, 126, .8], [168, 122, .9], [100, 20, .7]].map(([x, y, s]) => `<path transform="translate(${x} ${y}) scale(${s})" d="M0-12l3.5 7.6 8.3 1-6 5.8 1.5 8.2L0 6.7-7.3 10.6l1.5-8.2-6-5.8 8.3-1z"/>`).join('')}</g>` },
   { id: 'rainbow', slot: 'aura', r: 'legendaria', es: 'Arcoíris', en: 'Rainbow',
     svg: `<g fill="none" stroke-width="9" stroke-linecap="round" opacity=".55"><path d="M22 152a78 78 0 0 1 156 0" stroke="#FF8FAB"/><path d="M33 152a67 67 0 0 1 134 0" stroke="#FAEDCD"/><path d="M44 152a56 56 0 0 1 112 0" stroke="#CCD5AE"/></g>` },
 ];
+
+/* ----- build the catalogue: every template × its hues, then the one-offs ----- */
+const ITEMS = [];
+Object.keys(TPL).forEach(tk => {
+  const t = TPL[tk];
+  t.hues.forEach(hk => {
+    const h = HUES[hk];
+    ITEMS.push({ id: LEGACY_ID[tk + ':' + hk] || (tk + '-' + hk), slot: t.slot, r: t.r, fam: tk, hue: hk,
+      es: t.es + ' ' + h.es[t.g], en: h.t + ' ' + t.en, svg: t.svg(h) });
+  });
+});
+ONE_OFFS.forEach(o => ITEMS.push(Object.assign({ fam: o.id }, o)));
 const ITEM_BY_ID = Object.fromEntries(ITEMS.map(i => [i.id, i]));
+/* families = one shop card each; a family lists its variants in palette order */
+const FAMILIES = (() => {
+  const out = [];
+  ITEMS.forEach(i => { let f = out.find(x => x.fam === i.fam); if (!f) { f = { fam: i.fam, slot: i.slot, r: i.r, base: TPL[i.fam] ? { es: TPL[i.fam].es, en: TPL[i.fam].en } : { es: i.es, en: i.en }, items: [] }; out.push(f); } f.items.push(i); });
+  return out;
+})();
 const SLOTS = [
   { k: 'head', t: 'Head' }, { k: 'face', t: 'Face' }, { k: 'neck', t: 'Neck' }, { k: 'held', t: 'Holding' }, { k: 'aura', t: 'Aura' },
 ];
@@ -3123,8 +3255,47 @@ function initRewards() {
   if (!S.room.on) S.room.on = {};
   if (!S.chest) S.chest = { daily: null, weekly: 0 };
   if (!S.rewardSeen) S.rewardSeen = {};
+  if (!S.cart) S.cart = [];
   /* everyone starts with one free bow so the dressing-up is discoverable */
   if (!S.items['bow-pink']) S.items['bow-pink'] = true;
+}
+
+/* ----- the bag: everything is bought through the checkout page ----- */
+function priceOf(k, id) {
+  if (k === 'item') { const it = ITEM_BY_ID[id]; return it ? itemPrice(it) : 0; }
+  if (k === 'decor') { const d = DECOR_BY_ID[id]; return d ? d.price : 0; }
+  if (k === 'bg') { const b = ROOM_BG_BY_ID[id]; return b ? b.price : 0; }
+  return 0;
+}
+function ownedOf(k, id) {
+  if (k === 'item') return !!S.items[id];
+  if (k === 'decor') return !!S.decor[id];
+  if (k === 'bg') return id === 'casita' || !!S.decor['bg:' + id];
+  return false;
+}
+function nameOf(k, id) {
+  const o = k === 'item' ? ITEM_BY_ID[id] : k === 'decor' ? DECOR_BY_ID[id] : ROOM_BG_BY_ID[id];
+  return o ? { es: o.es, en: o.en } : { es: id, en: '' };
+}
+const inCart = (k, id) => (S.cart || []).some(c => c.k === k && c.id === id);
+function cartAdd(k, id) { if (ownedOf(k, id) || inCart(k, id)) return false; S.cart.push({ k, id }); return true; }
+function cartRemove(k, id) { S.cart = (S.cart || []).filter(c => !(c.k === k && c.id === id)); }
+function cartLines() { return (S.cart || []).filter(c => !ownedOf(c.k, c.id)).map(c => Object.assign({ price: priceOf(c.k, c.id) }, nameOf(c.k, c.id), c)); }
+const cartTotal = () => cartLines().reduce((a, l) => a + l.price, 0);
+const cartCount = () => cartLines().length;
+/* pay for everything in the bag at once; returns the receipt or null if short */
+function cartCheckout() {
+  const lines = cartLines(); const total = lines.reduce((a, l) => a + l.price, 0);
+  if (!lines.length || (S.coins || 0) < total) return null;
+  S.coins -= total;
+  const b = buddy();
+  lines.forEach(l => {
+    if (l.k === 'item') { S.items[l.id] = true; const it = ITEM_BY_ID[l.id]; if (it) S.chars[b.id].worn[it.slot] = l.id; }
+    else if (l.k === 'decor') { S.decor[l.id] = true; S.room.on[l.id] = true; }
+    else if (l.k === 'bg') { S.decor['bg:' + l.id] = true; S.room.bg = l.id; }
+  });
+  S.cart = [];
+  return { lines, total, left: S.coins };
 }
 const charUnlocked = (id) => (S.xp || 0) >= (CHAR_BY_ID[id] ? CHAR_BY_ID[id].unlock : 0);
 const unlockedChars = () => CHARS.filter(c => charUnlocked(c.id));
@@ -3861,7 +4032,7 @@ const gridForm = (w) => stripAccents(String(w).toUpperCase()).replace(/[^A-Z\u00
 const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const DICT_BY_ES = Object.fromEntries(DICT.map(d => [d.es, d]));
 const KEY = 'hablemos.v1';
-const BUILD = { v: 'v8', date: '31 August 2026' };
+const BUILD = { v: 'v9', date: '1 September 2026' };
 const todayStr = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 const addDays = (n) => { const d = new Date(); d.setDate(d.getDate() + n); return todayStr(d); };
 const XP = { lesson: 15, perfect: 5, phrase: 5, passage: 15, huntWord: 2, hunt: 10, card: 1, mistake: 3, dialogue: 10, listen: 3 };
@@ -4364,6 +4535,7 @@ function render() {
   else if (page === 'placement') renderPlacement();
   else if (page === 'casita') renderCasita(id);
   else if (page === 'shop') renderShop(id);
+  else if (page === 'checkout') renderCheckout();
   else if (page === 'collection') renderCollection();
   else if (page === 'owner') renderOwner(id);
   else if (page === 'about') renderAbout();
@@ -4373,7 +4545,7 @@ function render() {
   foldSides();
 }
 function paintMobNav(page) {
-  const map = { home: 'home', grammar: 'grammar', speaking: 'speaking', reading: 'reading', hunt: 'hunt', review: 'review', casita: 'casita', shop: 'casita', collection: 'casita', checkpoint: 'review', placement: 'home', owner: 'home', about: 'home' };
+  const map = { home: 'home', grammar: 'grammar', speaking: 'speaking', reading: 'reading', hunt: 'hunt', review: 'review', casita: 'casita', shop: 'casita', checkout: 'casita', collection: 'casita', checkpoint: 'review', placement: 'home', owner: 'home', about: 'home' };
   document.querySelectorAll('.mobnav a').forEach(a => a.classList.toggle('on', a.dataset.sec === (map[page] || 'home')));
 }
 /* on a phone the page intro + side panel fill the first screen — fold them so the lesson starts at the top */
@@ -4515,7 +4687,7 @@ function renderAbout() {
       <h2>Six levels, named after a growing plant</h2>
       ${LEVELS.map(l => `<p><b>${l.id} · ${esc(l.name)}</b> — ${esc(l.grade)} (${esc(l.cefr)}). ${esc(l.blurb)}</p>`).join('')}
       <h2 style="margin-top:20px">What's in, what's next</h2>
-      <p><b>In now:</b> levels 1–3 filled in (previews for 4–6); a ${DICT.length}-word dictionary; streak, XP and daily goal; a unit path; spaced-repetition flashcards; a mistakes queue; dialogues; listen-and-type; sentence building; a Latin-American Spanish voice with play and pause; and the <a href="#casita">Casita</a> — companions that grow, ${ITEMS.length} cosmetics, ${DECOR.length} pieces of decor and daily chests, all paid for with the XP you earn.</p>
+      <p><b>In now:</b> levels 1–3 filled in (previews for 4–6); a ${DICT.length}-word dictionary; streak, XP and daily goal; a unit path; spaced-repetition flashcards; a mistakes queue; dialogues; listen-and-type; sentence building; a Latin-American Spanish voice with play and pause; and the <a href="#casita">Casita</a> — companions that grow, ${ITEMS.length} cosmetics in ${Object.keys(HUES).length} colours, ${DECOR.length} pieces of decor and daily chests, all paid for through the <a href="#checkout">checkout</a> with the XP you earn.</p>
       <p><b>Also in now:</b> a <a href="#review/verbs">verb trainer</a> covering ${TENSES.length} tenses across ${VERBS.length} verbs (including Guatemalan <em>vos</em>), typed <a href="#review/translate">translation drills</a> in both directions, finished lessons that come back on the same spaced schedule as words, end-of-level <a href="#checkpoint/${S.level}">checkpoints</a>, a <a href="#placement">placement test</a>, and mistakes that tell you <em>why</em> they were wrong — gender, tense, ser vs estar and ten other causes.</p>
       <p><b>Next:</b> levels 4–6 filled in, illustrated stories with audio, a “hearts” mode for quizzes, streak repair and weekly quests.</p>
       <p><b>Later:</b> an AI conversation partner, native audio clips, writing correction.</p>
@@ -4558,9 +4730,28 @@ function renderGrammar(id) {
   if (cur) renderLesson(cur);
 }
 function exerciseHTML(ex, qi) {
-  if (ex.t === 'order') return `<div class="q order" data-q="${qi}"><div class="prompt">${qi + 1}. Build the sentence: <span class="muted" style="font-weight:400">“${esc(ex.en)}”</span></div><div class="answer" aria-label="Your sentence"></div><div class="bank"></div><div class="btn-row"><button type="button" class="btn sm rose" data-act="check">Check</button><button type="button" class="btn sm ghost" data-act="clear">Clear</button><button type="button" class="btn sm ghost" data-act="say" hidden>◉ Listen</button></div><div class="why" hidden>${esc(ex.why)}</div></div>`;
-  if (ex.t === 'blank') return `<div class="q blank" data-q="${qi}"><div class="prompt">${qi + 1}. Fill the blank</div><div class="sentence">${esc(ex.s).replace('___', '<span class="slot" data-slot>___</span>')}</div><div class="chips">${shuffle(ex.o).map(o => `<button type="button" data-o="${esc(o)}">${esc(o)}</button>`).join('')}</div><div class="why" hidden>${esc(ex.why)}</div></div>`;
-  return `<div class="q" data-q="${qi}"><div class="prompt">${qi + 1}. ${esc(ex.q)}</div><div class="opts">${ex.o.map((o, oi) => `<button type="button" data-o="${oi}">${esc(o)}</button>`).join('')}</div><div class="why" hidden>${esc(ex.why)}</div></div>`;
+  if (ex.t === 'order') return `<div class="q order" data-q="${qi}"><div class="prompt">${qi + 1}. Build the sentence: <span class="muted" style="font-weight:400">“${esc(ex.en)}”</span></div><div class="answer" aria-label="Your sentence"></div><div class="bank"></div><div class="btn-row"><button type="button" class="btn sm rose" data-act="check">Check</button><button type="button" class="btn sm ghost" data-act="clear">↺ Reset</button><button type="button" class="btn sm ghost" data-act="say" hidden>◉ Listen</button></div><div class="why" hidden>${esc(ex.why)}</div></div>`;
+  if (ex.t === 'blank') return `<div class="q blank" data-q="${qi}"><div class="prompt">${qi + 1}. Fill the blank</div><div class="sentence">${esc(ex.s).replace('___', '<span class="slot" data-slot>___</span>')}</div><div class="chips">${shuffle(ex.o).map(o => `<button type="button" data-o="${esc(o)}">${esc(o)}</button>`).join('')}</div><div class="qact"><button type="button" class="btn sm rose" data-act="check" disabled>Check</button><button type="button" class="btn sm ghost" data-act="reset" disabled>↺ Reset</button></div><div class="why" hidden>${esc(ex.why)}</div></div>`;
+  return `<div class="q" data-q="${qi}"><div class="prompt">${qi + 1}. ${esc(ex.q)}</div><div class="opts">${ex.o.map((o, oi) => `<button type="button" data-o="${oi}">${esc(o)}</button>`).join('')}</div><div class="qact"><button type="button" class="btn sm rose" data-act="check" disabled>Check</button><button type="button" class="btn sm ghost" data-act="reset" disabled>↺ Reset</button></div><div class="why" hidden>${esc(ex.why)}</div></div>`;
+}
+/* select-then-check: tap an option to choose it, Reset to change your mind, Check to commit */
+function wireChoice(qEl, btnSel, isRight, onCheck) {
+  const check = qEl.querySelector('[data-act="check"]'), reset = qEl.querySelector('[data-act="reset"]');
+  let picked = null;
+  const paint = () => { qEl.querySelectorAll(btnSel).forEach(b => b.classList.toggle('sel', b === picked)); if (check) check.disabled = !picked; if (reset) reset.disabled = !picked; };
+  qEl.querySelectorAll(btnSel).forEach(b => b.addEventListener('click', () => { if (qEl.classList.contains('locked')) return; picked = (picked === b) ? null : b; paint(); }));
+  if (reset) reset.addEventListener('click', () => { if (qEl.classList.contains('locked')) return; picked = null; paint(); });
+  const commit = () => {
+    if (!picked || qEl.classList.contains('locked')) return;
+    qEl.classList.add('locked');
+    qEl.querySelectorAll(btnSel).forEach(x => { x.disabled = true; x.classList.remove('sel'); if (isRight(x)) x.classList.add('right'); });
+    if (check) check.disabled = true; if (reset) reset.disabled = true;
+    const ok = isRight(picked);
+    if (!ok) picked.classList.add('wrong');
+    onCheck(picked, ok);
+  };
+  if (check) check.addEventListener('click', commit); else qEl.querySelectorAll(btnSel).forEach(b => b.addEventListener('click', () => { picked = b; commit(); }));
+  return { commit };
 }
 /* name the cause of a wrong answer, remember it, and append the tip to the explanation */
 function tagSlip(got, want, whyEl) {
@@ -4599,21 +4790,19 @@ function wireExercise(qEl, ex, done) {
       done(ok);
     });
   } else if (ex.t === 'blank') {
-    qEl.querySelectorAll('.chips button').forEach(b => b.addEventListener('click', () => {
-      if (qEl.classList.contains('locked')) return; qEl.classList.add('locked');
-      const ok = b.dataset.o === ex.a;
-      qEl.querySelectorAll('.chips button').forEach(x => { x.disabled = true; if (x.dataset.o === ex.a) x.classList.add('right'); });
-      if (!ok) { b.classList.add('wrong'); tagSlip(b.dataset.o, ex.a, why); }
-      qEl.querySelector('[data-slot]').textContent = ex.a; why.hidden = false; done(ok);
-    }));
+    const slot = qEl.querySelector('[data-slot]');
+    qEl.querySelectorAll('.chips button').forEach(b => b.addEventListener('click', () => { if (!qEl.classList.contains('locked')) slot.textContent = b.classList.contains('sel') ? '___' : b.dataset.o; }));
+    qEl.querySelector('[data-act="reset"]').addEventListener('click', () => { if (!qEl.classList.contains('locked')) slot.textContent = '___'; });
+    wireChoice(qEl, '.chips button', x => x.dataset.o === ex.a, (b, ok) => {
+      if (!ok) tagSlip(b.dataset.o, ex.a, why);
+      slot.textContent = ex.a; why.hidden = false; done(ok);
+    });
   } else {
-    qEl.querySelectorAll('.opts button').forEach(b => b.addEventListener('click', () => {
-      if (qEl.classList.contains('locked')) return; qEl.classList.add('locked');
-      const oi = Number(b.dataset.o), ok = oi === ex.a;
-      qEl.querySelectorAll('.opts button').forEach(x => { x.disabled = true; if (Number(x.dataset.o) === ex.a) x.classList.add('right'); });
-      if (!ok) { b.classList.add('wrong'); tagSlip(ex.o[oi], ex.o[ex.a], why); }
+    wireChoice(qEl, '.opts button', x => Number(x.dataset.o) === ex.a, (b, ok) => {
+      const oi = Number(b.dataset.o);
+      if (!ok) tagSlip(ex.o[oi], ex.o[ex.a], why);
       why.hidden = false; done(ok);
-    }));
+    });
   }
 }
 function renderLesson(l) {
@@ -4787,7 +4976,7 @@ function renderListenType(phrases) {
     <div class="row"><button type="button" class="big-play" id="ltPlay" aria-label="Play the phrase">▶</button><div class="stack tight"><b>Play, then type what you hear.</b><span class="muted small">Play it as many times as you like. Accents and punctuation don't matter.</span><div class="btn-row"><button type="button" class="btn sm ghost" id="ltSlow">🐢 Slow</button><button type="button" class="btn sm ghost" id="ltHint">Show English</button></div></div></div>
     <div class="muted small" id="ltHintTxt" hidden></div>
     <input id="ltInput" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Escribe aquí…" aria-label="Type what you hear">
-    <div class="btn-row"><button type="button" class="btn rose" id="ltCheck">Check</button><button type="button" class="btn ghost" id="ltSkip">Skip →</button></div>
+    <div class="btn-row"><button type="button" class="btn rose" id="ltCheck">Check</button><button type="button" class="btn ghost" id="ltReset">↺ Reset</button><button type="button" class="btn ghost" id="ltSkip">Skip →</button></div>
     <div id="ltResult" hidden></div>
   </div>`;
   const inp = $('#ltInput');
@@ -4802,6 +4991,7 @@ function renderListenType(phrases) {
     if (ok) { if (!S.listen[cur.es]) { S.listen[cur.es] = true; addXP(XP.listen, 'listening'); } else save(); $('#ltNext').addEventListener('click', () => renderListenType(phrases)); $('#ltCheck').disabled = true; }
   };
   $('#ltCheck').addEventListener('click', check);
+  $('#ltReset').addEventListener('click', () => { if ($('#ltCheck').disabled) return; inp.value = ''; const r = $('#ltResult'); r.hidden = true; r.innerHTML = ''; inp.focus(); });
   inp.addEventListener('keydown', (e) => { if (e.key === 'Enter') check(); });
   if (AUDIO_OK) setTimeout(() => speak(cur.es), 300); else { const r = $('#ltResult'); r.hidden = false; r.innerHTML = '<div class="notice">Tap ▶ to hear the phrase.</div>'; }
 }
@@ -4848,7 +5038,7 @@ function renderPassage(r) {
         ${r.en ? `<div class="row between"><span class="label">Read aloud</span>${playerHTML('readPlayer')}</div>` : ''}
         <div class="passage">${paras.map(p => `<p>${p}</p>`).join('')}</div>
         ${r.en ? `<div class="btn-row"><button type="button" class="btn sm ghost" id="showTr">Show English</button></div><div class="translation" id="tr" hidden>${esc(r.en)}</div>` : ''}
-        ${r.qs.length ? `<div class="quiz" id="rquiz"><div class="qhead"><span class="label">Did you understand? · ${r.qs.length} questions</span><span class="score" id="rscore">${S.done[r.id] ? 'Done ✓' : ''}</span></div>${r.qs.map((q, qi) => `<div class="q" data-q="${qi}"><div class="prompt">${qi + 1}. ${esc(q.q)}</div><div class="opts">${q.o.map((o, oi) => `<button type="button" data-o="${oi}">${esc(o)}</button>`).join('')}</div></div>`).join('')}</div>` : ''}
+        ${r.qs.length ? `<div class="quiz" id="rquiz"><div class="qhead"><span class="label">Did you understand? · ${r.qs.length} questions</span><span class="score" id="rscore">${S.done[r.id] ? 'Done ✓' : ''}</span></div>${r.qs.map((q, qi) => `<div class="q" data-q="${qi}"><div class="prompt">${qi + 1}. ${esc(q.q)}</div><div class="opts">${q.o.map((o, oi) => `<button type="button" data-o="${oi}">${esc(o)}</button>`).join('')}</div><div class="qact"><button type="button" class="btn sm rose" data-act="check" disabled>Check</button><button type="button" class="btn sm ghost" data-act="reset" disabled>↺ Reset</button></div></div>`).join('')}</div>` : ''}
       </div>
       <aside class="readside">
         <div class="gloss" id="gloss"><span class="label">Tap a word</span><p class="muted small">Its meaning and an example will appear here. Dotted words have an entry; a solid pink underline means it's already in your list.</p></div>
@@ -4869,15 +5059,14 @@ function renderPassage(r) {
     const answers = {};
     box.querySelectorAll('#rquiz .q').forEach(qEl => {
       const qi = Number(qEl.dataset.q), q = r.qs[qi];
-      qEl.querySelectorAll('.opts button').forEach(b => b.addEventListener('click', () => {
+      wireChoice(qEl, '.opts button', x => Number(x.dataset.o) === q.a, (b, ok) => {
         if (answers[qi] !== undefined) return;
         answers[qi] = Number(b.dataset.o);
-        qEl.querySelectorAll('.opts button').forEach(x => { x.disabled = true; if (Number(x.dataset.o) === q.a) x.classList.add('right'); });
-        if (answers[qi] !== q.a) { b.classList.add('wrong'); recordMistake(r.id, qi, { t: 'mcq', ...q, why: 'From the passage “' + r.title + '”.' }); }
+        if (!ok) { recordMistake(r.id, qi, { t: 'mcq', ...q, why: 'From the passage “' + r.title + '”.' }); tagSlip(q.o[answers[qi]], q.o[q.a], null); }
         const n = Object.keys(answers).length, right = Object.entries(answers).filter(([k, v]) => r.qs[k].a === v).length;
         $('#rscore').textContent = `${right}/${n} correct`;
         if (n === r.qs.length) { const first = !S.done[r.id]; S.done[r.id] = true; save(); $('#rscore').textContent = `${right}/${r.qs.length} · Passage done ✓`; const c = app.querySelector(`.list button[data-id="${r.id}"] .check`); if (c) { c.classList.add('done'); c.textContent = '✓'; } if (first) { logAct('reading', r.title, { s: Math.round(right / r.qs.length * 100) }); addXP(XP.passage, 'passage done'); } } else save();
-      }));
+      });
     });
   }
 }
@@ -5238,7 +5427,7 @@ function paintVerbDrill(pool, T) {
           <input type="text" id="vAns" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="${T.k === 'perf' ? 'two words' : 'type the form'}" aria-label="Your answer">
           <button type="button" class="btn rose" id="vGo">Check</button>
         </div>
-        <div class="vhint"><button type="button" class="btn sm ghost" id="vHint">Show me</button><span class="mono muted" id="vScore">${asked ? right + '/' + asked + (streak > 1 ? ' · ' + streak + ' in a row' : '') : 'accents optional'}</span></div>
+        <div class="vhint"><span class="btn-row"><button type="button" class="btn sm ghost" id="vReset">↺ Reset</button><button type="button" class="btn sm ghost" id="vHint">Show me</button></span><span class="mono muted" id="vScore">${asked ? right + '/' + asked + (streak > 1 ? ' · ' + streak + ' in a row' : '') : 'accents optional'}</span></div>
         <div id="vRes"></div>
       </div>`;
     const inp = $('#vAns'); inp.focus();
@@ -5265,6 +5454,7 @@ function paintVerbDrill(pool, T) {
       inp.disabled = true; $('#vGo').disabled = true; $('#vHint').disabled = true;
     };
     $('#vGo').addEventListener('click', check);
+    $('#vReset').addEventListener('click', () => { if (inp.disabled) return; inp.value = ''; inp.focus(); });
     inp.addEventListener('keydown', e => { if (e.key === 'Enter') check(); });
     $('#vHint').addEventListener('click', () => {
       noteVerb(v.inf, T.k, pk, false); save();
@@ -5301,7 +5491,7 @@ function renderTranslate() {
         <span class="label">${dir === 'es' ? 'Say this in Spanish' : 'What does this mean?'}</span>
         <div class="tprompt">${esc(prompt)}${dir === 'en' ? `<button type="button" class="btn sm ghost" id="tSay">◉</button>` : ''}</div>
         <textarea id="tAns" rows="2" autocomplete="off" autocapitalize="sentences" spellcheck="false" placeholder="${dir === 'es' ? 'Escribe en español…' : 'Type it in English…'}" aria-label="Your translation"></textarea>
-        <div class="btn-row"><button type="button" class="btn rose" id="tGo">Check</button><button type="button" class="btn ghost" id="tSkip">Show me</button><span class="mono muted" style="margin-left:auto">${asked ? right + '/' + asked : ''}</span></div>
+        <div class="btn-row"><button type="button" class="btn rose" id="tGo">Check</button><button type="button" class="btn ghost" id="tReset">↺ Reset</button><button type="button" class="btn ghost" id="tSkip">Show me</button><span class="mono muted" style="margin-left:auto">${asked ? right + '/' + asked : ''}</span></div>
         <div id="tRes"></div>
       </div>`;
     const say = $('#tSay'); if (say) say.addEventListener('click', () => speak(cur.es));
@@ -5329,6 +5519,7 @@ function renderTranslate() {
       ta.disabled = true; $('#tGo').disabled = true; $('#tSkip').disabled = true;
     };
     $('#tGo').addEventListener('click', grade);
+    $('#tReset').addEventListener('click', () => { if (ta.disabled) return; ta.value = ''; ta.focus(); });
     ta.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); grade(); } });
     $('#tSkip').addEventListener('click', () => { ta.value = target; grade(); });
   };
@@ -5336,12 +5527,16 @@ function renderTranslate() {
 }
 
 /* =========================== CHECKPOINTS AND PLACEMENT =========================== */
+document.addEventListener('click', (e) => {
+  const b = e.target.closest('.cpreset'); if (!b) return;
+  const inp = b.parentElement.querySelector('.cpin'); if (inp && !inp.disabled) { inp.value = ''; inp.focus(); }
+});
 function checkpointQuestionHTML(q, i) {
   if (q.kind === 'ex') return `<div class="cpq" data-i="${i}">${exerciseHTML(q.ex, i)}</div>`;
-  if (q.kind === 'trans') return `<div class="cpq" data-i="${i}"><div class="q"><div class="prompt">${i + 1}. Say this in Spanish: <span class="muted" style="font-weight:400">“${esc(q.en)}”</span></div><input type="text" class="cpin" autocomplete="off" spellcheck="false" aria-label="Your answer"><div class="why" hidden></div></div></div>`;
-  if (q.kind === 'listen') return `<div class="cpq" data-i="${i}"><div class="q"><div class="prompt">${i + 1}. Type what you hear <button type="button" class="btn sm ghost cpsay">◉ Play</button></div><input type="text" class="cpin" autocomplete="off" spellcheck="false" aria-label="Your answer"><div class="why" hidden></div></div></div>`;
+  if (q.kind === 'trans') return `<div class="cpq" data-i="${i}"><div class="q"><div class="prompt">${i + 1}. Say this in Spanish: <span class="muted" style="font-weight:400">“${esc(q.en)}”</span></div><div class="cprow"><input type="text" class="cpin" autocomplete="off" spellcheck="false" aria-label="Your answer"><button type="button" class="btn sm ghost cpreset" title="Clear this answer">↺</button></div><div class="why" hidden></div></div></div>`;
+  if (q.kind === 'listen') return `<div class="cpq" data-i="${i}"><div class="q"><div class="prompt">${i + 1}. Type what you hear <button type="button" class="btn sm ghost cpsay">◉ Play</button></div><div class="cprow"><input type="text" class="cpin" autocomplete="off" spellcheck="false" aria-label="Your answer"><button type="button" class="btn sm ghost cpreset" title="Clear this answer">↺</button></div><div class="why" hidden></div></div></div>`;
   const p = PERSONS.find(x => x.k === q.person);
-  return `<div class="cpq" data-i="${i}"><div class="q"><div class="prompt">${i + 1}. <b>${esc(q.inf)}</b> <span class="muted" style="font-weight:400">(${esc(q.en)})</span> — ${esc(TENSE_BY_K[q.tense].t)}, <b>${esc(p.t)}</b></div><input type="text" class="cpin" autocomplete="off" spellcheck="false" aria-label="Your answer"><div class="why" hidden></div></div></div>`;
+  return `<div class="cpq" data-i="${i}"><div class="q"><div class="prompt">${i + 1}. <b>${esc(q.inf)}</b> <span class="muted" style="font-weight:400">(${esc(q.en)})</span> — ${esc(TENSE_BY_K[q.tense].t)}, <b>${esc(p.t)}</b></div><div class="cprow"><input type="text" class="cpin" autocomplete="off" spellcheck="false" aria-label="Your answer"><button type="button" class="btn sm ghost cpreset" title="Clear this answer">↺</button></div><div class="why" hidden></div></div></div>`;
 }
 function gradeCheckpointQ(el, q) {
   /* returns true/false, and shows the answer inline */
@@ -5578,81 +5773,170 @@ function renderCasita(sub) {
 function shopTabs(tab) {
   return `<div class="tabs">${[['items', 'Cosmetics'], ['decor', 'Room & decor']].map(([k, t]) => `<a href="#shop/${k}" class="${tab === k ? 'on' : ''}">${t}</a>`).join('')}</div>`;
 }
+/* the floating bag bar, shown on shop pages */
+function bagBarHTML() {
+  const n = cartCount(), total = cartTotal(), short = Math.max(0, total - (S.coins || 0));
+  return `<div class="bagbar ${n ? 'has' : ''}" id="bagBar">
+    <span class="bagic" aria-hidden="true">👜</span>
+    <span class="bagtxt"><b>${n ? `${n} item${n === 1 ? '' : 's'} in your bag` : 'Your bag is empty'}</b><br><span class="small muted">${n ? `${COIN} ${total} total${short ? ` · ${short} short` : ' · you can afford it'}` : 'Tap Add to bag on anything you like'}</span></span>
+    <a class="btn ${n ? 'rose' : 'ghost'} sm" href="#checkout">Checkout →</a>
+  </div>`;
+}
+function paintBagBar() { const b = $('#bagBar'); if (b) b.outerHTML = bagBarHTML(); }
+/* which variant of a family is currently being previewed in the shop */
+function famPick(f) {
+  if (!S.shopPick) S.shopPick = {};
+  const pick = S.shopPick[f.fam];
+  if (pick && f.items.some(i => i.id === pick)) return ITEM_BY_ID[pick];
+  /* default: the first unowned variant, else the first */
+  return f.items.find(i => !S.items[i.id]) || f.items[0];
+}
+function shopCardHTML(f) {
+  const it = famPick(f);
+  const owned = !!S.items[it.id], queued = inCart('item', it.id);
+  const price = itemPrice(it);
+  const ownedN = f.items.filter(i => S.items[i.id]).length;
+  return `<div class="shopcard fam ${owned ? 'owned' : ''} r-${f.r}" data-fam="${esc(f.fam)}">
+    <div class="thumb">${previewWith(it.id, 104)}</div>
+    <b>${esc(it.es)}</b><span class="small muted">${esc(it.en)} · ${RARITY[f.r].t}${f.items.length > 1 ? ` · ${ownedN}/${f.items.length}` : ''}</span>
+    ${f.items.length > 1 ? `<div class="swatches" role="radiogroup" aria-label="Colour">${f.items.map(i => { const h = HUES[i.hue] || {}; return `<button type="button" class="sw ${i.id === it.id ? 'on' : ''} ${S.items[i.id] ? 'have' : ''}" data-pick="${esc(i.id)}" style="--sw:${h.a || '#ccc'};--swb:${h.b || '#999'}" title="${esc(i.es)}" aria-label="${esc(i.en)}"></button>`; }).join('')}</div>` : ''}
+    ${owned ? `<button type="button" class="btn sm" data-wear="${esc(it.id)}">${(S.chars[buddy().id].worn[it.slot] === it.id) ? 'Wearing ✓' : 'Wear'}</button>`
+      : queued ? `<button type="button" class="btn sm ghost" data-unbag="${esc(it.id)}">In bag ✓ · remove</button>`
+      : `<button type="button" class="btn sm rose" data-bag="${esc(it.id)}">Add to bag · ${COIN} ${price}</button>`}
+  </div>`;
+}
+function wireShopCards(root) {
+  root.querySelectorAll('[data-pick]').forEach(b => b.addEventListener('click', () => {
+    const it = ITEM_BY_ID[b.dataset.pick]; if (!it) return;
+    if (!S.shopPick) S.shopPick = {};
+    S.shopPick[it.fam] = it.id; save();
+    const card = b.closest('.shopcard'); const f = FAMILIES.find(x => x.fam === it.fam);
+    card.outerHTML = shopCardHTML(f);
+    wireShopCards(root.querySelector(`[data-fam="${it.fam}"]`).parentElement);
+  }));
+  root.querySelectorAll('[data-bag]').forEach(b => b.addEventListener('click', () => {
+    if (cartAdd('item', b.dataset.bag)) { save(); toast('Added to your bag'); }
+    const it = ITEM_BY_ID[b.dataset.bag]; const f = FAMILIES.find(x => x.fam === it.fam);
+    const card = b.closest('.shopcard'); card.outerHTML = shopCardHTML(f);
+    wireShopCards(root.querySelector(`[data-fam="${it.fam}"]`).parentElement); paintBagBar();
+  }));
+  root.querySelectorAll('[data-unbag]').forEach(b => b.addEventListener('click', () => {
+    cartRemove('item', b.dataset.unbag); save();
+    const it = ITEM_BY_ID[b.dataset.unbag]; const f = FAMILIES.find(x => x.fam === it.fam);
+    const card = b.closest('.shopcard'); card.outerHTML = shopCardHTML(f);
+    wireShopCards(root.querySelector(`[data-fam="${it.fam}"]`).parentElement); paintBagBar();
+  }));
+  root.querySelectorAll('[data-wear]').forEach(b => b.addEventListener('click', () => {
+    const it = ITEM_BY_ID[b.dataset.wear]; if (!it) return;
+    const bd = buddy(); S.chars[bd.id].worn[it.slot] = S.chars[bd.id].worn[it.slot] === it.id ? null : it.id; save();
+    renderShop('items');
+  }));
+}
 function renderShop(sub) {
   const tab = sub === 'decor' ? 'decor' : 'items';
   crumb([{ t: 'Casita', href: '#casita' }, { t: 'Shop' }]);
   const head = `
   <section class="pagehead">
-    <div class="title"><span class="label">Shop</span><h1>Spend your ${COIN_NAME}</h1><p>Common items cost ${RARITY.comun.p}, rare ${RARITY.rara.p}, legendary ${RARITY.legendaria.p}. Chests can also drop them for free.</p></div>
-    <div class="side pink"><span class="label">Purse</span><div class="es" style="font-size:2rem">${COIN} ${S.coins || 0}</div><span class="small muted">Earn one for every XP.</span><div class="btn-row" style="margin-top:10px"><a class="btn sm ghost" href="#casita">← Casita</a></div></div>
+    <div class="title"><span class="label">Shop</span><h1>Spend your ${COIN_NAME}</h1><p>Pick a colour, see it on ${esc(buddy().name)}, add it to your bag. Common items cost ${RARITY.comun.p}, rare ${RARITY.rara.p}, legendary ${RARITY.legendaria.p}. Chests can also drop them for free.</p></div>
+    <div class="side pink"><span class="label">Purse</span><div class="es" style="font-size:2rem">${COIN} ${S.coins || 0}</div><span class="small muted">Earn one for every XP.</span><div class="btn-row" style="margin-top:10px"><a class="btn sm rose" href="#checkout">Bag (${cartCount()}) →</a><a class="btn sm ghost" href="#casita">← Casita</a></div></div>
   </section>${shopTabs(tab)}`;
   if (tab === 'decor') {
     app.innerHTML = head + `
     <div class="shopgrid">
       ${ROOM_BGS.map(bg => {
-        const owned = bg.price === 0 || S.decor['bg:' + bg.id];
-        const on = S.room.bg === bg.id;
+        const owned = ownedOf('bg', bg.id), on = S.room.bg === bg.id, queued = inCart('bg', bg.id);
         return `<div class="shopcard ${owned ? 'owned' : ''}">
           <div class="thumb wide"><svg viewBox="0 0 600 300">${bg.svg}</svg></div>
           <b>${esc(bg.es)}</b><span class="small muted">${esc(bg.en)} · background</span>
-          ${on ? `<span class="pill ok">in use</span>` : owned ? `<button type="button" class="btn sm" data-usebg="${bg.id}">Use</button>` : `<button type="button" class="btn sm rose" data-buybg="${bg.id}" ${(S.coins || 0) < bg.price ? 'disabled' : ''}>${COIN} ${bg.price}</button>`}
+          ${on ? `<span class="pill ok">in use</span>` : owned ? `<button type="button" class="btn sm" data-usebg="${bg.id}">Use</button>` : queued ? `<button type="button" class="btn sm ghost" data-unbagx="bg:${bg.id}">In bag ✓ · remove</button>` : `<button type="button" class="btn sm rose" data-bagx="bg:${bg.id}">Add to bag · ${COIN} ${bg.price}</button>`}
         </div>`;
       }).join('')}
       ${DECOR.map(d => {
-        const owned = !!S.decor[d.id], on = !!S.room.on[d.id];
+        const owned = !!S.decor[d.id], on = !!S.room.on[d.id], queued = inCart('decor', d.id);
         return `<div class="shopcard ${owned ? 'owned' : ''}">
           <div class="thumb"><svg viewBox="-70 -70 140 140">${d.svg}</svg></div>
           <b>${esc(d.es)}</b><span class="small muted">${esc(d.en)}</span>
-          ${owned ? `<button type="button" class="btn sm ${on ? '' : 'rose'}" data-togdec="${d.id}">${on ? 'Put away' : 'Place in room'}</button>` : `<button type="button" class="btn sm rose" data-buydec="${d.id}" ${(S.coins || 0) < d.price ? 'disabled' : ''}>${COIN} ${d.price}</button>`}
+          ${owned ? `<button type="button" class="btn sm ${on ? '' : 'rose'}" data-togdec="${d.id}">${on ? 'Put away' : 'Place in room'}</button>` : queued ? `<button type="button" class="btn sm ghost" data-unbagx="decor:${d.id}">In bag ✓ · remove</button>` : `<button type="button" class="btn sm rose" data-bagx="decor:${d.id}">Add to bag · ${COIN} ${d.price}</button>`}
         </div>`;
       }).join('')}
-    </div>`;
-    app.querySelectorAll('[data-buydec]').forEach(b => b.addEventListener('click', () => buyDecor(b.dataset.buydec)));
+    </div>${bagBarHTML()}`;
+    app.querySelectorAll('[data-bagx]').forEach(b => b.addEventListener('click', () => { const [k, id] = b.dataset.bagx.split(':'); if (cartAdd(k, id)) { save(); toast('Added to your bag'); } renderShop('decor'); }));
+    app.querySelectorAll('[data-unbagx]').forEach(b => b.addEventListener('click', () => { const [k, id] = b.dataset.unbagx.split(':'); cartRemove(k, id); save(); renderShop('decor'); }));
     app.querySelectorAll('[data-togdec]').forEach(b => b.addEventListener('click', () => { const id = b.dataset.togdec; S.room.on[id] = !S.room.on[id]; save(); renderShop('decor'); }));
     app.querySelectorAll('[data-usebg]').forEach(b => b.addEventListener('click', () => { S.room.bg = b.dataset.usebg; save(); renderShop('decor'); }));
-    app.querySelectorAll('[data-buybg]').forEach(b => b.addEventListener('click', () => buyBg(b.dataset.buybg)));
     return;
   }
-  app.innerHTML = head + SLOTS.map(s => `
+  app.innerHTML = head + SLOTS.map(s => {
+    const fams = FAMILIES.filter(f => f.slot === s.k);
+    const have = itemsFor(s.k).filter(i => S.items[i.id]).length;
+    return `
     <section class="hsec">
-      <div class="hhead"><div><span class="eyebrow">${s.t}</span><h2>${s.t === 'Aura' ? 'Auras' : s.t + ' items'}</h2></div><span class="mono muted">${itemsFor(s.k).filter(i => S.items[i.id]).length}/${itemsFor(s.k).length}</span></div>
-      <div class="hbody shopgrid">
-        ${itemsFor(s.k).map(i => {
-          const owned = !!S.items[i.id], price = itemPrice(i);
-          return `<div class="shopcard ${owned ? 'owned' : ''} r-${i.r}">
-            <div class="thumb">${previewWith(i.id, 104)}</div>
-            <b>${esc(i.es)}</b><span class="small muted">${esc(i.en)} · ${RARITY[i.r].t}</span>
-            ${owned ? `<span class="pill ok">owned</span>` : `<button type="button" class="btn sm rose" data-buy="${i.id}" ${(S.coins || 0) < price ? 'disabled' : ''}>${COIN} ${price}</button>`}
-          </div>`;
-        }).join('')}
-      </div>
-    </section>`).join('');
-  app.querySelectorAll('[data-buy]').forEach(b => b.addEventListener('click', () => buyItem(b.dataset.buy)));
+      <div class="hhead"><div><span class="eyebrow">${s.t}</span><h2>${s.t === 'Aura' ? 'Auras' : s.t + ' items'}</h2></div><span class="mono muted">${have}/${itemsFor(s.k).length} owned</span></div>
+      <div class="hbody shopgrid" data-slotgrid="${s.k}">${fams.map(shopCardHTML).join('')}</div>
+    </section>`;
+  }).join('') + bagBarHTML();
+  wireShopCards(app);
 }
-function buyItem(id) {
-  const it = ITEM_BY_ID[id]; if (!it || S.items[id]) return;
-  const p = itemPrice(it);
-  if ((S.coins || 0) < p) { toast(`Not enough ${COIN_NAME} — ${p - (S.coins || 0)} more to go.`); return; }
-  S.coins -= p; S.items[id] = true;
-  const b = buddy(); S.chars[b.id].worn[it.slot] = id;
-  logAct('buy', it.es); save();
-  bigToast('New item!', `<b>${esc(it.es)}</b> (${esc(it.en)}) — ${esc(b.name)} is wearing it now.`, b.id);
-  renderShop('items');
+
+/* =========================== CHECKOUT =========================== */
+function lineThumb(l) {
+  if (l.k === 'item') return previewWith(l.id, 72);
+  if (l.k === 'decor') { const d = DECOR_BY_ID[l.id]; return `<svg viewBox="-70 -70 140 140" style="width:72px;height:72px">${d ? d.svg : ''}</svg>`; }
+  const b = ROOM_BG_BY_ID[l.id]; return `<svg viewBox="0 0 600 300" style="width:96px;height:48px;border-radius:8px">${b ? b.svg : ''}</svg>`;
 }
-function buyDecor(id) {
-  const d = DECOR_BY_ID[id]; if (!d || S.decor[id]) return;
-  if ((S.coins || 0) < d.price) { toast(`Not enough ${COIN_NAME} — ${d.price - (S.coins || 0)} more to go.`); return; }
-  S.coins -= d.price; S.decor[id] = true; S.room.on[id] = true;
-  logAct('buy', d.es); save();
-  bigToast('Added to the casita!', `<b>${esc(d.es)}</b> (${esc(d.en)}) is in the room now.`, buddy().id);
-  renderShop('decor');
-}
-function buyBg(id) {
-  const bg = ROOM_BG_BY_ID[id]; if (!bg || S.decor['bg:' + id]) return;
-  if ((S.coins || 0) < bg.price) { toast(`Not enough ${COIN_NAME} — ${bg.price - (S.coins || 0)} more to go.`); return; }
-  S.coins -= bg.price; S.decor['bg:' + id] = true; S.room.bg = id;
-  logAct('buy', bg.es); save();
-  renderShop('decor');
+function renderCheckout() {
+  crumb([{ t: 'Casita', href: '#casita' }, { t: 'Shop', href: '#shop' }, { t: 'Checkout' }]);
+  const lines = cartLines(), total = cartTotal(), coins = S.coins || 0, left = coins - total, short = Math.max(0, -left);
+  app.innerHTML = `
+  <section class="pagehead">
+    <div class="title"><span class="label">Checkout</span><h1>Your bag</h1><p>Everything here is paid for with ${COIN_NAME} — the coins you earn one-for-one with XP. Nothing leaves your purse until you confirm.</p></div>
+    <div class="side pink"><span class="label">Purse</span><div class="es" style="font-size:2rem">${COIN} ${coins}</div><span class="small muted">${lines.length ? (short ? `${short} more needed` : `${left} left after this`) : 'Nothing to pay yet'}</span></div>
+  </section>
+  <div class="checkout">
+    ${lines.length ? `
+    <div class="bagitems">
+      ${lines.map(l => `<div class="bagline" data-line="${l.k}:${esc(l.id)}">
+        <div class="bthumb">${lineThumb(l)}</div>
+        <div class="bname"><b>${esc(l.es)}</b><span class="small muted">${esc(l.en)} · ${l.k === 'item' ? RARITY[ITEM_BY_ID[l.id].r].t : l.k === 'decor' ? 'decor' : 'background'}</span></div>
+        <div class="bprice">${COIN} ${l.price}</div>
+        <button type="button" class="btn sm ghost" data-rm="${l.k}:${esc(l.id)}" aria-label="Remove ${esc(l.en)}">Remove</button>
+      </div>`).join('')}
+    </div>
+    <div class="bagsum">
+      <span class="label">Summary</span>
+      <div class="row between"><span>${lines.length} item${lines.length === 1 ? '' : 's'}</span><span class="mono">${COIN} ${total}</span></div>
+      <div class="row between"><span>In your purse</span><span class="mono">${COIN} ${coins}</span></div>
+      <div class="row between ${short ? 'short' : ''}"><b>${short ? 'Still needed' : 'Left afterwards'}</b><b class="mono">${COIN} ${short || left}</b></div>
+      ${short ? `<p class="small muted">${short} XP of practice would cover it — that is about ${Math.ceil(short / 20)} day${Math.ceil(short / 20) === 1 ? '' : 's'} at a 20-XP goal. Or remove something above.</p>` : `<p class="small muted">New items go straight onto ${esc(buddy().name)}; decor goes straight into the room.</p>`}
+      <div class="btn-row"><button type="button" class="btn rose" id="payBtn" ${short ? 'disabled' : ''}>Confirm and pay ${COIN} ${total}</button><a class="btn ghost" href="#shop">Keep shopping</a></div>
+      ${short ? `<div class="btn-row"><a class="btn sm ghost" href="#review">Earn some XP →</a></div>` : ''}
+    </div>` : `
+    <div class="bagempty">
+      ${companion(buddy().id, 140, 'float')}
+      <h2>Your bag is empty</h2>
+      <p class="muted">Pick a colour, try it on ${esc(buddy().name)}, and tap <b>Add to bag</b>. Then come back here to pay for everything at once.</p>
+      <div class="btn-row"><a class="btn rose" href="#shop">Cosmetics →</a><a class="btn ghost" href="#shop/decor">Room &amp; decor →</a></div>
+    </div>`}
+    <div id="receipt"></div>
+  </div>`;
+  app.querySelectorAll('[data-rm]').forEach(b => b.addEventListener('click', () => { const [k, id] = b.dataset.rm.split(':'); cartRemove(k, id); save(); renderCheckout(); }));
+  const pay = $('#payBtn');
+  if (pay) pay.addEventListener('click', () => {
+    const r = cartCheckout();
+    if (!r) { toast(`Not enough ${COIN_NAME}.`); renderCheckout(); return; }
+    r.lines.forEach(l => logAct('buy', l.es));
+    save();
+    const items = r.lines.filter(l => l.k === 'item'), other = r.lines.filter(l => l.k !== 'item');
+    app.querySelector('.checkout').innerHTML = `
+      <div class="receipt">
+        <div class="rhead">${companion(buddy().id, 150, 'float')}<div><span class="label">Receipt</span><h2>¡Gracias!</h2><p class="muted">${r.lines.length} item${r.lines.length === 1 ? '' : 's'} for ${COIN} ${r.total}. You have ${COIN} ${r.left} left.</p></div></div>
+        <div class="rlines">${r.lines.map(l => `<div class="bagline"><div class="bthumb">${lineThumb(l)}</div><div class="bname"><b>${esc(l.es)}</b><span class="small muted">${esc(l.en)}</span></div><div class="bprice">${COIN} ${l.price}</div><span class="pill ok">${l.k === 'item' ? 'wearing' : l.k === 'decor' ? 'placed' : 'in use'}</span></div>`).join('')}</div>
+        <p class="small muted">${items.length ? `${esc(buddy().name)} is wearing the new things now — change outfits any time in the Casita.` : ''} ${other.length ? 'The room has been updated.' : ''}</p>
+        <div class="btn-row"><a class="btn rose" href="#casita">See the Casita →</a><a class="btn ghost" href="#shop">Back to the shop</a><a class="btn ghost" href="#collection">Collection</a></div>
+      </div>`;
+    bigToast('Purchase complete!', `<b>${r.lines.length}</b> new thing${r.lines.length === 1 ? '' : 's'} for ${esc(buddy().name)}.`, buddy().id);
+    updateStat();
+  });
 }
 
 function renderCollection() {
