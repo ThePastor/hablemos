@@ -7,6 +7,9 @@
 <meta name="apple-mobile-web-app-title" content="Hablemos">
 <meta name="theme-color" content="#FEFAE0" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#1E1519" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap">
 <style>
 /* ---------- Hablemos — visual system (hairline grid, sage/cream ground, pink celebration) ---------- */
@@ -1309,6 +1312,26 @@ img, svg { max-width: 100%; }
   .home-hero .copy h1 { font-size: clamp(3.4rem, 9vw, 5rem); }
 }
 
+/* =========================== v11: PWA — install, update, offline =========================== */
+.installbox { display: grid; gap: 8px; padding: 16px; border-radius: 18px; background: var(--pink-1); border: 1px solid var(--pink-3); position: relative; }
+.installbox.done { background: var(--ok-soft); border-color: var(--sage); }
+.installbox b { font-family: var(--font-display); font-size: 1.05rem; }
+.installbox ol b, .installbox p b { font-family: inherit; font-size: inherit; }
+.installbox ol { margin: 6px 0 0 18px; display: grid; gap: 4px; }
+.installbox .ic { display: inline-block; padding: 0 5px; border: 1px solid var(--line); border-radius: 5px; font-size: .85em; }
+.installbox .btn { justify-self: start; margin-top: 4px; }
+.installbox.compact { grid-template-columns: auto 1fr; align-items: center; gap: 14px; padding-right: 44px; }
+.installbox .x { position: absolute; top: 6px; right: 8px; background: none; border: 0; font-size: 1.3rem; color: var(--ink-3); cursor: pointer; padding: 6px 10px; min-width: 40px; min-height: 40px; }
+.updtoast { position: fixed; left: 12px; right: 12px; bottom: calc(84px + env(safe-area-inset-bottom, 0px)); z-index: 95; display: flex; align-items: center; gap: 12px; padding: 12px 40px 12px 16px; border-radius: 16px; background: var(--ink); color: var(--inverse-ink); box-shadow: var(--shadow); }
+.updtoast span { flex: 1 1 auto; font-weight: 600; }
+.updtoast .x { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); background: none; border: 0; color: var(--inverse-ink-2); font-size: 1.3rem; padding: 6px 10px; cursor: pointer; }
+@media (min-width: 761px) { .updtoast { left: auto; right: 18px; bottom: 18px; max-width: 420px; } }
+#netpill { position: fixed; top: calc(8px + env(safe-area-inset-top, 0px)); left: 50%; transform: translateX(-50%); z-index: 60; padding: 6px 12px; border-radius: 999px; background: var(--ink); color: var(--inverse-ink); font-family: var(--font-mono); font-size: .62rem; letter-spacing: .08em; text-transform: uppercase; pointer-events: none; }
+#netpill[hidden] { display: none; }
+/* installed: no browser chrome, so lose the web footer and give the bar a little more top room */
+html.standalone .foot { display: none; }
+html.standalone .topbar { padding-top: max(env(safe-area-inset-top, 0px), 6px); }
+
 </style>
 
 <header class="topbar">
@@ -1328,6 +1351,7 @@ img, svg { max-width: 100%; }
   <a class="gear" id="gearBtn" href="#settings" aria-label="Settings"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></a>
 </header>
 <div class="crumbm" id="crumbM" hidden></div>
+<div id="netpill" hidden>Offline · everything still works</div>
 
 <main id="app" class="page"></main>
 
@@ -4177,6 +4201,110 @@ function initChecks() { if (!S.checks) S.checks = {}; }
 const levelPassed = (lv) => !!(S.checks && S.checks[lv] && S.checks[lv].passed);
 const levelUnlocked = (lv) => lv <= 1 || levelPassed(lv - 1) || (S.placed || 0) >= lv;
 
+/* =========================== PWA: install, offline, updates =========================== */
+/* Only the hosted https copy has a service worker (sw.js sits next to index.html on GitHub Pages).
+   The claude.ai artifact and the local file skip all of this quietly. */
+
+const PWA = {
+  prompt: null,           /* the deferred beforeinstallprompt event (Android / desktop Chrome) */
+  reg: null,
+  waiting: null,          /* a new worker that has installed and is waiting to take over */
+  standalone() { return matchMedia('(display-mode: standalone)').matches || navigator.standalone === true; },
+  canRegister() { return 'serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1') && !ON_CLAUDE; },
+  isIOS() { return IS_IOS; },
+  installable() { return !!PWA.prompt; },
+  installed() { try { return PWA.standalone() || localStorage.getItem(KEY + '.installed') === '1'; } catch (e) { return PWA.standalone(); } },
+  bannerDismissed() { try { return localStorage.getItem(KEY + '.installbanner') === 'no'; } catch (e) { return false; } },
+  dismissBanner() { try { localStorage.setItem(KEY + '.installbanner', 'no'); } catch (e) {} const b = $('#installBanner'); if (b) b.remove(); },
+  async install() {
+    if (!PWA.prompt) return false;
+    PWA.prompt.prompt();
+    const r = await PWA.prompt.userChoice.catch(() => ({ outcome: 'dismissed' }));
+    if (r && r.outcome === 'accepted') { try { localStorage.setItem(KEY + '.installed', '1'); } catch (e) {} logAct('install', 'installed'); PWA.prompt = null; return true; }
+    return false;
+  },
+  updating: false,
+  applyUpdate() {
+    PWA.updating = true;
+    if (!PWA.waiting) { location.reload(); return; }
+    PWA.waiting.postMessage('SKIP_WAITING');
+    /* if the worker never answers, don't leave the button stuck */
+    setTimeout(() => { if (PWA.updating) location.reload(); }, 4000);
+  },
+};
+
+function initPWA() {
+  document.documentElement.classList.toggle('standalone', PWA.standalone());
+  /* Android / desktop: keep the install prompt for our own button */
+  window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); PWA.prompt = e; paintInstallUI(); });
+  window.addEventListener('appinstalled', () => { try { localStorage.setItem(KEY + '.installed', '1'); } catch (e) {} PWA.prompt = null; logAct('install', 'installed'); paintInstallUI(); toast('Installed. Find Hablemos on your home screen.'); });
+  /* online / offline pill */
+  const paintNet = () => { document.documentElement.classList.toggle('offline', !navigator.onLine); const p = $('#netpill'); if (p) p.hidden = navigator.onLine; };
+  window.addEventListener('online', paintNet); window.addEventListener('offline', paintNet); paintNet();
+  if (!PWA.canRegister()) return;
+  navigator.serviceWorker.register('./sw.js').then((reg) => {
+    PWA.reg = reg;
+    if (reg.waiting && navigator.serviceWorker.controller) { PWA.waiting = reg.waiting; showUpdateToast(); }
+    reg.addEventListener('updatefound', () => {
+      const nw = reg.installing; if (!nw) return;
+      nw.addEventListener('statechange', () => {
+        if (nw.state === 'installed' && navigator.serviceWorker.controller) { PWA.waiting = nw; showUpdateToast(); }
+      });
+    });
+    /* check for a newer build every time the app comes back to the front */
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) reg.update().catch(() => {}); });
+    setInterval(() => reg.update().catch(() => {}), 60 * 60 * 1000);
+  }).catch(() => {});
+  /* reload only when WE asked for the new worker — the first install also fires this and must not bounce the page */
+  let reloading = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => { if (!PWA.updating || reloading) return; reloading = true; location.reload(); });
+}
+
+function showUpdateToast() {
+  if ($('#updToast')) return;
+  const el = document.createElement('div');
+  el.id = 'updToast'; el.className = 'updtoast';
+  el.innerHTML = `<span>A newer Hablemos is ready.</span><button type="button" class="btn sm rose" id="updGo">Refresh</button><button type="button" class="x" aria-label="Later">×</button>`;
+  document.body.appendChild(el);
+  $('#updGo').addEventListener('click', () => { $('#updGo').textContent = 'Refreshing…'; PWA.applyUpdate(); });
+  el.querySelector('.x').addEventListener('click', () => el.remove());
+}
+
+/* the same block is used on Home (as a banner) and in Settings (as a card) */
+function installHTML(compact) {
+  if (PWA.standalone()) return compact ? '' : `<div class="installbox done"><b>Installed ✓</b><p class="small muted">You are using Hablemos as an app. Updates arrive on their own — a "Refresh" note appears when one is ready.</p></div>`;
+  if (!PWA.canRegister()) return compact ? '' : `<div class="installbox"><b>Install from the web address</b><p class="small muted">Open <a href="https://thepastor.github.io/hablemos/">thepastor.github.io/hablemos</a> in Safari or Chrome on the phone — that copy can be added to the home screen and works offline. This one can't.</p></div>`;
+  if (PWA.isIOS()) {
+    return `<div class="installbox ${compact ? 'compact' : ''}" id="${compact ? 'installBanner' : 'installCard'}">
+      ${compact ? mascot('lola', 56) : ''}
+      <div><b>Put Hablemos on your home screen</b>
+      <ol class="small"><li>Tap <b>Share</b> <span class="ic" aria-hidden="true">⎋</span> at the bottom of Safari</li><li>Scroll and tap <b>Add to Home Screen</b></li><li>Tap <b>Add</b></li></ol>
+      <p class="small muted">Opens full screen, works with no signal, and the microphone keeps working.</p></div>
+      ${compact ? '<button type="button" class="x" id="installNo" aria-label="Not now">×</button>' : ''}
+    </div>`;
+  }
+  const can = PWA.installable();
+  return `<div class="installbox ${compact ? 'compact' : ''}" id="${compact ? 'installBanner' : 'installCard'}">
+    ${compact ? mascot('lola', 56) : ''}
+    <div><b>Install Hablemos</b><p class="small muted">${can ? 'One tap. Opens like a real app, works offline.' : 'Open the browser menu and choose <b>Install app</b> or <b>Add to Home screen</b>.'}</p>
+    ${can ? '<button type="button" class="btn sm rose" id="installGo">Install</button>' : ''}</div>
+    ${compact ? '<button type="button" class="x" id="installNo" aria-label="Not now">×</button>' : ''}
+  </div>`;
+}
+function wireInstall(root) {
+  const go = root.querySelector('#installGo'); if (go) go.addEventListener('click', async () => { go.disabled = true; const ok = await PWA.install(); go.disabled = false; if (ok) paintInstallUI(); });
+  const no = root.querySelector('#installNo'); if (no) no.addEventListener('click', PWA.dismissBanner);
+}
+function paintInstallUI() {
+  const card = $('#installCard'); if (card) { card.outerHTML = installHTML(false); wireInstall(document); }
+  const ban = $('#installBanner'); if (ban) { if (PWA.standalone() || PWA.bannerDismissed()) ban.remove(); else { ban.outerHTML = installHTML(true); wireInstall(document); } }
+}
+/* shown on Home until dismissed or installed; only on the hosted copy */
+function installBannerHTML() {
+  if (!PWA.canRegister() || PWA.standalone() || PWA.bannerDismissed()) return '';
+  return `<section class="hsec"><div class="hbody">${installHTML(true)}</div></section>`;
+}
+
 /* =========================== APP =========================== */
 const $ = (s, el = document) => el.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
@@ -4186,7 +4314,7 @@ const gridForm = (w) => stripAccents(String(w).toUpperCase()).replace(/[^A-Z\u00
 const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const DICT_BY_ES = Object.fromEntries(DICT.map(d => [d.es, d]));
 const KEY = 'hablemos.v1';
-const BUILD = { v: 'v10', date: '1 September 2026' };
+const BUILD = { v: 'v11', date: '2 September 2026' };
 const todayStr = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 const addDays = (n) => { const d = new Date(); d.setDate(d.getDate() + n); return todayStr(d); };
 const XP = { lesson: 15, perfect: 5, phrase: 5, passage: 15, huntWord: 2, hunt: 10, card: 1, mistake: 3, dialogue: 10, listen: 3 };
@@ -4790,6 +4918,7 @@ function renderHome() {
     </div>
   </section>
 
+  ${installBannerHTML()}
   <section class="hsec">
     <div class="hhead"><div><span class="eyebrow">Learn</span><h2>Pick a section</h2><p>Each one follows the level you choose here.</p></div>
       <div class="levelrow">${LEVELS.map(l => `<button type="button" class="${l.id === lv.id ? 'on' : ''} ${levelUnlocked(l.id) ? '' : 'locked'}" data-level="${l.id}" title="${levelUnlocked(l.id) ? esc(l.grade) : 'Pass the level ' + (l.id - 1) + ' checkpoint to open this'}"><i class="${levelPassed(l.id) || levelProgress(l.id) >= 100 ? 'full' : ''}"></i>${levelUnlocked(l.id) ? '' : '○ '}${l.id} · ${esc(l.name)}</button>`).join('')}</div>
@@ -4830,6 +4959,7 @@ function renderHome() {
   app.querySelectorAll('.levelrow button').forEach(b => b.addEventListener('click', () => { S.level = Number(b.dataset.level); save(); render(); }));
   $('#goalSel').addEventListener('change', (e) => { S.goal = Number(e.target.value); save(); renderHome(); });
   const pm = $('#pathMore'); if (pm) pm.addEventListener('click', () => { S.showAllPath = !S.showAllPath; save(); renderHome(); });
+  wireInstall(app);
 }
 
 /* =========================== LEARN (phone/tablet hub) =========================== */
@@ -4899,6 +5029,10 @@ function renderSettings() {
       <div class="setrow"><span>Cloud sync</span><span class="cpill" data-cloudstate></span></div>
       <p class="small muted">Paste a setup code and connect on the <a href="#casita">Casita</a> page, under “Your name and sync”.</p>
     </section>
+    <section class="setcard">
+      <span class="label">On your phone</span>
+      ${installHTML(false)}
+    </section>
     <section class="setcard links">
       <a href="#about">About Hablemos and the cast <span class="arr">→</span></a>
       <a href="#placement">Placement test <span class="arr">→</span></a>
@@ -4912,6 +5046,7 @@ function renderSettings() {
   app.querySelectorAll('[data-goal]').forEach(b => b.addEventListener('click', () => { S.goal = Number(b.dataset.goal); save(); renderSettings(); }));
   app.querySelectorAll('[data-theme]').forEach(b => b.addEventListener('click', () => { setTheme(b.dataset.theme); renderSettings(); }));
   $('#setName').addEventListener('change', () => { const v = $('#setName').value.trim(); if (v) { S.who.name = v; S.who.asked = true; save(); Cloud.push(true); toast('Saved'); } });
+  wireInstall(app);
 }
 
 /* =========================== ABOUT =========================== */
@@ -4941,7 +5076,7 @@ function renderAbout() {
       <p><b>Also in now:</b> a <a href="#review/verbs">verb trainer</a> covering ${TENSES.length} tenses across ${VERBS.length} verbs (including Guatemalan <em>vos</em>), typed <a href="#review/translate">translation drills</a> in both directions, finished lessons that come back on the same spaced schedule as words, end-of-level <a href="#checkpoint/${S.level}">checkpoints</a>, a <a href="#placement">placement test</a>, and mistakes that tell you <em>why</em> they were wrong — gender, tense, ser vs estar and ten other causes.</p>
       <p><b>Next:</b> levels 4–6 filled in, illustrated stories with audio, a “hearts” mode for quizzes, streak repair and weekly quests.</p>
       <p><b>Later:</b> an AI conversation partner, native audio clips, writing correction.</p>
-      <p class="small">Progress is saved in this browser, and — if cloud sync is switched on — mirrored to your own Supabase project so the <a href="#owner">Owner</a> page can see it. Built with ♥ for Nat ♥</p>
+      <p class="small">On a phone, add Hablemos to the home screen (<a href="#settings">Settings → On your phone</a>) and it opens full screen and works with no signal. Progress is saved in this browser, and — if cloud sync is switched on — mirrored to your own Supabase project so the <a href="#owner">Owner</a> page can see it. Built with ♥ for Nat ♥</p>
       <p class="small buildstamp">Version <b>${esc(BUILD.v)}</b> · built ${esc(BUILD.date)}<br>If this copy is on a web address, compare this line with the one in the Claude version to check it is up to date.</p>
     </div>
   </div>`;
@@ -6386,6 +6521,7 @@ function askName() {
 
 /* ----- boot ----- */
 initCloud();
+initPWA();
 startClock();
 render();
 setTimeout(askName, 1200);
