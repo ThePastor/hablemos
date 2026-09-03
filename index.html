@@ -1348,6 +1348,19 @@ html.standalone .topbar { padding-top: max(env(safe-area-inset-top, 0px), 6px); 
 @media (max-width: 480px) { .acctform { grid-template-columns: 1fr; } .acct.nudge { grid-template-columns: auto 1fr; } .acct.nudge .btn { grid-column: 2; justify-self: start; } .bigtoast.acctbox .acctform { grid-template-columns: 1fr; } }
 @media (pointer: coarse) { .acctform input { min-height: 44px; font-size: 16px !important; } }
 
+
+/* v12.1: owner test mode */
+#testbar { position: sticky; top: 56px; z-index: 19; display: flex; align-items: center; gap: 12px; padding: 8px 16px; background: var(--ink); color: var(--inverse-ink); font-family: var(--font-mono); font-size: .72rem; letter-spacing: .04em; border-bottom: 1px solid var(--line); }
+#testbar span { flex: 1 1 auto; min-width: 0; }
+#testbar b { color: var(--pink-3); }
+#testbar a { color: inherit; text-decoration: underline; white-space: nowrap; }
+#testbar button { border: 1px solid var(--inverse-ink); background: none; color: inherit; border-radius: 999px; padding: 4px 12px; font: inherit; cursor: pointer; min-height: 32px; }
+#testerBox .btn { white-space: normal; text-align: center; line-height: 1.25; }
+.acct.test { background: var(--ink); color: var(--inverse-ink); border-color: var(--ink); }
+.acct.test .muted, .acct.test a { color: var(--inverse-ink); opacity: .85; }
+@media (max-width: 1200px) { #testbar { top: 64px; } }
+@media (max-width: 600px) { #testbar { padding: 6px 12px; gap: 8px; font-size: .66rem; } #testbar .long { display: none; } }
+html.standalone #testbar { top: calc(64px + max(env(safe-area-inset-top, 0px), 6px)); }
 </style>
 
 <header class="topbar">
@@ -3712,6 +3725,7 @@ const Cloud = {
   /* upsert this learner's row */
   async push(force) {
     const cfg = cloudCfg(); if (!cfg) return;
+    if (S.test) return;                                   /* the owner's test copy never leaves the device */
     if (Cloud.blocked()) { Cloud.setState('blocked', 'Sync is switched off inside claude.ai — use your web address.'); return; }
     const payload = summary(); payload.full = fullState(); payload.acct = !!S.acct;
     const body = { id: rowId(), name: learnerName(), updated_at: new Date().toISOString(), payload };
@@ -3732,7 +3746,7 @@ const Cloud = {
     }
   },
   queue() {
-    if (!Cloud.on() || Cloud.blocked()) return;
+    if (!Cloud.on() || Cloud.blocked() || S.test) return;
     clearTimeout(Cloud.timer);
     Cloud.timer = setTimeout(() => Cloud.push(false), 6000);
   },
@@ -3761,7 +3775,7 @@ const Cloud = {
   },
   /* on open: if the account's cloud copy is newer and not behind, take it — that is what makes a second device just work */
   async pull() {
-    if (!S.acct || Cloud.blocked() || !Cloud.on()) return false;
+    if (!S.acct || S.test || Cloud.blocked() || !Cloud.on()) return false;
     try {
       const row = await Cloud.get(S.acct.id);
       const full = row && row.payload && row.payload.full;
@@ -3850,6 +3864,7 @@ async function signIn(name, pin, opts) {
   name = String(name || '').trim();
   if (name.length < 2) return { ok: false, msg: 'Type your name first.' };
   if (!validPin(pin)) return { ok: false, msg: 'The PIN is 4 to 8 digits.' };
+  if (S.test) return { ok: false, msg: 'Leave test mode first — the test copy is never saved to the cloud.' };
   if (Cloud.blocked()) return { ok: false, msg: 'Sign-in needs the web address — claude.ai blocks this page from reaching the internet.' };
   const id = await acctId(name, pin);
   let row = null;
@@ -4453,6 +4468,127 @@ function installBannerHTML() {
   return `<section class="hsec"><div class="hbody">${installHTML(true)}</div></section>`;
 }
 
+/* =========================== OWNER TEST MODE =========================== */
+/* Behind the Owner passcode. Turns THIS device into a test copy with everything unlocked — every level,
+   companion, outfit, decoration and room, plus a big pile of quetzalitos — so every screen can be walked
+   through. The real progress is stashed first and comes back when you leave. While test mode is on nothing
+   is sent to the cloud and sign-in is disabled, so Nat's data and the Owner list are never touched. */
+
+const BLANK_STATE = () => ({ level: 1, done: {}, found: {}, learned: {}, quiz: {}, spoken: {}, xp: 0, xpLog: {}, streak: { count: 0, last: null }, goal: 20, mistakes: [], cards: {}, listen: {} });
+const Test = {
+  on() { return !!(S && S.test); },
+  stashKey() { return KEY + '.real'; },
+  hasStash() { try { return !!localStorage.getItem(Test.stashKey()); } catch (e) { return false; } },
+  /* replace the live state with a fresh one and run the same init that boot does */
+  _fresh() {
+    S = BLANK_STATE();
+    S.who = { id: 'OWNERTEST', name: 'Owner', since: todayStr(), asked: true };
+    initRewards(); initProfile(); initConcepts(); initChecks();
+  },
+  grantAll() {
+    S.xp = 2500;                                   /* past every companion unlock (0 / 300 / 800 / 1600) */
+    S.coins = 9999;
+    S.placed = LEVELS.length;                      /* every level open, nothing has to be passed first */
+    ITEMS.forEach(i => { S.items[i.id] = true; });
+    DECOR.forEach(d => { S.decor[d.id] = true; });
+    ROOM_BGS.forEach(b => { if (b.id !== 'casita') S.decor['bg:' + b.id] = true; });
+    CHARS.forEach(c => { S.chars[c.id].care = STAGE_AT[STAGE_AT.length - 1]; S.rewardSeen['char.' + c.id] = true; });
+    S.streak = { count: 7, last: todayStr() };
+    S.cart = [];
+  },
+  enter() {
+    if (Test.on()) return;
+    try { localStorage.setItem(Test.stashKey(), JSON.stringify(S)); } catch (e) {}
+    Test._fresh();
+    S.test = { since: Date.now() };
+    Test.grantAll();
+    logAct('test', 'owner test mode on');
+    save();
+  },
+  /* start the test copy over (still everything unlocked) */
+  reset() {
+    if (!Test.on()) return;
+    Test._fresh();
+    S.test = { since: Date.now() };
+    Test.grantAll();
+    save();
+  },
+  /* put the real progress back */
+  leave() {
+    if (!Test.on()) return;
+    let real = null;
+    try { real = JSON.parse(localStorage.getItem(Test.stashKey()) || 'null'); } catch (e) {}
+    try { localStorage.removeItem(Test.stashKey()); } catch (e) {}
+    S = Object.assign(BLANK_STATE(), real || {});
+    S.streak = Object.assign({ count: 0, last: null }, (real && real.streak) || {});
+    delete S.test;
+    initRewards(); initProfile(); initConcepts(); initChecks();
+    save();
+    if (S.acct) Cloud.pull().then(() => render());
+  },
+  /* quick pokes while testing */
+  markAllDone() {
+    LEVELS.forEach(l => {
+      (GRAMMAR[l.id] || []).forEach(g => { S.done[g.id] = true; S.quiz[g.id] = 100; });
+      (DIALOGUES[l.id] || []).forEach(d => { S.done[d.id] = true; });
+      (READING[l.id] || []).forEach(r => { S.done[r.id] = true; });
+      (HUNTS[l.id] || []).forEach(h => { S.done['h' + l.id + '-' + h.theme] = true; h.words.forEach(w => { S.learned[w] = true; }); });
+      S.checks[l.id] = { best: 100, passed: true, at: todayStr() };
+    });
+    save();
+  },
+  chestsReady() {
+    S.xpLog[todayStr()] = Math.max(S.xpLog[todayStr()] || 0, S.goal || 20);
+    S.chest = { daily: null, weekly: 0 };
+    S.streak = { count: 14, last: todayStr() };
+    save();
+  },
+};
+
+/* a thin bar under the top bar so it is always obvious this is the test copy */
+function paintTestBar() {
+  let bar = document.getElementById('testbar');
+  if (!Test.on()) { if (bar) bar.remove(); document.documentElement.classList.remove('testing'); return; }
+  document.documentElement.classList.add('testing');
+  if (bar) return;
+  bar = document.createElement('div');
+  bar.id = 'testbar';
+  bar.innerHTML = `<span><b>Test mode</b><span class="long"> · everything unlocked · nothing is saved to the cloud</span></span><a href="#owner">Owner tools</a><button type="button" id="testLeave">Leave</button>`;
+  const top = document.querySelector('header.topbar');
+  top.insertAdjacentElement('afterend', bar);
+  bar.querySelector('#testLeave').addEventListener('click', () => { Test.leave(); paintTestBar(); toast('Back to your own progress.'); render(); });
+}
+
+/* the card on the Owner page */
+function testerHTML() {
+  if (!Test.on()) return `<section class="hsec" id="testerBox">
+    <div class="hhead"><div><span class="eyebrow">Owner tools</span><h2>Test everything</h2><p>Turn this device into a test copy with every level, companion, outfit, decoration and room unlocked and 9,999 ${COIN_NAME} to spend. Your own progress is put aside and comes back when you leave. Nothing done in test mode reaches the cloud or the list above.</p></div></div>
+    <div class="hbody"><div class="btn-row"><button type="button" class="btn rose" id="testOn">Unlock everything on this device</button></div>
+    ${Test.hasStash() ? '<p class="small muted">A stashed copy of your real progress is still here from an earlier test — it will be restored when you leave test mode.</p>' : ''}</div>
+  </section>`;
+  return `<section class="hsec" id="testerBox">
+    <div class="hhead"><div><span class="eyebrow">Owner tools</span><h2>Test mode is on</h2><p>Since ${fmtAgo(S.test.since)}. ${S.xp || 0} XP · ${S.coins || 0} ${COIN_NAME} · ${ownedItems().length} of ${ITEMS.length} items · ${lessonsDone()} of ${lessonsTotal()} lessons done.</p></div></div>
+    <div class="hbody">
+      <div class="btn-row wrap">
+        <button type="button" class="btn sm rose" id="testXP">+100 XP</button>
+        <button type="button" class="btn sm ghost" id="testDone">Mark every lesson done</button>
+        <button type="button" class="btn sm ghost" id="testChests">Make the chests ready</button>
+        <button type="button" class="btn sm ghost" id="testReset">Start the test copy over</button>
+        <button type="button" class="btn sm" id="testOff">Leave test mode</button>
+      </div>
+      <p class="small muted">Handy stops: <a href="#casita">Casita</a> · <a href="#shop">Shop</a> · <a href="#checkout">Checkout</a> · <a href="#collection">Collection</a> · <a href="#learn">Learn</a> · <a href="#review/verbs">Verb trainer</a> · <a href="#checkpoint/1">Checkpoint</a> · <a href="#settings">Settings</a>.</p>
+    </div>
+  </section>`;
+}
+function wireTester(root) {
+  const on = root.querySelector('#testOn'); if (on) on.addEventListener('click', () => { Test.enter(); paintTestBar(); toast('Everything unlocked. Have a look around.'); render(); });
+  const off = root.querySelector('#testOff'); if (off) off.addEventListener('click', () => { Test.leave(); paintTestBar(); toast('Back to your own progress.'); render(); });
+  const xp = root.querySelector('#testXP'); if (xp) xp.addEventListener('click', () => { addXP(100, 'test'); render(); });
+  const dn = root.querySelector('#testDone'); if (dn) dn.addEventListener('click', () => { Test.markAllDone(); toast('Every lesson, passage, dialogue and hunt marked done.'); render(); });
+  const ch = root.querySelector('#testChests'); if (ch) ch.addEventListener('click', () => { Test.chestsReady(); toast('Daily and weekly chests are ready in the Casita.'); render(); });
+  const rs = root.querySelector('#testReset'); if (rs) rs.addEventListener('click', () => { Test.reset(); toast('Fresh test copy.'); render(); });
+}
+
 /* =========================== APP =========================== */
 const $ = (s, el = document) => el.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
@@ -4462,7 +4598,7 @@ const gridForm = (w) => stripAccents(String(w).toUpperCase()).replace(/[^A-Z\u00
 const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const DICT_BY_ES = Object.fromEntries(DICT.map(d => [d.es, d]));
 const KEY = 'hablemos.v1';
-const BUILD = { v: 'v12', date: '3 September 2026' };
+const BUILD = { v: 'v12.1', date: '3 September 2026' };
 const todayStr = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 const addDays = (n) => { const d = new Date(); d.setDate(d.getDate() + n); return todayStr(d); };
 const XP = { lesson: 15, perfect: 5, phrase: 5, passage: 15, huntWord: 2, hunt: 10, card: 1, mistake: 3, dialogue: 10, listen: 3 };
@@ -4966,6 +5102,7 @@ function render() {
   Player.stop(); LineAudio.stop();
   if (activeHunt && page !== 'hunt') { activeHunt = null; }
   updateStat();
+  paintTestBar();
   /* on phones and tablets a chosen lesson or passage hides the big section header — the back row carries the title */
   app.classList.toggle('has-item', !!id && (page === 'grammar' || page === 'reading'));
   if (page === 'grammar') renderGrammar(id);
@@ -5184,7 +5321,7 @@ function renderSettings() {
       <a href="#about">About Hablemos and the cast <span class="arr">→</span></a>
       <a href="#placement">Placement test <span class="arr">→</span></a>
       <a href="#collection">Collection <span class="arr">→</span></a>
-      <a href="#owner">Owner view <span class="arr">→</span></a>
+      <a href="#owner">Owner view and test tools <span class="arr">→</span></a>
     </section>
     <p class="small muted buildstamp">Version <b>${esc(BUILD.v)}</b> · built ${esc(BUILD.date)} · ${learnedCount()} words · ${S.xp || 0} XP total</p>
   </div>`;
@@ -5200,6 +5337,7 @@ function renderSettings() {
 function fmtAgo(ms) { if (!ms) return 'never'; const m = Math.round((Date.now() - ms) / 60000); return m < 1 ? 'just now' : m < 60 ? m + ' min ago' : m < 1440 ? Math.round(m / 60) + ' h ago' : Math.round(m / 1440) + ' d ago'; }
 function accountHTML(opts) {
   opts = opts || {};
+  if (S.test) return `<div class="acct test"><b>Owner test mode</b><p class="small muted">This is the test copy — it is never saved to the cloud and sign-in is off. <a href="#owner">Owner tools</a> to leave.</p></div>`;
   if (ON_CLAUDE) return `<div class="acct"><b>Save your progress</b><p class="small muted">Signing in works on the web address, not inside claude.ai. Open <a href="https://thepastor.github.io/hablemos/">thepastor.github.io/hablemos</a>.</p></div>`;
   if (S.acct) {
     return `<div class="acct in" id="acctCard">
@@ -5253,7 +5391,7 @@ function wireAccount(root, after) {
 }
 /* first run, and again once there is something worth keeping */
 function askAccount() {
-  if (S.acct || S.who.asked || ON_CLAUDE) return;
+  if (S.acct || S.who.asked || ON_CLAUDE || S.test) return;
   S.who.asked = true; save();
   const el = document.createElement('div');
   el.className = 'bigtoast in namebox acctbox';
@@ -5262,7 +5400,7 @@ function askAccount() {
   wireAccount(el, () => { el.remove(); stackToasts(); render(); });
 }
 function accountNudgeHTML() {
-  if (S.acct || ON_CLAUDE || (S.xp || 0) < 30) return '';
+  if (S.acct || ON_CLAUDE || S.test || (S.xp || 0) < 30) return '';
   return `<section class="hsec"><div class="hbody"><div class="acct nudge"><div>${companion(buddy().id, 56)}</div><div><b>${S.xp} XP and ${S.coins || 0} ${COIN_NAME} live only on this device.</b><p class="small muted">Sign in once so they can't be lost.</p></div><a class="btn sm rose" href="#settings">Save it →</a></div></div></section>`;
 }
 
@@ -6603,9 +6741,11 @@ function renderOwner(sub) {
       <div class="btn-row" style="margin-top:10px"><button type="button" class="btn sm rose" id="oRefresh">Refresh</button><button type="button" class="btn sm ghost" id="oSetup">Setup</button><button type="button" class="btn sm ghost" id="oLock">Lock</button></div>
     </div>
   </section>
+  ${testerHTML()}
   <div id="ownerBody">${cfg ? '<p class="muted">Loading…</p>' : ''}</div>
   ${cfg ? '' : ownerSetupHTML()}`;
   document.querySelectorAll('[data-cloudstate]').forEach(paintCloudPill);
+  wireTester(app);
   $('#oLock').addEventListener('click', () => { setOwnerUnlocked(false); render(); });
   $('#oSetup').addEventListener('click', () => { $('#ownerBody').innerHTML = ownerSetupHTML(); wireOwnerSetup(); });
   $('#oRefresh').addEventListener('click', loadOwner);
