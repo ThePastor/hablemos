@@ -1361,6 +1361,71 @@ html.standalone .topbar { padding-top: max(env(safe-area-inset-top, 0px), 6px); 
 @media (max-width: 1200px) { #testbar { top: 64px; } }
 @media (max-width: 600px) { #testbar { padding: 6px 12px; gap: 8px; font-size: .66rem; } #testbar .long { display: none; } }
 html.standalone #testbar { top: calc(64px + max(env(safe-area-inset-top, 0px), 6px)); }
+
+/* v13: evolution, wardrobe, decorating */
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font-family: var(--font-mono); font-size: .66rem; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; white-space: nowrap; min-height: 36px; }
+.chip.on { background: var(--ink); color: var(--inverse-ink); border-color: var(--ink); }
+.chip .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--pink-4); }
+.chip.on .dot { background: var(--pink-3); }
+.wchips { display: flex; gap: 6px; overflow-x: auto; padding: 2px 2px 8px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.wchips::-webkit-scrollbar { display: none; }
+.wrail { display: flex; gap: 8px; overflow-x: auto; padding: 4px 2px 10px; scroll-snap-type: x proximity; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.wrail::-webkit-scrollbar { display: none; }
+.wtile { flex: 0 0 auto; width: 92px; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 6px 8px; border-radius: 16px; border: 1px solid var(--line-soft); background: var(--surface); color: var(--ink); cursor: pointer; scroll-snap-align: start; text-decoration: none; position: relative; font: inherit; }
+.wtile .pic { width: 60px; height: 60px; display: grid; place-items: center; border-radius: 50%; background: var(--sand); }
+.wtile .pic.none { font-size: 1.2rem; color: var(--ink-3); }
+.wtile small { font-size: .68rem; line-height: 1.2; text-align: center; max-width: 100%; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.wtile em { font-style: normal; font-family: var(--font-mono); font-size: .55rem; letter-spacing: .06em; text-transform: uppercase; color: var(--pink-5); }
+.wtile.on { border-color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--ink); background: var(--pink-1); }
+.wtile.on .pic { background: var(--pink-2); }
+.wtile.r-rara .pic { box-shadow: inset 0 0 0 2px var(--pink-3); }
+.wtile.r-legendaria .pic { box-shadow: inset 0 0 0 2px #E2B93B; }
+.wtile.more { border-style: dashed; color: var(--ink-2); }
+.wtile.more .pic { background: transparent; border: 1px dashed var(--line-soft); font-family: var(--font-mono); font-size: .8rem; }
+.wtile.wide { width: 132px; }
+.wtile.wide .pic { width: 116px; height: 58px; border-radius: 10px; overflow: hidden; background: var(--sand); }
+.wtile.wide .pic svg { width: 100%; height: 100%; display: block; }
+.casita .room, .casita .buddybox, .wardrobe, .evo { min-width: 0; }
+.wlooks { margin-top: 8px; text-align: left; }
+.lookrow { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+.lookchip { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+.lookchip button { border: 0; background: var(--surface); color: var(--ink); font-family: var(--font-mono); font-size: .66rem; letter-spacing: .06em; text-transform: uppercase; padding: 8px 12px; cursor: pointer; min-height: 36px; }
+.lookchip .x { border-left: 1px solid var(--line-soft); padding: 8px 10px; font-size: .9rem; }
+.lookchip.on button:first-child { background: var(--pink-2); color: var(--pink-ink); }
+.evo { text-align: left; margin-top: 12px; }
+.evo .meter { margin: 6px 0 10px; }
+.evo > p.small { font-size: .82rem; margin-top: 8px; }
+.evostrip { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.evostep { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 4px 8px; border-radius: 14px; border: 1px solid var(--line-soft); background: var(--surface); color: var(--ink); cursor: pointer; font: inherit; min-width: 0; }
+.evostep .pic { width: 100%; aspect-ratio: 1; display: block; }
+.evostep .pic svg { width: 100%; height: 100%; display: block; }
+.evostep .q { display: grid; place-items: center; height: 100%; font-family: var(--font-display); font-size: 1.6rem; color: var(--ink-3); opacity: .5; }
+.evostep b { font-size: .68rem; line-height: 1.15; text-align: center; }
+.evostep small { font-family: var(--font-mono); font-size: .52rem; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-3); text-align: center; }
+.evostep.on { border-color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--ink); background: var(--pink-1); }
+.evostep.on small { color: var(--pink-5); }
+.evostep.locked { opacity: .55; cursor: default; }
+.castcard .stages span.cur { box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--ink); }
+.deco { display: grid; grid-template-columns: 1.3fr 1fr; gap: 18px; padding: 22px 48px 30px; border-bottom: 1px solid var(--line); align-items: start; }
+.deco-room, .deco-panel { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 16px; min-width: 0; }
+.roomwrap { position: relative; }
+.roomwrap .roomsvg { margin: 0; }
+.hot { position: absolute; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%; border: 0; background: transparent; padding: 0; cursor: pointer; display: grid; place-items: center; }
+.hot span { width: 16px; height: 16px; border-radius: 50%; background: var(--surface); border: 2px solid var(--ink); box-shadow: 0 1px 4px rgba(0,0,0,.25); transition: transform .15s; }
+.hot.full span { background: var(--pink-4); }
+.hot.on span { transform: scale(1.35); border-color: var(--ink); background: var(--ink); }
+.hot:hover span { transform: scale(1.2); }
+.roomname { display: grid; gap: 4px; margin-top: 12px; }
+.roomname input { width: 100%; }
+.spotpanel { margin-bottom: 14px; }
+.shopnote { padding: 12px 48px 0; }
+@media (max-width: 1100px) { .shopnote { padding: 12px 32px 0; } }
+@media (max-width: 760px) { .shopnote { padding: 12px 18px 0; } }
+.bgpick { margin-bottom: 12px; }
+@media (max-width: 1100px) { .deco { grid-template-columns: 1fr; padding-left: 32px; padding-right: 32px; } }
+@media (max-width: 760px) { .deco { padding: 16px 18px 22px; gap: 14px; } .evostep b { font-size: .62rem; } .evostep small { font-size: .48rem; } .hot { width: 36px; height: 36px; margin: -18px 0 0 -18px; } }
+@media (max-width: 400px) { .evostrip { gap: 4px; } .evostep { padding: 6px 2px; border-radius: 10px; } .wtile { width: 84px; } }
+@media (pointer: coarse) { .chip, .lookchip button { min-height: 40px; } }
 </style>
 
 <header class="topbar">
@@ -3418,28 +3483,102 @@ const ROOM_BGS = [
     svg: `<rect width="600" height="300" fill="#FFD9C0"/><circle cx="300" cy="180" r="80" fill="#FFB3C6"/><rect y="150" width="600" height="60" fill="#FF8FAB" opacity=".35"/><path d="M0 150h600" stroke="#FB6F92" stroke-width="2" opacity=".4"/><rect y="210" width="600" height="90" fill="#E7B79A"/>` },
   { id: 'noche', es: 'Noche estrellada', en: 'Starry night', price: 300,
     svg: `<rect width="600" height="300" fill="#2C2038"/><g fill="#FEFAE0">${[[60, 40], [140, 80], [220, 36], [300, 70], [380, 44], [460, 86], [540, 50], [100, 120], [500, 130], [260, 110]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2.5"/>`).join('')}</g><circle cx="510" cy="60" r="24" fill="#FAEDCD"/><circle cx="500" cy="54" r="22" fill="#2C2038"/><rect y="210" width="600" height="90" fill="#3D2C4B"/>` },
+  /* --- v13: more places to live --- */
+  { id: 'antigua', es: 'Antigua Guatemala', en: 'Antigua, with the arch', price: 250,
+    svg: `<rect width="600" height="300" fill="#DCEBF5"/><path d="M180 210l120-150 120 150z" fill="#8AA06A"/><path d="M270 100l30-40 30 40z" fill="#FEFAE0" opacity=".7"/><path d="M0 210h600" fill="none"/><rect x="0" y="120" width="600" height="90" fill="#FAEDCD"/><path d="M120 210v-70a60 60 0 0 1 120 0v70" fill="#F0C674" stroke="#D4A373" stroke-width="3"/><path d="M150 210v-64a30 30 0 0 1 60 0v64" fill="#DCEBF5"/><rect x="164" y="88" width="32" height="40" fill="#F0C674" stroke="#D4A373" stroke-width="2"/><circle cx="180" cy="104" r="8" fill="#FEFAE0"/><g fill="#FF8FAB"><circle cx="360" cy="180" r="10"/><circle cx="380" cy="184" r="8"/><circle cx="400" cy="178" r="10"/></g><rect y="210" width="600" height="90" fill="#E7C98F"/><path d="M0 220h600M0 240h600M0 260h600M0 280h600" stroke="#D4A373" stroke-width="1.5" opacity=".5"/>` },
+  { id: 'tikal', es: 'Tikal', en: 'Temple in the jungle', price: 300,
+    svg: `<rect width="600" height="300" fill="#CFE3D6"/><g fill="#7FBF9A"><ellipse cx="60" cy="150" rx="90" ry="60"/><ellipse cx="540" cy="150" rx="90" ry="60"/><ellipse cx="150" cy="190" rx="80" ry="40"/><ellipse cx="450" cy="190" rx="80" ry="40"/></g><path d="M220 210l30-90h100l30 90z" fill="#C8BBA4"/><path d="M250 120l12-40h76l12 40z" fill="#B8A88E"/><path d="M270 80l10-30h40l10 30z" fill="#C8BBA4"/><rect x="290" y="60" width="20" height="20" fill="#3A2230" opacity=".5"/><path d="M262 120h76M244 150h112M232 180h136" stroke="#A8987E" stroke-width="2"/><g fill="#4FB894"><ellipse cx="100" cy="120" rx="40" ry="26"/><ellipse cx="500" cy="110" rx="46" ry="28"/></g><rect y="210" width="600" height="90" fill="#9FB27A"/><path d="M0 214q150 12 300 0t300 0" fill="none" stroke="#7FBF9A" stroke-width="6"/>` },
+  { id: 'mercado', es: 'Mercado', en: 'Market day', price: 220,
+    svg: `<rect width="600" height="300" fill="#FEFAE0"/>${[0, 120, 240, 360, 480].map((x, i) => `<path d="M${x} 60h120l-10 40h-100z" fill="${['#FB6F92', '#F0C674', '#9FD0EA', '#CCD5AE', '#C9B6E4'][i]}"/><path d="M${x + 10} 100v110M${x + 110} 100v110" stroke="#D4A373" stroke-width="4"/>`).join('')}<g>${[40, 160, 280, 400, 520].map((x, i) => `<rect x="${x - 30}" y="150" width="60" height="60" fill="#D4A373"/><g fill="${['#F0C674', '#FF8FAB', '#9FB27A', '#D6455F', '#FB6F92'][i]}"><circle cx="${x - 14}" cy="146" r="8"/><circle cx="${x}" cy="142" r="8"/><circle cx="${x + 14}" cy="146" r="8"/></g>`).join('')}</g><rect y="210" width="600" height="90" fill="#E7C98F"/>` },
+  { id: 'playa', es: 'Playa de Monterrico', en: 'Black-sand beach', price: 240,
+    svg: `<rect width="600" height="300" fill="#FFD9C0"/><circle cx="300" cy="150" r="60" fill="#FB6F92" opacity=".7"/><rect y="140" width="600" height="70" fill="#5FA8CF"/><path d="M0 150q50-10 100 0t100 0 100 0 100 0 100 0 100 0" fill="none" stroke="#DCEBF5" stroke-width="4" opacity=".7"/><path d="M0 200q150-16 300 0t300 0v10H0z" fill="#9FD0EA"/><path d="M60 110l-30 40h60zM540 110l-30 40h60z" fill="#3E9E7E"/><path d="M30 150v-70M510 150v-70" stroke="#8A5A3B" stroke-width="5"/><g fill="#7FBF9A"><ellipse cx="30" cy="78" rx="30" ry="10"/><ellipse cx="510" cy="78" rx="30" ry="10"/></g><rect y="210" width="600" height="90" fill="#5C4A44"/><path d="M0 214h600" stroke="#8A7A70" stroke-width="3"/>` },
+  { id: 'cafetal', es: 'Cafetal', en: 'Coffee hills', price: 200,
+    svg: `<rect width="600" height="300" fill="#E2EFE6"/><path d="M0 170q150-80 300-40t300-60v140H0z" fill="#9FB27A"/><path d="M0 200q150-50 300-20t300-40v70H0z" fill="#7FBF9A"/>${[40, 120, 200, 280, 360, 440, 520].map((x, i) => `<ellipse cx="${x}" cy="${190 - (i % 2) * 10}" rx="22" ry="16" fill="#4FB894"/><circle cx="${x - 6}" cy="${186 - (i % 2) * 10}" r="2.5" fill="#D6455F"/><circle cx="${x + 6}" cy="${192 - (i % 2) * 10}" r="2.5" fill="#D6455F"/>`).join('')}<circle cx="500" cy="60" r="26" fill="#FAEDCD"/><rect y="210" width="600" height="90" fill="#C08B5E"/><path d="M0 222h600M0 246h600M0 270h600" stroke="#8A5A3B" stroke-width="1.5" opacity=".4"/>` },
+  { id: 'lluvia', es: 'Tarde de lluvia', en: 'Rainy afternoon', price: 180,
+    svg: `<rect width="600" height="300" fill="#C9D3DA"/><g fill="#B3C1CB"><ellipse cx="120" cy="60" rx="70" ry="30"/><ellipse cx="420" cy="50" rx="90" ry="34"/><ellipse cx="270" cy="80" rx="60" ry="26"/></g><g stroke="#9FD0EA" stroke-width="2" stroke-linecap="round" opacity=".7">${Array.from({ length: 22 }, (_, i) => `<path d="M${20 + i * 27} ${100 + (i % 3) * 30}l-6 18"/>`).join('')}</g><rect x="220" y="90" width="160" height="120" rx="8" fill="#FEFAE0" stroke="#D4A373" stroke-width="5"/><path d="M300 90v120M220 150h160" stroke="#D4A373" stroke-width="5"/><rect y="210" width="600" height="90" fill="#FAEDCD"/>` },
+  { id: 'fiesta', es: 'Noche de fiesta', en: 'Fiesta night', price: 260,
+    svg: `<rect width="600" height="300" fill="#3D2C4B"/><g fill="#FEFAE0">${[[60, 40], [180, 30], [300, 50], [420, 26], [540, 44]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2"/>`).join('')}</g><path d="M0 70q150 40 300 0t300 0" fill="none" stroke="#F0C674" stroke-width="2"/>${[40, 110, 180, 250, 320, 390, 460, 530].map((x, i) => `<path d="M${x - 14} ${88 - Math.abs(x - 300) * .08}h28v22l-14 8-14-8z" fill="${['#FF8FAB', '#F0C674', '#9FD0EA', '#CCD5AE'][i % 4]}"/>`).join('')}${[90, 300, 510].map(x => `<path d="M${x} 120v-14" stroke="#F0C674" stroke-width="2"/><ellipse cx="${x}" cy="140" rx="18" ry="24" fill="#F0C674" opacity=".9"/><ellipse cx="${x}" cy="140" rx="10" ry="16" fill="#FEFAE0" opacity=".9"/>`).join('')}<rect y="210" width="600" height="90" fill="#5C4A6E"/>` },
+  { id: 'jardin', es: 'Jardín', en: 'Flower garden', price: 200,
+    svg: `<rect width="600" height="300" fill="#DFF3E7"/><circle cx="90" cy="60" r="28" fill="#FEFAE0"/><path d="M0 160q100-40 200-10t200-20 200 20v60H0z" fill="#B7E0C8"/>${[30, 90, 150, 210, 270, 330, 390, 450, 510, 570].map((x, i) => `<path d="M${x} 205v-30" stroke="#7FBF9A" stroke-width="3"/><g transform="translate(${x} 170)"><g fill="${['#FF8FAB', '#F0C674', '#C9B6E4', '#FB6F92', '#9FD0EA'][i % 5]}"><circle cy="-8" r="6"/><circle cx="7" cy="-2" r="6"/><circle cx="4" cy="7" r="6"/><circle cx="-4" cy="7" r="6"/><circle cx="-7" cy="-2" r="6"/></g><circle r="4" fill="#FEFAE0"/></g>`).join('')}<rect y="210" width="600" height="90" fill="#9FB27A"/><path d="M0 216q100 8 200 0t200 0 200 0" fill="none" stroke="#7FBF9A" stroke-width="4"/>` },
 ];
 const ROOM_BG_BY_ID = Object.fromEntries(ROOM_BGS.map(b => [b.id, b]));
-/* decor sits at fixed anchors in the 600×300 scene */
+/* v13: the room has named spots; a decoration goes into a spot of its kind. `at` is the spot the item
+   was drawn for (its default), but any compatible spot works. */
+const SPOTS = [
+  { id: 'ceiling', t: 'Ceiling', kind: 'ceiling', at: [300, 16] },
+  { id: 'wallL', t: 'Left wall', kind: 'wall', at: [90, 96] },
+  { id: 'wallLhi', t: 'Left wall, high', kind: 'wall', at: [200, 56] },
+  { id: 'wallRhi', t: 'Right wall, high', kind: 'wall', at: [400, 56] },
+  { id: 'wallR', t: 'Right wall', kind: 'wall', at: [510, 96] },
+  { id: 'floorL', t: 'Left corner', kind: 'floor', at: [64, 206] },
+  { id: 'floorL2', t: 'Front left', kind: 'floor', at: [120, 262] },
+  { id: 'rug', t: 'Middle of the floor', kind: 'rug', at: [300, 254] },
+  { id: 'floorR2', t: 'Front right', kind: 'floor', at: [480, 262] },
+  { id: 'floorR', t: 'Right corner', kind: 'floor', at: [536, 206] },
+];
+const SPOT_BY_ID = Object.fromEntries(SPOTS.map(s => [s.id, s]));
 const DECOR = [
-  { id: 'rug', es: 'Alfombra', en: 'Woven rug', price: 80, at: [300, 254],
+  { id: 'rug', es: 'Alfombra', en: 'Woven rug', price: 80, at: [300, 254], kind: 'rug',
     svg: `<g><ellipse rx="120" ry="26" fill="#FF8FAB" opacity=".55"/><ellipse rx="92" ry="19" fill="#FFC2D1"/><ellipse rx="60" ry="12" fill="#FAEDCD"/></g>` },
-  { id: 'plant', es: 'Maceta', en: 'Potted plant', price: 80, at: [66, 202],
+  { id: 'plant', es: 'Maceta', en: 'Potted plant', price: 80, at: [66, 202], kind: 'floor',
     svg: `<g><path d="M0-6q-30-10-26-42 22 4 26 34 4-32 28-38 6 34-28 46z" fill="#9FB27A"/><path d="M-20-4h40l-6 30h-28z" fill="#D4A373"/><path d="M-22-8h44v8h-44z" fill="#C08B5E"/></g>` },
-  { id: 'lamp', es: 'Lámpara', en: 'Lamp', price: 80, at: [528, 208],
+  { id: 'lamp', es: 'Lámpara', en: 'Lamp', price: 80, at: [528, 208], kind: 'floor',
     svg: `<g><rect x="-3" y="-52" width="6" height="52" fill="#D4A373"/><path d="M-24-52h48l-8-26h-32z" fill="#FAEDCD" stroke="#D4A373" stroke-width="2"/><ellipse cy="2" rx="20" ry="6" fill="#D4A373"/></g>` },
-  { id: 'shelf', es: 'Repisa', en: 'Book shelf', price: 120, at: [110, 120],
+  { id: 'shelf', es: 'Repisa', en: 'Book shelf', price: 120, at: [110, 120], kind: 'wall',
     svg: `<g><rect x="-56" y="0" width="112" height="8" rx="3" fill="#D4A373"/><g>${[[-42, '#FF8FAB', 30], [-30, '#CCD5AE', 36], [-18, '#FFC2D1', 26], [-6, '#FAEDCD', 34]].map(([x, c, h]) => `<rect x="${x}" y="${-h}" width="9" height="${h}" rx="2" fill="${c}"/>`).join('')}</g><g transform="translate(28 -14)"><ellipse rx="16" ry="13" fill="#FFC2D1"/><circle cx="-6" cy="-2" r="2" fill="#3A2230"/><circle cx="6" cy="-2" r="2" fill="#3A2230"/></g></g>` },
-  { id: 'papel', es: 'Papel picado', en: 'Paper banners', price: 120, at: [300, 16],
+  { id: 'papel', es: 'Papel picado', en: 'Paper banners', price: 120, at: [300, 16], kind: 'ceiling',
     svg: `<g><path d="M-270 0q135 40 270 0" fill="none" stroke="#D4A373" stroke-width="2"/>${[-210, -150, -90, -30, 30, 90, 150, 210].map((x, i) => { const y = Math.round(34 - Math.abs(x) * 0.11); const c = ['#FF8FAB', '#CCD5AE', '#FFC2D1', '#FAEDCD'][i % 4]; return `<path d="M${x - 16} ${y}h32v25l-16 8-16-8z" fill="${c}"/>`; }).join('')}</g>` },
-  { id: 'marimba', es: 'Marimba', en: 'Marimba', price: 160, at: [72, 262],
+  { id: 'marimba', es: 'Marimba', en: 'Marimba', price: 160, at: [72, 262], kind: 'floor',
     svg: `<g><rect x="-56" y="-16" width="112" height="12" rx="4" fill="#D4A373"/>${[-46, -32, -18, -4, 10, 24, 38].map((x, i) => `<rect x="${x}" y="${-26 + i}" width="10" height="${20 - i}" rx="2" fill="#C08B5E"/>`).join('')}<path d="M-44-4v22M44-4v22" stroke="#8A5A3B" stroke-width="5"/></g>` },
-  { id: 'ventana', es: 'Ventana', en: 'Window', price: 160, at: [470, 96],
+  { id: 'ventana', es: 'Ventana', en: 'Window', price: 160, at: [470, 96], kind: 'wall',
     svg: `<g><rect x="-52" y="-46" width="104" height="92" rx="6" fill="#DCEBF5" stroke="#D4A373" stroke-width="5"/><path d="M0-46v92M-52 0h104" stroke="#D4A373" stroke-width="5"/><path d="M-46 30l26-30 22 26 18-16 26 20v12h-92z" fill="#9FB27A"/></g>` },
-  { id: 'tapete', es: 'Huipil en la pared', en: 'Woven wall hanging', price: 200, at: [140, 96],
+  { id: 'tapete', es: 'Huipil en la pared', en: 'Woven wall hanging', price: 200, at: [140, 96], kind: 'wall',
     svg: `<g><rect x="-40" y="-44" width="80" height="88" rx="4" fill="#FEFAE0" stroke="#D4A373" stroke-width="3"/>${[-30, -14, 2, 18].map((y, i) => `<g><rect x="-34" y="${y}" width="68" height="8" fill="${['#FB6F92', '#9FB27A', '#F0C674', '#FF8FAB'][i]}"/><path d="M-34 ${y + 12}h68" stroke="#EBD3DA" stroke-width="2"/></g>`).join('')}</g>` },
-  { id: 'quetzal', es: 'Quetzal', en: 'Quetzal bird', price: 300, at: [560, 130],
+  { id: 'quetzal', es: 'Quetzal', en: 'Quetzal bird', price: 300, at: [560, 130], kind: 'wall',
     svg: `<g><path d="M-4 6q-22 26-30 52 20-14 34-40z" fill="#3E9E7E"/><ellipse rx="16" ry="18" fill="#4FB894"/><circle cy="-14" r="11" fill="#4FB894"/><path d="M-10-22q10-10 20 0z" fill="#3E9E7E"/><circle cx="4" cy="-16" r="2.5" fill="#3A2230"/><path d="M11-14l8 3-8 3z" fill="#F0C674"/><path d="M-2 8h10v18h-10z" fill="#D6455F"/></g>` },
+  /* --- v13: more for the casita (Guatemalan touches first) --- */
+  { id: 'hamaca', es: 'Hamaca', en: 'Hammock', price: 220, kind: 'floor', at: [120, 262],
+    svg: `<g><path d="M-80 -70v70M80 -70v70" stroke="#8A5A3B" stroke-width="6" stroke-linecap="round"/><path d="M-76 -40q76 62 152 0" fill="none" stroke="#D4A373" stroke-width="3"/><path d="M-70 -36q70 54 140 0q-70 44-140 0z" fill="#FF8FAB"/><path d="M-60 -30q60 44 120 0" fill="none" stroke="#FFC2D1" stroke-width="4"/><path d="M-48 -22q48 32 96 0" fill="none" stroke="#FAEDCD" stroke-width="3"/></g>` },
+  { id: 'tinaja', es: 'Tinaja', en: 'Clay water jar', price: 90, kind: 'floor', at: [540, 262],
+    svg: `<g><ellipse cy="2" rx="22" ry="5" fill="#C08B5E" opacity=".4"/><path d="M-20 -8q-8-30 20-36 28 6 20 36-4 10-20 10t-20-10z" fill="#C08B5E"/><path d="M-13-44h26l-3 6h-20z" fill="#8A5A3B"/><path d="M-16-24q16 6 32 0" fill="none" stroke="#FEFAE0" stroke-width="3"/><path d="M-13-16q13 5 26 0" fill="none" stroke="#FB6F92" stroke-width="2"/></g>` },
+  { id: 'mecedora', es: 'Silla mecedora', en: 'Rocking chair', price: 180, kind: 'floor', at: [64, 206],
+    svg: `<g fill="none" stroke="#8A5A3B" stroke-width="4" stroke-linecap="round"><path d="M-26 -8h44M-22 -8v-44q0-6 6-6h26M-22 -30h32M-22 -20h32M-22 -8v20M18 -8v20M-30 18q26 14 56 0"/></g><path d="M-22 -10h40v6h-40z" fill="#FFC2D1"/>` },
+  { id: 'cojines', es: 'Cojines', en: 'Cushion pile', price: 110, kind: 'floor', at: [480, 262],
+    svg: `<g><rect x="-34" y="-14" width="68" height="20" rx="9" fill="#CCD5AE"/><rect x="-30" y="-32" width="60" height="20" rx="9" fill="#FF8FAB"/><rect x="-24" y="-50" width="48" height="20" rx="9" fill="#FAEDCD"/><path d="M-18-40h36M-24-22h48M-28-4h56" stroke="#fff" stroke-width="2" opacity=".5"/></g>` },
+  { id: 'cafeto', es: 'Cafeto', en: 'Coffee plant', price: 130, kind: 'floor', at: [536, 206],
+    svg: `<g><path d="M-16 -4h32l-5 30h-22z" fill="#D4A373"/><path d="M0 -6v-50" stroke="#8A5A3B" stroke-width="3"/>${[[-14, -44], [14, -36], [-14, -26], [14, -18], [-12, -10]].map(([x, y]) => `<ellipse cx="${x}" cy="${y}" rx="14" ry="7" fill="#7FBF9A" transform="rotate(${x < 0 ? -25 : 25} ${x} ${y})"/>`).join('')}<g fill="#D6455F"><circle cx="-8" cy="-34" r="2.5"/><circle cx="9" cy="-28" r="2.5"/><circle cx="-6" cy="-18" r="2.5"/></g></g>` },
+  { id: 'pecera', es: 'Pecera', en: 'Fish bowl', price: 140, kind: 'floor', at: [64, 206],
+    svg: `<g><rect x="-30" y="-2" width="60" height="8" rx="3" fill="#D4A373"/><path d="M-26-40a26 26 0 1 0 52 0v-6h-52z" fill="#DCEBF5" stroke="#9FD0EA" stroke-width="2"/><path d="M-24-38a24 22 0 0 0 48 0z" fill="#A7CDE3" opacity=".6"/><path d="M-6-26l-8 6 8 6zM-6-20l14 0 6-6-6-6-14 0z" fill="#FF8FAB"/><circle cx="4" cy="-22" r="1.5" fill="#3A2230"/><circle cx="14" cy="-34" r="2" fill="#fff" opacity=".8"/><circle cx="18" cy="-42" r="1.5" fill="#fff" opacity=".8"/></g>` },
+  { id: 'radio', es: 'Radio', en: 'Old radio', price: 120, kind: 'floor', at: [480, 262],
+    svg: `<g><rect x="-30" y="-36" width="60" height="38" rx="8" fill="#FAEDCD" stroke="#D4A373" stroke-width="2"/><circle cx="-12" cy="-17" r="10" fill="#D4A373"/><g stroke="#FEFAE0" stroke-width="1.5"><path d="M-12-25v16M-20-17h16"/></g><rect x="4" y="-26" width="20" height="8" rx="2" fill="#3A2230"/><rect x="6" y="-24" width="6" height="4" fill="#F0C674"/><circle cx="14" cy="-9" r="3" fill="#FB6F92"/><path d="M20-36l10-18" stroke="#8A5A3B" stroke-width="2"/></g>` },
+  { id: 'canasta', es: 'Canasta de mangos', en: 'Basket of mangoes', price: 90, kind: 'floor', at: [120, 262],
+    svg: `<g><path d="M-30-14h60l-6 18h-48z" fill="#D4A373"/><path d="M-30-14h60" stroke="#8A5A3B" stroke-width="3"/><path d="M-26-8h52M-24-2h48" stroke="#C08B5E" stroke-width="1.5"/><g><ellipse cx="-14" cy="-20" rx="11" ry="8" fill="#F0C674" transform="rotate(-20 -14 -20)"/><ellipse cx="4" cy="-24" rx="11" ry="8" fill="#FF8FAB" transform="rotate(15 4 -24)"/><ellipse cx="18" cy="-18" rx="10" ry="7" fill="#F0C674"/><path d="M4-31l3-6" stroke="#7FBF9A" stroke-width="2"/></g></g>` },
+  { id: 'veladora', es: 'Veladora', en: 'Candle', price: 70, kind: 'floor', at: [540, 262],
+    svg: `<g><rect x="-10" y="-30" width="20" height="32" rx="4" fill="#FEFAE0" stroke="#D4A373" stroke-width="2"/><path d="M-6-18h12" stroke="#FF8FAB" stroke-width="3"/><path d="M0-30v-6" stroke="#3A2230" stroke-width="1.5"/><path d="M0-48q6 6 0 14-6-8 0-14z" fill="#F0C674"/><path d="M0-42q3 3 0 7-3-4 0-7z" fill="#FEFAE0"/></g>` },
+  { id: 'quitapenas', es: 'Muñecas quitapenas', en: 'Worry dolls', price: 150, kind: 'wall', at: [90, 96],
+    svg: `<g><rect x="-40" y="-16" width="80" height="34" rx="6" fill="#F0C674" stroke="#C9922F" stroke-width="2"/>${[-28, -14, 0, 14, 28].map((x, i) => `<g transform="translate(${x} -2)"><circle cy="-6" r="4" fill="#C08B5E"/><rect x="-4" y="-2" width="8" height="12" rx="2" fill="${['#FB6F92', '#9FB27A', '#9FD0EA', '#FF8FAB', '#C9B6E4'][i]}"/><path d="M-4 2h8" stroke="#FEFAE0" stroke-width="1.5"/></g>`).join('')}</g>` },
+  { id: 'reloj', es: 'Reloj', en: 'Wall clock', price: 100, kind: 'wall', at: [200, 56],
+    svg: `<g><circle r="24" fill="#FEFAE0" stroke="#D4A373" stroke-width="4"/><circle r="2" fill="#3A2230"/><path d="M0 0v-15M0 0l10 6" stroke="#3A2230" stroke-width="2.5" stroke-linecap="round"/><g fill="#D4A373"><circle cy="-18" r="1.5"/><circle cx="18" r="1.5"/><circle cy="18" r="1.5"/><circle cx="-18" r="1.5"/></g></g>` },
+  { id: 'cuadro', es: 'Cuadro de Antigua', en: 'Antigua painting', price: 180, kind: 'wall', at: [510, 96],
+    svg: `<g><rect x="-50" y="-40" width="100" height="80" rx="4" fill="#FEFAE0" stroke="#C9922F" stroke-width="5"/><rect x="-42" y="-32" width="84" height="64" fill="#DCEBF5"/><path d="M-42 32l30-46 34 46z" fill="#9FB27A"/><path d="M-42 4h84v28h-84z" fill="#FAEDCD"/><path d="M-30 32v-24a10 10 0 0 1 20 0v24M-2 32v-24a10 10 0 0 1 20 0v24" fill="#F0C674" stroke="#D4A373" stroke-width="2"/><circle cx="30" cy="-20" r="6" fill="#F0C674"/></g>` },
+  { id: 'espejo', es: 'Espejo', en: 'Mirror', price: 130, kind: 'wall', at: [400, 56],
+    svg: `<g><ellipse rx="24" ry="30" fill="#DCEBF5" stroke="#C9922F" stroke-width="5"/><path d="M-12-20q10-6 18 2" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity=".8"/><path d="M0-30q0-8 6-8M0-30q0-8-6-8" stroke="#C9922F" stroke-width="3" fill="none"/></g>` },
+  { id: 'barrilete-pared', es: 'Barrilete gigante', en: 'Giant kite', price: 240, kind: 'wall', at: [90, 96],
+    svg: `<g><circle r="46" fill="#FF8FAB"/><circle r="36" fill="#F0C674"/><circle r="26" fill="#9FD0EA"/><circle r="16" fill="#FEFAE0"/><circle r="7" fill="#FB6F92"/><g stroke="#3A2230" stroke-width="1.5" opacity=".7"><path d="M-46 0h92M0-46v92M-33-33l66 66M-33 33l66-66"/></g>${[0, 60, 120, 180, 240, 300].map(a => `<path transform="rotate(${a})" d="M0-46l-4-10h8z" fill="#3A2230"/>`).join('')}</g>` },
+  { id: 'calendario', es: 'Calendario', en: 'Calendar', price: 70, kind: 'wall', at: [400, 56],
+    svg: `<g><rect x="-22" y="-28" width="44" height="54" rx="4" fill="#FEFAE0" stroke="#D4A373" stroke-width="2"/><rect x="-22" y="-28" width="44" height="14" rx="4" fill="#FB6F92"/><g fill="#D4A373">${[-12, 0, 12].map(x => [-6, 4, 14].map(y => `<rect x="${x - 3}" y="${y - 2}" width="6" height="4" rx="1"/>`).join('')).join('')}</g><circle cx="12" cy="4" r="4.5" fill="none" stroke="#FB6F92" stroke-width="2"/></g>` },
+  { id: 'luces', es: 'Luces de colores', en: 'String lights', price: 140, kind: 'ceiling', at: [300, 16],
+    svg: `<g><path d="M-280 0q140 44 280 0t280 0" fill="none" stroke="#3A2230" stroke-width="2"/>${[-250, -200, -150, -100, -50, 0, 50, 100, 150, 200, 250].map((x, i) => { const yy = Math.round(22 - Math.abs(Math.abs(x) - 140) * 0.14); const c = ['#FF8FAB', '#F0C674', '#9FD0EA', '#CCD5AE', '#C9B6E4'][i % 5]; return `<path d="M${x} ${yy}v6" stroke="#3A2230" stroke-width="2"/><ellipse cx="${x}" cy="${yy + 14}" rx="5" ry="8" fill="${c}"/><ellipse cx="${x - 1.5}" cy="${yy + 11}" rx="1.5" ry="2.5" fill="#fff" opacity=".8"/>`; }).join('')}</g>` },
+  { id: 'movil', es: 'Móvil de estrellas', en: 'Star mobile', price: 120, kind: 'ceiling', at: [300, 16],
+    svg: `<g><path d="M-40 10h80" stroke="#8A5A3B" stroke-width="3"/><path d="M0 0v10" stroke="#8A5A3B" stroke-width="2"/>${[-34, -12, 12, 34].map((x, i) => `<path d="M${x} 10v${16 + (i % 2) * 12}" stroke="#3A2230" stroke-width="1"/><path transform="translate(${x} ${34 + (i % 2) * 12}) scale(.8)" d="M0-12l3.5 7.6 8.3 1-6 5.8 1.5 8.2L0 6.7-7.3 10.6l1.5-8.2-6-5.8 8.3-1z" fill="${i % 2 ? '#FF8FAB' : '#F0C674'}"/>`).join('')}</g>` },
+  { id: 'petate', es: 'Petate', en: 'Woven mat', price: 90, kind: 'rug', at: [300, 254],
+    svg: `<g><path d="M-120 -10h240l-20 30h-200z" fill="#E7C98F"/><g stroke="#D4A373" stroke-width="2" opacity=".7">${[-90, -60, -30, 0, 30, 60, 90].map(x => `<path d="M${x} -10l${x > 0 ? -2 : 2} 30"/>`).join('')}<path d="M-114 -2h228M-108 8h216M-104 14h208"/></g></g>` },
+  { id: 'alfombra-rayas', es: 'Alfombra de rayas', en: 'Striped rug', price: 130, kind: 'rug', at: [300, 254],
+    svg: `<g><rect x="-124" y="-22" width="248" height="46" rx="10" fill="#FAEDCD"/>${[-16, -6, 4, 14].map((y, i) => `<rect x="-116" y="${y}" width="232" height="6" rx="3" fill="${['#FB6F92', '#9FB27A', '#F0C674', '#9FD0EA'][i]}"/>`).join('')}<path d="M-124 -14h-8M-124 0h-8M-124 14h-8M124 -14h8M124 0h8M124 14h8" stroke="#D4A373" stroke-width="2"/></g>` },
+  { id: 'mesita', es: 'Mesita con chocolate', en: 'Side table with cocoa', price: 120, kind: 'floor', at: [480, 262],
+    svg: `<g><rect x="-30" y="-24" width="60" height="6" rx="3" fill="#D4A373"/><path d="M-24-18v22M24-18v22" stroke="#8A5A3B" stroke-width="4"/><path d="M-10-36h20l-2 12h-16z" fill="#FEFAE0" stroke="#D4A373" stroke-width="1.5"/><path d="M-8-34h16" stroke="#8A5A3B" stroke-width="3"/><path d="M-2-46q3-4 0-8M4-46q3-4 0-8" stroke="#EBD3DA" stroke-width="2" fill="none" stroke-linecap="round"/></g>` },
+  { id: 'comal', es: 'Comal con tortillas', en: 'Comal with tortillas', price: 100, kind: 'floor', at: [120, 262],
+    svg: `<g><ellipse cy="-2" rx="34" ry="9" fill="#3A2230"/><ellipse cy="-6" rx="34" ry="9" fill="#5C4A44"/>${[[-14, -8], [4, -10], [16, -5]].map(([x, y]) => `<ellipse cx="${x}" cy="${y}" rx="11" ry="4.5" fill="#F0C674" stroke="#D4A373" stroke-width="1"/>`).join('')}<path d="M-30 0q0 10 8 12M30 0q0 10-8 12" stroke="#3A2230" stroke-width="3" fill="none"/></g>` },
 ];
 const DECOR_BY_ID = Object.fromEntries(DECOR.map(d => [d.id, d]));
 
@@ -3460,6 +3599,10 @@ function initRewards() {
   if (!S.decor) S.decor = {};
   if (!S.room) S.room = { bg: 'casita', on: {} };
   if (!S.room.on) S.room.on = {};
+  /* v13: decor lives in spots; older saves only knew "on" */
+  if (!S.room.spots) { S.room.spots = {}; Object.keys(S.room.on).filter(k => S.room.on[k]).forEach(k => placeDecor(k)); }
+  else Object.keys(S.room.spots).forEach(k => { if (!SPOT_BY_ID[k] || !DECOR_BY_ID[S.room.spots[k]]) delete S.room.spots[k]; });
+  if (!S.room.name) S.room.name = '';
   if (!S.chest) S.chest = { daily: null, weekly: 0 };
   if (!S.rewardSeen) S.rewardSeen = {};
   if (!S.cart) S.cart = [];
@@ -3498,7 +3641,7 @@ function cartCheckout() {
   const b = buddy();
   lines.forEach(l => {
     if (l.k === 'item') { S.items[l.id] = true; const it = ITEM_BY_ID[l.id]; if (it) S.chars[b.id].worn[it.slot] = l.id; }
-    else if (l.k === 'decor') { S.decor[l.id] = true; S.room.on[l.id] = true; }
+    else if (l.k === 'decor') { S.decor[l.id] = true; l.spot = placeDecor(l.id); }
     else if (l.k === 'bg') { S.decor['bg:' + l.id] = true; S.room.bg = l.id; }
   });
   S.cart = [];
@@ -3562,12 +3705,44 @@ function layer(item, anchor) {
   const [x, y, s] = anchor[item.slot] || [100, 100, 1];
   return `<g transform="translate(${x} ${y}) scale(${s})">${item.svg}</g>`;
 }
-/* stage flourishes: the companion simply grows, and gains a little glow at the top stages */
-function stageFX(stage) {
+/* ----- evolution (v13): every stage is a visibly different look, not just a bigger one -----
+   Each companion has its own motif that gathers around the head as it grows: one at stage 2, two at 3,
+   three at 4 (with a soft ring), and at stage 5 the motifs turn gold with a double ring and a little crown of
+   light. The learner can wear any look already reached (S.chars[id].look). */
+const EVO = {
+  lola:     { motif: 'bubble', c: '#9FD0EA', c2: '#DCEBF5' },
+  mota:     { motif: 'star',   c: '#F0C674', c2: '#FBE7B0' },
+  nopalito: { motif: 'flower', c: '#FF8FAB', c2: '#FEFAE0' },
+  nube:     { motif: 'heart',  c: '#FFB3C6', c2: '#FB6F92' },
+};
+function motifSVG(kind, c, c2) {
+  if (kind === 'bubble') return `<circle r="9" fill="none" stroke="${c}" stroke-width="2.5"/><circle cx="-3" cy="-3" r="2.2" fill="${c2}"/>`;
+  if (kind === 'star') return `<path d="M0-11l3.2 6.9 7.6.9-5.6 5.3 1.4 7.5L0 6.1l-6.6 3.5 1.4-7.5-5.6-5.3 7.6-.9z" fill="${c}" stroke="${c2}" stroke-width="1"/>`;
+  if (kind === 'heart') return `<path transform="scale(.7)" d="M0 10C-14 0-18-10-11-15-6-19 0-14 0-9c0-5 6-10 11-6 7 5 3 15-11 25z" fill="${c}" stroke="${c2}" stroke-width="1.5"/>`;
+  return `<g fill="${c}"><circle cy="-6" r="4.5"/><circle cx="5.5" cy="-1.5" r="4.5"/><circle cx="3.5" cy="5.5" r="4.5"/><circle cx="-3.5" cy="5.5" r="4.5"/><circle cx="-5.5" cy="-1.5" r="4.5"/></g><circle r="3" fill="${c2}"/>`;
+}
+/* rings sit outside the scaled body; the motifs travel with the head (drawn inside the scaled group) */
+function stageRing(stage) {
   /* a ring, not a filled disc — a disc turns muddy on the dark theme */
   if (stage >= 5) return `<circle cx="100" cy="108" r="88" fill="none" stroke="#F0C674" stroke-width="2.5" opacity=".55"/><circle cx="100" cy="108" r="80" fill="none" stroke="#FFB3C6" stroke-width="7" opacity=".35"/>`;
   if (stage === 4) return `<circle cx="100" cy="110" r="84" fill="none" stroke="#FFB3C6" stroke-width="6" opacity=".3"/>`;
   return '';
+}
+function stageMarks(stage, c) {
+  if (stage < 2) return '';
+  const e = EVO[c.id] || EVO.lola; const [hx, hy] = c.anchor.head;
+  const gold = stage >= 5;
+  const spots = [[hx + 50, hy + 10, 1], [hx - 50, hy + 4, .85], [hx + 34, hy - 34, .75], [hx - 32, hy - 36, .7]];
+  const n = Math.min(spots.length, stage - 1);
+  const marks = spots.slice(0, n).map(([x, y, sc]) => `<g transform="translate(${x} ${y}) scale(${sc})">${motifSVG(e.motif, gold ? '#F0C674' : e.c, gold ? '#FEFAE0' : e.c2)}</g>`).join('');
+  const crown = gold ? `<g fill="#F0C674" opacity=".9">${[[-18, -2, .45], [0, -10, .6], [18, -2, .45]].map(([dx, dy, sc]) => `<path transform="translate(${hx + dx} ${hy - 26 + dy}) scale(${sc})" d="M0-12l3.5 7.6 8.3 1-6 5.8 1.5 8.2L0 6.7-7.3 10.6l1.5-8.2-6-5.8 8.3-1z"/>`).join('')}</g>` : '';
+  return marks + crown;
+}
+const stageFX = stageRing;
+/* the look a companion is drawn with: the stage the learner chose, capped at the stage actually reached */
+function lookStage(id) {
+  const st = charStage(id); const ch = S.chars && S.chars[id];
+  const l = ch && ch.look; return l && l >= 1 && l <= st ? l : st;
 }
 function companionSVG(id, opts) {
   opts = opts || {};
@@ -3578,13 +3753,13 @@ function companionSVG(id, opts) {
   const aura = worn.aura ? ITEM_BY_ID[worn.aura] : null;
   const front = ['head', 'face', 'neck', 'held'].map(k => layer(worn[k] ? ITEM_BY_ID[worn[k]] : null, c.anchor)).join('');
   return `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${esc(c.name)}, stage ${st}">
-    ${stageFX(st)}${aura ? layer(aura, c.anchor) : ''}
-    <g transform="translate(100 112) scale(${sc}) translate(-100 -112)">${innerSVG(id)}${front}</g>
+    ${stageRing(st)}${aura ? layer(aura, c.anchor) : ''}
+    <g transform="translate(100 112) scale(${sc}) translate(-100 -112)">${innerSVG(id)}${stageMarks(st, c)}${front}</g>
   </svg>`;
 }
 function companion(id, size, cls, opts) {
   const ch = S.chars && S.chars[id];
-  const o = Object.assign({ stage: charStage(id), worn: (ch && ch.worn) || {} }, opts || {});
+  const o = Object.assign({ stage: lookStage(id), worn: (ch && ch.worn) || {} }, opts || {});
   return `<span class="mascot ${cls || ''}" style="width:${size}px;height:${size}px">${companionSVG(id, o)}</span>`;
 }
 /* a small preview used in the shop: the buddy wearing one candidate item */
@@ -3592,13 +3767,29 @@ function previewWith(itemId, size) {
   const b = buddy();
   const worn = Object.assign({}, S.chars[b.id].worn);
   const it = ITEM_BY_ID[itemId]; if (it) worn[it.slot] = itemId;
-  return `<span class="mascot" style="width:${size}px;height:${size}px">${companionSVG(b.id, { stage: charStage(b.id), worn })}</span>`;
+  return `<span class="mascot" style="width:${size}px;height:${size}px">${companionSVG(b.id, { stage: lookStage(b.id), worn })}</span>`;
 }
 /* the room scene */
-function roomSVG() {
+/* ----- placing decor (v13) ----- */
+const spotOf = (id) => Object.keys(S.room.spots || {}).find(k => S.room.spots[k] === id) || null;
+const spotsFor = (d) => SPOTS.filter(s => s.kind === d.kind);
+/* put a decoration in the first free spot of its kind (its own default first); returns the spot id or null */
+function placeDecor(id, spotId) {
+  const d = DECOR_BY_ID[id]; if (!d) return null;
+  if (!S.room.spots) S.room.spots = {};
+  const cur = spotOf(id); if (cur) delete S.room.spots[cur];
+  let s = spotId ? SPOT_BY_ID[spotId] : null;
+  if (s && s.kind !== d.kind) s = null;
+  if (!s) { const pref = SPOTS.find(x => x.kind === d.kind && x.at[0] === d.at[0] && x.at[1] === d.at[1]); const order = [pref].concat(spotsFor(d)).filter(Boolean); s = order.find(x => !S.room.spots[x.id]) || null; }
+  if (!s) { S.room.on[id] = false; return null; }
+  S.room.spots[s.id] = id; S.room.on[id] = true; return s.id;
+}
+function unplaceDecor(id) { const cur = spotOf(id); if (cur) delete S.room.spots[cur]; S.room.on[id] = false; }
+function clearSpot(spotId) { const id = S.room.spots && S.room.spots[spotId]; if (id) { delete S.room.spots[spotId]; S.room.on[id] = false; } }
+function roomSVG(opts) {
+  opts = opts || {};
   const bg = ROOM_BG_BY_ID[S.room.bg] || ROOM_BGS[0];
-  const on = Object.keys(S.room.on).filter(k => S.room.on[k] && DECOR_BY_ID[k]);
-  const props = on.map(k => { const d = DECOR_BY_ID[k]; return `<g transform="translate(${d.at[0]} ${d.at[1]})">${d.svg}</g>`; }).join('');
+  const props = SPOTS.map(sp => { const k = S.room.spots && S.room.spots[sp.id]; const d = k && DECOR_BY_ID[k]; return d ? `<g transform="translate(${sp.at[0]} ${sp.at[1]})">${d.svg}</g>` : ''; }).join('');
   const cast = unlockedChars();
   /* an even row along the floor, buddy first and centre-most */
   const row = { 1: [300], 2: [238, 366], 3: [180, 302, 424], 4: [150, 252, 354, 456] }[cast.length] || [300];
@@ -3611,10 +3802,144 @@ function roomSVG() {
   const folk = cast.map((c) => {
     const p = [seat[c.id], 198]; const sc = (c.id === S.buddy ? 0.86 : 0.7);
     const ch = S.chars[c.id] || blankChar(c.id);
-    const inner = companionSVG(c.id, { stage: charStage(c.id), worn: ch.worn }).trim().replace(/^<svg[^>]*>/, '').replace(/<\/svg>$/, '');
+    const inner = companionSVG(c.id, { stage: lookStage(c.id), worn: ch.worn }).trim().replace(/^<svg[^>]*>/, '').replace(/<\/svg>$/, '');
     return `<g transform="translate(${p[0] - 100 * sc} ${p[1] - 100 * sc}) scale(${sc})">${inner}</g>`;
   }).join('');
   return `<svg viewBox="0 0 600 300" class="roomsvg" role="img" aria-label="Your casita">${bg.svg}${props}${folk}</svg>`;
+}
+
+/* =========================== CASITA UI (v13): wardrobe, evolution, decorating =========================== */
+/* Helpers only — renderCasita in part4 assembles them. Transient UI choices (which wardrobe slot or room
+   spot is open) live here, not in S, so they are never synced. */
+
+let WSLOT = 'head';      /* wardrobe slot being browsed */
+let DSPOT = 'rug';       /* room spot being edited */
+
+function itemThumb(i, size) {
+  size = size || 64;
+  return `<svg viewBox="-46 -46 92 92" style="width:${size}px;height:${size}px" aria-hidden="true">${i.slot === 'aura' ? `<g transform="translate(-100 -100) scale(.42) translate(100 100)">${i.svg}</g>` : i.svg}</svg>`;
+}
+function decorThumb(d, size) { size = size || 64; return `<svg viewBox="-80 -80 160 160" style="width:${size}px;height:${size}px" aria-hidden="true">${d.svg}</svg>`; }
+
+/* ----- wardrobe: slot chips, a scrolling rail of owned things, saved looks ----- */
+function wardrobeHTML(id) {
+  const ch = S.chars[id]; const worn = ch.worn;
+  const all = itemsFor(WSLOT), mine = all.filter(i => S.items[i.id]);
+  const looks = ch.looks || [];
+  return `<div class="wardrobe" id="wardrobe">
+    <div class="wchips" role="tablist" aria-label="Wardrobe slots">${SLOTS.map(s => `<button type="button" role="tab" class="chip ${s.k === WSLOT ? 'on' : ''}" data-wslot="${s.k}" aria-selected="${s.k === WSLOT}">${s.t}${worn[s.k] ? '<i class="dot"></i>' : ''}</button>`).join('')}</div>
+    <div class="wrail" role="listbox" aria-label="${esc(SLOTS.find(s => s.k === WSLOT).t)} items">
+      <button type="button" class="wtile ${!worn[WSLOT] ? 'on' : ''}" data-wear-none="1" role="option" aria-selected="${!worn[WSLOT]}"><span class="pic none">—</span><small>Nothing</small></button>
+      ${mine.map(i => `<button type="button" class="wtile r-${i.r} ${worn[WSLOT] === i.id ? 'on' : ''}" data-wear-id="${esc(i.id)}" role="option" aria-selected="${worn[WSLOT] === i.id}" title="${esc(i.en)}"><span class="pic">${itemThumb(i, 56)}</span><small>${esc(i.es)}</small></button>`).join('')}
+      ${mine.length < all.length ? `<a class="wtile more" href="#shop"><span class="pic">+${all.length - mine.length}</span><small>in the shop</small></a>` : ''}
+    </div>
+    <div class="wlooks">
+      <span class="label">Saved looks</span>
+      <div class="lookrow">
+        ${looks.map((l, i) => `<span class="lookchip ${sameWorn(l.worn, worn) ? 'on' : ''}"><button type="button" data-look-apply="${i}">${esc(l.n)}</button><button type="button" class="x" data-look-del="${i}" aria-label="Delete ${esc(l.n)}">×</button></span>`).join('')}
+        ${looks.length < 4 ? `<button type="button" class="chip" id="lookSave">+ Save this look</button>` : ''}
+        <button type="button" class="chip" id="lookRandom">Surprise me</button>
+        ${Object.values(worn).some(Boolean) ? `<button type="button" class="chip" id="lookClear">Take it all off</button>` : ''}
+      </div>
+    </div>
+  </div>`;
+}
+const sameWorn = (a, b) => SLOTS.every(s => (a[s.k] || null) === (b[s.k] || null));
+function wireWardrobe(root, id, after) {
+  const ch = S.chars[id];
+  root.querySelectorAll('[data-wslot]').forEach(b => b.addEventListener('click', () => { WSLOT = b.dataset.wslot; after(); }));
+  root.querySelectorAll('[data-wear-none]').forEach(b => b.addEventListener('click', () => { ch.worn[WSLOT] = null; save(); after(); }));
+  root.querySelectorAll('[data-wear-id]').forEach(b => b.addEventListener('click', () => { const it = ITEM_BY_ID[b.dataset.wearId]; if (!it) return; ch.worn[it.slot] = it.id; save(); after(); }));
+  root.querySelectorAll('[data-look-apply]').forEach(b => b.addEventListener('click', () => { const l = (ch.looks || [])[Number(b.dataset.lookApply)]; if (!l) return; SLOTS.forEach(s => { ch.worn[s.k] = l.worn[s.k] && S.items[l.worn[s.k]] ? l.worn[s.k] : null; }); save(); after(); }));
+  root.querySelectorAll('[data-look-del]').forEach(b => b.addEventListener('click', () => { ch.looks.splice(Number(b.dataset.lookDel), 1); save(); after(); }));
+  const sv = root.querySelector('#lookSave'); if (sv) sv.addEventListener('click', () => { ch.looks = ch.looks || []; ch.looks.push({ n: 'Look ' + (ch.looks.length + 1), worn: Object.assign({}, ch.worn) }); save(); toast('Look saved.'); after(); });
+  const rn = root.querySelector('#lookRandom'); if (rn) rn.addEventListener('click', () => {
+    SLOTS.forEach(s => { const pool = itemsFor(s.k).filter(i => S.items[i.id]); ch.worn[s.k] = pool.length && Math.random() < (s.k === 'aura' ? .5 : .8) ? pool[Math.floor(Math.random() * pool.length)].id : null; });
+    save(); after();
+  });
+  const cl = root.querySelector('#lookClear'); if (cl) cl.addEventListener('click', () => { SLOTS.forEach(s => { ch.worn[s.k] = null; }); save(); after(); });
+}
+
+/* ----- evolution: every stage reached is a look you can keep ----- */
+function evolutionHTML(id) {
+  const c = CHAR_BY_ID[id], st = charStage(id), look = lookStage(id), ch = S.chars[id], p = stageProgress(id);
+  return `<div class="evo" id="evo">
+    <div class="row between"><span class="label">Evolution · stage ${st} of 5</span><span class="mono muted">${p.max ? 'fully grown' : p.have + '/' + p.need + ' care to stage ' + (st + 1)}</span></div>
+    <div class="meter"><i style="width:${p.pct}%"></i></div>
+    <div class="evostrip">
+      ${c.stages.map((name, i) => { const n = i + 1, reached = n <= st; return `<button type="button" class="evostep ${reached ? '' : 'locked'} ${n === look ? 'on' : ''}" data-look="${n}" ${reached ? '' : 'disabled'} aria-pressed="${n === look}">
+        <span class="pic">${reached ? companionSVG(c.id, { stage: n, worn: ch.worn }) : '<span class="q">?</span>'}</span>
+        <b>${reached ? esc(name) : 'Stage ' + n}</b>
+        <small>${reached ? (n === look ? 'in use' : 'tap to use') : STAGE_AT[i] + ' care'}</small>
+      </button>`; }).join('')}
+    </div>
+    <p class="small muted">Every stage you reach stays yours: pick the one you like and ${esc(c.name)} wears it everywhere. Care keeps counting towards the next one either way.</p>
+  </div>`;
+}
+function wireEvolution(root, id, after) {
+  root.querySelectorAll('[data-look]').forEach(b => b.addEventListener('click', () => { const n = Number(b.dataset.look); if (n > charStage(id)) return; S.chars[id].look = n === charStage(id) ? null : n; save(); after(); }));
+}
+
+/* ----- decorating: tap a spot in the room, choose what goes there ----- */
+function hotspotsHTML() {
+  return SPOTS.map(sp => { const k = S.room.spots[sp.id]; const d = k && DECOR_BY_ID[k]; return `<button type="button" class="hot ${d ? 'full' : ''} ${sp.id === DSPOT ? 'on' : ''}" style="left:${sp.at[0] / 6}%;top:${sp.at[1] / 3}%" data-spot="${sp.id}" aria-label="${esc(sp.t)}${d ? ': ' + esc(d.es) : ' (empty)'}" title="${esc(sp.t)}${d ? ' · ' + esc(d.es) : ''}"><span></span></button>`; }).join('');
+}
+function spotPanelHTML() {
+  const sp = SPOT_BY_ID[DSPOT] || SPOTS[0];
+  const here = S.room.spots[sp.id]; const mine = DECOR.filter(d => d.kind === sp.kind && S.decor[d.id]);
+  const shopN = DECOR.filter(d => d.kind === sp.kind && !S.decor[d.id]).length;
+  const kindName = { ceiling: 'ceiling', wall: 'wall', floor: 'floor', rug: 'rug' }[sp.kind];
+  return `<div class="spotpanel" id="spotPanel">
+    <div class="row between"><span class="label">${esc(sp.t)}</span><span class="small muted">${kindName} spot</span></div>
+    <div class="wrail">
+      <button type="button" class="wtile ${here ? '' : 'on'}" data-put-none="1"><span class="pic none">—</span><small>Empty</small></button>
+      ${mine.map(d => { const at = spotOf(d.id); return `<button type="button" class="wtile ${at === sp.id ? 'on' : ''}" data-put="${d.id}" title="${esc(d.en)}"><span class="pic">${decorThumb(d, 56)}</span><small>${esc(d.es)}</small>${at && at !== sp.id ? `<em>move here</em>` : ''}</button>`; }).join('')}
+      ${shopN ? `<a class="wtile more" href="#shop/decor"><span class="pic">+${shopN}</span><small>in the shop</small></a>` : ''}
+    </div>
+    ${mine.length ? '' : `<p class="small muted">Nothing for this spot yet — the shop has ${shopN} ${kindName} thing${shopN === 1 ? '' : 's'}.</p>`}
+  </div>`;
+}
+function renderDecorate() {
+  crumb([{ t: 'Casita', href: '#casita' }, { t: 'Decorate' }]);
+  const bgs = ROOM_BGS.filter(b => ownedOf('bg', b.id));
+  app.innerHTML = `
+  <section class="pagehead">
+    <div class="title"><span class="label">Decorate</span><h1>${esc(S.room.name || 'Your casita')}</h1><p>Tap a dot in the room to choose what lives there. Everything you own is here; the rest is in the shop.</p></div>
+    <div class="side pink"><span class="label">Purse</span><div class="es" style="font-size:2rem">${COIN} ${S.coins || 0}</div><div class="btn-row" style="margin-top:10px"><a class="btn sm rose" href="#shop/decor">Shop for the room →</a><a class="btn sm ghost" href="#casita">← Casita</a></div></div>
+  </section>
+  <div class="deco">
+    <div class="deco-room">
+      <div class="roomwrap" id="roomWrap">${roomSVG()}${hotspotsHTML()}</div>
+      <label class="roomname"><span class="label">Name your casita</span><input type="text" id="roomName" maxlength="28" placeholder="Casita de Nat" value="${esc(S.room.name || '')}"></label>
+    </div>
+    <div class="deco-panel">
+      ${spotPanelHTML()}
+      <div class="bgpick">
+        <div class="row between"><span class="label">Background</span><span class="small muted">${bgs.length} of ${ROOM_BGS.length}</span></div>
+        <div class="wrail">
+          ${bgs.map(b => `<button type="button" class="wtile wide ${S.room.bg === b.id ? 'on' : ''}" data-bg="${b.id}" title="${esc(b.en)}"><span class="pic"><svg viewBox="0 0 600 300" aria-hidden="true">${b.svg}</svg></span><small>${esc(b.es)}</small></button>`).join('')}
+          ${bgs.length < ROOM_BGS.length ? `<a class="wtile wide more" href="#shop/decor"><span class="pic">+${ROOM_BGS.length - bgs.length}</span><small>in the shop</small></a>` : ''}
+        </div>
+      </div>
+      <div class="btn-row"><button type="button" class="btn sm ghost" id="roomClear">Put everything away</button></div>
+    </div>
+  </div>`;
+  wireDecorate();
+}
+function wireDecorate() {
+  const deco = app.querySelector('.deco'); if (!deco) return;
+  const paintRoom = () => { const w = $('#roomWrap'); if (w) w.innerHTML = roomSVG() + hotspotsHTML(); };
+  const paintPanel = () => { const p = $('#spotPanel'); if (p) p.outerHTML = spotPanelHTML(); };
+  /* one delegated listener on the wrapper — the room and the panel are repainted many times */
+  deco.addEventListener('click', (e) => {
+    const t = e.target.closest('[data-spot],[data-put],[data-put-none],[data-bg],#roomClear'); if (!t) return;
+    if (t.dataset.spot) { DSPOT = t.dataset.spot; paintRoom(); paintPanel(); return; }
+    if (t.dataset.put) { placeDecor(t.dataset.put, DSPOT); save(); paintRoom(); paintPanel(); return; }
+    if (t.dataset.putNone) { clearSpot(DSPOT); save(); paintRoom(); paintPanel(); return; }
+    if (t.dataset.bg) { S.room.bg = t.dataset.bg; save(); deco.querySelectorAll('[data-bg]').forEach(x => x.classList.toggle('on', x === t)); paintRoom(); return; }
+    if (t.id === 'roomClear') { SPOTS.forEach(sp => clearSpot(sp.id)); save(); paintRoom(); paintPanel(); }
+  });
+  const nm = $('#roomName'); if (nm) nm.addEventListener('change', () => { S.room.name = nm.value.trim().slice(0, 28); save(); const h = app.querySelector('.pagehead h1'); if (h) h.textContent = S.room.name || 'Your casita'; });
 }
 
 /* =========================== LEARNER PROFILE, ACTIVITY LOG, CLOUD SYNC =========================== */
@@ -3851,7 +4176,7 @@ function rebuildFromSummary(p) {
     else if (a.k === 'dialogue') { const d = Object.values(DIALOGUES).flat().find(x => x.title === a.v); if (d) out.done[d.id] = true; }
     else if (a.k === 'hunt') { Object.entries(HUNTS).forEach(([lv, hs]) => hs.forEach(h => { if (h.theme === a.v) out.done['h' + lv + '-' + h.theme] = true; })); }
     else if (a.k === 'xp' && / found$/.test(a.v)) { const es = a.v.replace(/ found$/, ''); if (DICT_BY_ES[es]) { out.learned[es] = true; out.cards[es] = out.cards[es] || { box: 0, due: todayStr() }; } }
-    else if (a.k === 'buy') { const it = ITEMS.find(i => i.es === a.v); const dc = DECOR.find(d => d.es === a.v); const bg = ROOM_BGS.find(b => b.es === a.v); if (it) { out.items[it.id] = true; } if (dc) { out.decor[dc.id] = true; out.room.on[dc.id] = true; } if (bg) { out.decor['bg:' + bg.id] = true; } }
+    else if (a.k === 'buy') { const it = ITEMS.find(i => i.es === a.v); const dc = DECOR.find(d => d.es === a.v); const bg = ROOM_BGS.find(b => b.es === a.v); if (it) { out.items[it.id] = true; } if (dc) { out.decor[dc.id] = true; out.room.on[dc.id] = true; delete out.room.spots; /* initRewards re-places from `on` */ } if (bg) { out.decor['bg:' + bg.id] = true; } }
     else if (a.k === 'chest') { const d = new Date(a.t * 1000); out.chest.daily = todayStr(d); }
     else if (a.k === 'checkpoint' && a.s >= 75) { const lv = Number(String(a.v).replace(/\D/g, '')); if (lv) out.checks[lv] = { best: a.s, passed: true, at: todayStr() }; }
   });
@@ -4598,7 +4923,7 @@ const gridForm = (w) => stripAccents(String(w).toUpperCase()).replace(/[^A-Z\u00
 const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const DICT_BY_ES = Object.fromEntries(DICT.map(d => [d.es, d]));
 const KEY = 'hablemos.v1';
-const BUILD = { v: 'v12.1', date: '3 September 2026' };
+const BUILD = { v: 'v13', date: '3 September 2026' };
 const todayStr = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 const addDays = (n) => { const d = new Date(); d.setDate(d.getDate() + n); return todayStr(d); };
 const XP = { lesson: 15, perfect: 5, phrase: 5, passage: 15, huntWord: 2, hunt: 10, card: 1, mistake: 3, dialogue: 10, listen: 3 };
@@ -6424,37 +6749,36 @@ function wireChests(root) {
   }));
 }
 function renderCasita(sub) {
+  if (sub === 'decorate') return renderDecorate();
   crumb([{ t: 'Casita' }]);
   const b = buddy();
   const cast = unlockedChars();
   const nextChar = CHARS.find(c => !charUnlocked(c.id));
-  const worn = S.chars[b.id].worn;
+  const placed = SPOTS.filter(sp => S.room.spots[sp.id]).length;
   app.innerHTML = `
   <section class="pagehead">
-    <div class="title"><span class="label">Casita</span><h1>Your little house</h1><p>Every XP you earn is also one ${COIN_NAME} to spend, and it feeds whichever companion is with you. Feed one long enough and it grows.</p></div>
+    <div class="title"><span class="label">Casita</span><h1>${esc(S.room.name || 'Your little house')}</h1><p>Every XP you earn is also one ${COIN_NAME} to spend, and it feeds whichever companion is with you. Feed one long enough and it grows — and every look it grows through stays yours.</p></div>
     <div class="side pink">
       <span class="label">Purse</span><div class="es" style="font-size:2rem">${COIN} ${S.coins || 0}</div>
-      <span class="label" style="margin-top:8px">Collection</span><div class="small">${Object.keys(S.items).length} of ${ITEMS.length} items · ${cast.length} of ${CHARS.length} friends</div>
+      <span class="label" style="margin-top:8px">Collection</span><div class="small">${Object.keys(S.items).length} of ${ITEMS.length} items · ${DECOR.filter(d => S.decor[d.id]).length} of ${DECOR.length} decor · ${cast.length} of ${CHARS.length} friends</div>
       <div class="btn-row" style="margin-top:10px"><a class="btn sm rose" href="#shop">Shop →</a><a class="btn sm ghost" href="#collection">Collection →</a></div>
     </div>
   </section>
 
   <div class="casita">
     <div class="room">
-      <span class="label">The casita</span>
+      <div class="row between"><span class="label">${esc(S.room.name || 'The casita')}</span><span class="small muted">${placed ? placed + ' thing' + (placed === 1 ? '' : 's') + ' placed' : 'nothing placed yet'}</span></div>
       ${roomSVG()}
-      <div class="btn-row"><a class="btn sm ghost" href="#shop/decor">Decorate →</a></div>
+      <div class="btn-row"><a class="btn sm rose" href="#casita/decorate">Decorate →</a><a class="btn sm ghost" href="#shop/decor">Shop for the room →</a></div>
     </div>
     <div class="buddybox">
       <span class="label">With you today</span>
       <div class="buddypic">${companion(b.id, 200, 'float')}</div>
       <h2>${esc(b.name)}</h2>
       <p class="muted small">${esc(b.blurb)}</p>
-      ${stageBar(b.id)}
-      <div class="wearrow">
-        ${SLOTS.map(s => { const it = worn[s.k] ? ITEM_BY_ID[worn[s.k]] : null; return `<div class="wear"><span class="label">${s.t}</span><select data-slot="${s.k}"><option value="">— none —</option>${itemsFor(s.k).filter(i => S.items[i.id]).map(i => `<option value="${i.id}" ${worn[s.k] === i.id ? 'selected' : ''}>${esc(i.es)} · ${esc(i.en)}</option>`).join('')}</select></div>`; }).join('')}
-      </div>
-      <p class="small muted">${ownedItems().length ? 'Change an outfit any time — nothing is used up.' : 'Buy something in the shop and it appears in these menus.'}</p>
+      ${evolutionHTML(b.id)}
+      <div class="row between" style="margin-top:14px"><span class="label">Wardrobe</span><span class="small muted">${ownedItems().length} of ${ITEMS.length} things</span></div>
+      ${wardrobeHTML(b.id)}
     </div>
   </div>
 
@@ -6467,12 +6791,12 @@ function renderCasita(sub) {
     <div class="hhead"><div><span class="eyebrow">Friends</span><h2>Choose your companion</h2><p>Whoever is with you receives the care from every XP you earn — so they grow at different speeds.</p></div><span class="mono muted">${cast.length}/${CHARS.length} unlocked</span></div>
     <div class="hbody castgrid">
       ${CHARS.map(c => {
-        const un = charUnlocked(c.id), st = charStage(c.id);
+        const un = charUnlocked(c.id), st = charStage(c.id), lk = un ? lookStage(c.id) : 1;
         return `<div class="castcard ${un ? '' : 'locked'} ${c.id === b.id ? 'on' : ''}">
           <div class="pic">${un ? companion(c.id, 120) : `<span class="lockpic">?</span>`}</div>
           <b>${esc(un ? c.name : 'Locked')}</b>
-          <span class="small muted">${un ? esc(c.stages[st - 1]) + ' · stage ' + st : 'Unlocks at ' + c.unlock + ' XP'}</span>
-          ${un ? `<div class="meter sm"><i style="width:${stageProgress(c.id).pct}%"></i></div>` : `<div class="meter sm"><i style="width:${Math.min(100, Math.round((S.xp || 0) / c.unlock * 100))}%"></i></div>`}
+          <span class="small muted">${un ? esc(c.stages[lk - 1]) + ' · stage ' + lk + (lk !== st ? ' look' : '') : 'Unlocks at ' + c.unlock + ' XP'}</span>
+          ${un ? `<div class="stages">${c.stages.map((sname, i) => `<span class="${st > i ? 'on' : ''} ${lk === i + 1 ? 'cur' : ''}" title="${esc(sname)}">${i + 1}</span>`).join('')}</div>` : `<div class="meter sm"><i style="width:${Math.min(100, Math.round((S.xp || 0) / c.unlock * 100))}%"></i></div>`}
           ${un ? (c.id === b.id ? `<span class="pill ok">with you</span>` : `<button type="button" class="btn sm" data-pick="${c.id}">Bring along</button>`) : `<span class="small muted">${Math.max(0, c.unlock - (S.xp || 0))} XP to go</span>`}
         </div>`;
       }).join('')}
@@ -6484,11 +6808,25 @@ function renderCasita(sub) {
     <div class="hhead"><div><span class="eyebrow">You</span><h2>Your account</h2><p>Progress, ${COIN_NAME} and outfits are saved to the cloud under your name and PIN.</p></div></div>
     <div class="hbody">${accountHTML()}</div>
   </section>`;
+  wireCasitaBuddy(b.id);
   app.querySelectorAll('[data-pick]').forEach(btn => btn.addEventListener('click', () => { S.buddy = btn.dataset.pick; logAct('buddy', CHAR_BY_ID[S.buddy].name); save(); renderCasita(); }));
-  app.querySelectorAll('[data-slot]').forEach(sel => sel.addEventListener('change', () => { S.chars[b.id].worn[sel.dataset.slot] = sel.value || null; save(); renderCasita(); }));
   wireChests(app);
   document.querySelectorAll('[data-cloudstate]').forEach(paintCloudPill);
   wireAccount(app, () => renderCasita());
+}
+/* the buddy box repaints itself (preview, evolution strip, wardrobe) without rebuilding the whole page */
+function wireCasitaBuddy(id) {
+  const box = app.querySelector('.buddybox'); if (!box) return;
+  const repaint = () => {
+    const pic = box.querySelector('.buddypic'); if (pic) pic.innerHTML = companion(id, 200, 'float');
+    const ev = box.querySelector('#evo'); if (ev) ev.outerHTML = evolutionHTML(id);
+    const wd = box.querySelector('#wardrobe'); if (wd) wd.outerHTML = wardrobeHTML(id);
+    const room = app.querySelector('.roomsvg'); if (room) room.outerHTML = roomSVG();
+    app.querySelectorAll('.castcard.on .pic').forEach(p => { p.innerHTML = companion(id, 120); });
+    wire();
+  };
+  const wire = () => { wireEvolution(box, id, repaint); wireWardrobe(box, id, repaint); };
+  wire();
 }
 
 function shopTabs(tab) {
@@ -6562,28 +6900,33 @@ function renderShop(sub) {
     <div class="side pink"><span class="label">Purse</span><div class="es" style="font-size:2rem">${COIN} ${S.coins || 0}</div><span class="small muted">Earn one for every XP.</span><div class="btn-row" style="margin-top:10px"><a class="btn sm rose" href="#checkout">Bag (${cartCount()}) →</a><a class="btn sm ghost" href="#casita">← Casita</a></div></div>
   </section>${shopTabs(tab)}`;
   if (tab === 'decor') {
-    app.innerHTML = head + `
-    <div class="shopgrid">
-      ${ROOM_BGS.map(bg => {
-        const owned = ownedOf('bg', bg.id), on = S.room.bg === bg.id, queued = inCart('bg', bg.id);
-        return `<div class="shopcard ${owned ? 'owned' : ''}">
-          <div class="thumb wide"><svg viewBox="0 0 600 300">${bg.svg}</svg></div>
-          <b>${esc(bg.es)}</b><span class="small muted">${esc(bg.en)} · background</span>
-          ${on ? `<span class="pill ok">in use</span>` : owned ? `<button type="button" class="btn sm" data-usebg="${bg.id}">Use</button>` : queued ? `<button type="button" class="btn sm ghost" data-unbagx="bg:${bg.id}">In bag ✓ · remove</button>` : `<button type="button" class="btn sm rose" data-bagx="bg:${bg.id}">Add to bag · ${COIN} ${bg.price}</button>`}
-        </div>`;
-      }).join('')}
-      ${DECOR.map(d => {
-        const owned = !!S.decor[d.id], on = !!S.room.on[d.id], queued = inCart('decor', d.id);
-        return `<div class="shopcard ${owned ? 'owned' : ''}">
-          <div class="thumb"><svg viewBox="-70 -70 140 140">${d.svg}</svg></div>
-          <b>${esc(d.es)}</b><span class="small muted">${esc(d.en)}</span>
-          ${owned ? `<button type="button" class="btn sm ${on ? '' : 'rose'}" data-togdec="${d.id}">${on ? 'Put away' : 'Place in room'}</button>` : queued ? `<button type="button" class="btn sm ghost" data-unbagx="decor:${d.id}">In bag ✓ · remove</button>` : `<button type="button" class="btn sm rose" data-bagx="decor:${d.id}">Add to bag · ${COIN} ${d.price}</button>`}
-        </div>`;
-      }).join('')}
-    </div>${bagBarHTML()}`;
+    const bgCard = (bg) => {
+      const owned = ownedOf('bg', bg.id), on = S.room.bg === bg.id, queued = inCart('bg', bg.id);
+      return `<div class="shopcard ${owned ? 'owned' : ''}">
+        <div class="thumb wide"><svg viewBox="0 0 600 300">${bg.svg}</svg></div>
+        <b>${esc(bg.es)}</b><span class="small muted">${esc(bg.en)}</span>
+        ${on ? `<span class="pill ok">in use</span>` : owned ? `<button type="button" class="btn sm" data-usebg="${bg.id}">Use</button>` : queued ? `<button type="button" class="btn sm ghost" data-unbagx="bg:${bg.id}">In bag ✓ · remove</button>` : `<button type="button" class="btn sm rose" data-bagx="bg:${bg.id}">Add to bag · ${COIN} ${bg.price}</button>`}
+      </div>`;
+    };
+    const decCard = (d) => {
+      const owned = !!S.decor[d.id], at = owned ? spotOf(d.id) : null, queued = inCart('decor', d.id);
+      return `<div class="shopcard ${owned ? 'owned' : ''}">
+        <div class="thumb"><svg viewBox="-80 -80 160 160">${d.svg}</svg></div>
+        <b>${esc(d.es)}</b><span class="small muted">${esc(d.en)}${at ? ' · ' + esc(SPOT_BY_ID[at].t.toLowerCase()) : ''}</span>
+        ${owned ? `<button type="button" class="btn sm ${at ? '' : 'rose'}" data-togdec="${d.id}">${at ? 'Put away' : 'Place in room'}</button>` : queued ? `<button type="button" class="btn sm ghost" data-unbagx="decor:${d.id}">In bag ✓ · remove</button>` : `<button type="button" class="btn sm rose" data-bagx="decor:${d.id}">Add to bag · ${COIN} ${d.price}</button>`}
+      </div>`;
+    };
+    const groups = [
+      ['Backgrounds', 'Where the casita is', 'Change the view out of the window — or the whole room.', ROOM_BGS.map(bgCard).join(''), ROOM_BGS.filter(b => ownedOf('bg', b.id)).length + '/' + ROOM_BGS.length],
+    ].concat([['rug', 'Rugs', 'One at a time, in the middle of the floor.'], ['floor', 'On the floor', 'Four floor spots: the two corners and the two front edges.'], ['wall', 'On the wall', 'Four wall spots, two low and two high.'], ['ceiling', 'From the ceiling', 'One thing hangs across the top.']].map(([k, t, p]) => { const list = DECOR.filter(d => d.kind === k); return [t, t, p, list.map(decCard).join(''), list.filter(d => S.decor[d.id]).length + '/' + list.length]; }));
+    app.innerHTML = head + `<p class="small muted shopnote">Bought things go straight into a free spot. Move them around any time in <a href="#casita/decorate">Decorate</a>.</p>` + groups.map(([eyebrow, h2, p, cards, n]) => `
+    <section class="hsec">
+      <div class="hhead"><div><span class="eyebrow">${esc(eyebrow)}</span><h2>${esc(h2)}</h2><p>${esc(p)}</p></div><span class="mono muted">${n} owned</span></div>
+      <div class="hbody shopgrid">${cards}</div>
+    </section>`).join('') + bagBarHTML();
     app.querySelectorAll('[data-bagx]').forEach(b => b.addEventListener('click', () => { const [k, id] = b.dataset.bagx.split(':'); if (cartAdd(k, id)) { save(); toast('Added to your bag'); } renderShop('decor'); }));
     app.querySelectorAll('[data-unbagx]').forEach(b => b.addEventListener('click', () => { const [k, id] = b.dataset.unbagx.split(':'); cartRemove(k, id); save(); renderShop('decor'); }));
-    app.querySelectorAll('[data-togdec]').forEach(b => b.addEventListener('click', () => { const id = b.dataset.togdec; S.room.on[id] = !S.room.on[id]; save(); renderShop('decor'); }));
+    app.querySelectorAll('[data-togdec]').forEach(b => b.addEventListener('click', () => { const id = b.dataset.togdec; if (spotOf(id)) unplaceDecor(id); else if (!placeDecor(id)) { toast(`Every ${DECOR_BY_ID[id].kind} spot is taken — swap something in Decorate.`); } save(); renderShop('decor'); }));
     app.querySelectorAll('[data-usebg]').forEach(b => b.addEventListener('click', () => { S.room.bg = b.dataset.usebg; save(); renderShop('decor'); }));
     return;
   }
@@ -6651,7 +6994,7 @@ function renderCheckout() {
     app.querySelector('.checkout').innerHTML = `
       <div class="receipt">
         <div class="rhead">${companion(buddy().id, 150, 'float')}<div><span class="label">Receipt</span><h2>¡Gracias!</h2><p class="muted">${r.lines.length} item${r.lines.length === 1 ? '' : 's'} for ${COIN} ${r.total}. You have ${COIN} ${r.left} left.</p></div></div>
-        <div class="rlines">${r.lines.map(l => `<div class="bagline"><div class="bthumb">${lineThumb(l)}</div><div class="bname"><b>${esc(l.es)}</b><span class="small muted">${esc(l.en)}</span></div><div class="bprice">${COIN} ${l.price}</div><span class="pill ok">${l.k === 'item' ? 'wearing' : l.k === 'decor' ? 'placed' : 'in use'}</span></div>`).join('')}</div>
+        <div class="rlines">${r.lines.map(l => `<div class="bagline"><div class="bthumb">${lineThumb(l)}</div><div class="bname"><b>${esc(l.es)}</b><span class="small muted">${esc(l.en)}</span></div><div class="bprice">${COIN} ${l.price}</div><span class="pill ${l.k === 'decor' && !l.spot ? '' : 'ok'}">${l.k === 'item' ? 'wearing' : l.k === 'decor' ? (l.spot ? 'placed · ' + esc(SPOT_BY_ID[l.spot].t.toLowerCase()) : 'spots full — see Decorate') : 'in use'}</span></div>`).join('')}</div>
         <p class="small muted">${items.length ? `${esc(buddy().name)} is wearing the new things now — change outfits any time in the Casita.` : ''} ${other.length ? 'The room has been updated.' : ''}</p>
         <div class="btn-row"><a class="btn rose" href="#casita">See the Casita →</a><a class="btn ghost" href="#shop">Back to the shop</a><a class="btn ghost" href="#collection">Collection</a></div>
       </div>`;
