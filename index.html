@@ -1541,6 +1541,58 @@ html.standalone #testbar { top: calc(64px + max(env(safe-area-inset-top, 0px), 6
 @media (max-width: 1100px) { .gamecards { padding-left: 32px; padding-right: 32px; } .game { padding-left: 32px; padding-right: 32px; } }
 @media (max-width: 760px) { .gamecards { grid-template-columns: 1fr; padding: 12px 18px 22px; } .game { padding: 12px 18px 30px; } .gcard { padding: 16px; border-radius: 20px; } .cpic { font-size: 2.6rem; width: 68px; height: 68px; } .cbubble b { font-size: 1.3rem; } .gopt { min-height: 60px; font-size: 1.15rem; } .dladder { padding: 40px 20px 0; } .lwho .mascot { width: 38px !important; height: 38px !important; } .lwho { margin-left: -19px; } }
 @media (max-width: 400px) { .goptions { gap: 8px; } .gopt { font-size: 1.05rem; padding: 10px 6px; } .dladder { padding-left: 18px; padding-right: 18px; } }
+
+/* v16: lotería, ¡el o la!, crucigrama */
+.gamecard.t-sand { background: var(--sand); } .gamecard.t-lilac { background: #E6DAF5; color: #2F2D1F; } .gamecard.t-mint { background: #DFF3E7; color: #2F2D1F; }
+.acct.nudge.rescue { background: var(--sand); border-color: #E2B93B; }
+/* lotería */
+.lotcall { display: grid; gap: 10px; justify-items: center; padding: 12px; border-radius: 18px; background: var(--pink-1); border: 1px solid var(--line-soft); }
+.lotcall.shown { background: var(--sand); }
+.callcard { display: grid; gap: 2px; justify-items: center; text-align: center; }
+.callcard b { font-family: var(--font-display); font-size: 1.7rem; letter-spacing: -0.02em; }
+.callcard b.q { font-size: 2.4rem; color: var(--ink-3); }
+.lotboard { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.lotcell { position: relative; display: grid; gap: 2px; justify-items: center; align-content: center; aspect-ratio: 1; min-width: 0; padding: 4px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--surface); cursor: pointer; font: inherit; overflow: hidden; }
+.lotcell .pic { font-size: 1.9rem; line-height: 1.1; }
+.lotcell .es { font-size: .6rem; line-height: 1.1; text-align: center; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--ink-2); }
+.lotcell .bean { position: absolute; top: 2px; right: 3px; font-size: .9rem; }
+.lotcell.marked { background: var(--pink-1); }
+.lotcell .es:empty { display: none; }
+.lotcell.marked { border-color: var(--pink-4); }
+.lotcell.bad { animation: shake .35s; border-color: var(--bad); background: var(--bad-soft); }
+/* ¡el o la! */
+.gsplay { gap: 10px; }
+.gsarena { position: relative; height: 210px; border-radius: 18px; background: var(--sand); border: 1px solid var(--line-soft); overflow: hidden; touch-action: pan-y; }
+.gsguides { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; }
+.gsguides span { display: grid; place-items: center; font-family: var(--font-display); font-size: 3.4rem; color: var(--ink); opacity: .07; }
+.gsguides span + span { border-left: 1px dashed var(--line-soft); }
+.gstile { position: absolute; left: 50%; top: 0; transform: translate(-50%, 0); display: grid; gap: 1px; justify-items: center; padding: 10px 16px; border-radius: 14px; background: var(--surface); border: 1.5px solid var(--line); box-shadow: var(--shadow); max-width: 90%; }
+.gstile b { font-family: var(--font-display); font-size: 1.5rem; letter-spacing: -0.02em; line-height: 1.1; }
+.gstile .small { color: var(--ink-3); font-size: .7rem; }
+.gstile.plural { border-color: var(--pink-4); background: var(--pink-1); }
+.gstile.ok { border-color: var(--ok); background: var(--ok-soft); }
+.gstile.no { border-color: var(--bad); background: var(--bad-soft); }
+@keyframes gsfall { from { transform: translate(-50%, 0); } to { transform: translate(-50%, 150px); } }
+.gszones { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.gszone { display: grid; gap: 6px; }
+.gszone .zbig { min-height: 62px; border-radius: 16px; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); font-family: var(--font-display); font-size: 1.5rem; letter-spacing: .02em; cursor: pointer; }
+.gszone .zsm { min-height: 38px; border-radius: 12px; border: 1px dashed var(--line-soft); background: transparent; color: var(--ink-2); font-family: var(--font-mono); font-size: .68rem; letter-spacing: .08em; cursor: pointer; }
+.gszone.armed .zbig { background: var(--pink-2); border-color: var(--pink-4); }
+.gszone .zbig:active, .gszone .zsm:active { transform: scale(.97); }
+/* crucigrama */
+.cwgrid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; max-width: 330px; margin: 0 auto; width: 100%; }
+.cwcell { position: relative; aspect-ratio: 1; border-radius: 8px; background: var(--surface); border: 1.5px solid var(--line); display: block; }
+.cwcell.off { background: transparent; border-color: transparent; }
+.cwcell input { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: transparent; text-align: center; text-transform: uppercase; font-family: var(--font-display); font-size: 1.4rem; color: var(--ink); padding: 0; border-radius: 8px; }
+.cwcell input:focus { outline: 0; background: var(--pink-1); box-shadow: inset 0 0 0 2px var(--pink-4); }
+.cwcell input.bad { background: var(--bad-soft); color: var(--bad); }
+.cwcell input[readonly] { color: var(--ok); }
+.cwn { position: absolute; top: 1px; left: 3px; font-family: var(--font-mono); font-size: .5rem; color: var(--ink-3); font-style: normal; z-index: 1; }
+.cwclues { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.cwclues ul { margin: 4px 0 0; padding-left: 16px; display: grid; gap: 6px; }
+.cwclues li { font-size: .85rem; line-height: 1.4; }
+@media (max-width: 760px) { .gsarena { height: 190px; } .gstile b { font-size: 1.3rem; } .lotcell .pic { font-size: 1.6rem; } .cwclues { grid-template-columns: 1fr; gap: 8px; } }
+@media (max-width: 400px) { .lotboard { gap: 4px; } .lotcell .es { font-size: .52rem; } .gszone .zbig { font-size: 1.3rem; min-height: 56px; } .cwgrid { max-width: 280px; } .cwcell input { font-size: 1.2rem; } }
 </style>
 
 <header class="topbar">
@@ -5079,26 +5131,45 @@ function wireTester(root) {
 /* Each game is one screen, phone-first: a status row, one big play area, big tap targets, and an end card
    that pays XP through addXP() so quetzalitos, care and streak all work as usual. Bests live in S.games. */
 
-function initGames() { if (!S.games) S.games = {}; ['mercado', 'escucha'].forEach(k => { if (!S.games[k]) S.games[k] = { best: 0, plays: 0 }; }); }
+function initGames() { if (!S.games) S.games = {}; ['mercado', 'escucha', 'loteria', 'genero', 'crucigrama'].forEach(k => { if (!S.games[k]) S.games[k] = { best: 0, plays: 0 }; }); }
 const gameStat = (k) => (S.games && S.games[k]) || { best: 0, plays: 0 };
 
-/* ----- Mercado: the stalls. Every item is a DICT word, so a right answer also learns the word. ----- */
+/* ----- shared picture words: es -> emoji. Used by Mercado's stalls and the Lotería deck. ----- */
+const PICS = {
+  /* comida */ pan: '🍞', queso: '🧀', huevo: '🥚', arroz: '🍚', pollo: '🍗', sopa: '🍲', tortilla: '🫓', tamal: '🫔', 'pepián': '🍛', pescado: '🐟', carne: '🥩', chocolate: '🍫', 'café': '☕', leche: '🥛', agua: '💧', sal: '🧂', 'azúcar': '🍬', manzana: '🍎', tomate: '🍅', cebolla: '🧅', aguacate: '🥑', fruta: '🍇', merienda: '🥐',
+  /* animales */ perro: '🐶', gato: '🐱', 'pájaro': '🐦', pez: '🐠', vaca: '🐮', caballo: '🐴', conejo: '🐰', oso: '🐻', 'ratón': '🐭', cerdo: '🐷', gallina: '🐔', oveja: '🐑', pato: '🦆', burro: '🫏', 'león': '🦁', granja: '🚜', chucho: '🐕',
+  /* ropa */ camisa: '👕', zapato: '👟', vestido: '👗', sombrero: '👒', abrigo: '🧥', falda: '👚', huipil: '🧵', cartera: '👛',
+  /* casa */ casa: '🏠', cocina: '🍳', mesa: '🪑', cama: '🛏️', silla: '💺', puerta: '🚪', ventana: '🪟', llave: '🔑', 'jardín': '🌷', 'baño': '🛁', reloj: '⌚',
+  /* escuela y trabajo */ libro: '📖', 'lápiz': '✏️', papel: '📄', escuela: '🏫', maestro: '🧑‍🏫', clase: '👩‍🎓', tarea: '📝', pregunta: '❓', computadora: '💻', oficina: '🏢', correo: '✉️', pantalla: '🖥️', trabajo: '🧰', dinero: '💵', pisto: '💵', sueldo: '💰',
+  /* ciudad */ ciudad: '🏙️', calle: '🛣️', mercado: '🏪', tienda: '🏬', parque: '🌳', iglesia: '⛪', 'estación': '🚉', farmacia: '💊', metro: '🚇', museo: '🏛️', edificio: '🏢', barrio: '🏘️', hotel: '🏨',
+  /* naturaleza y clima */ 'árbol': '🌳', flor: '🌸', 'río': '🏞️', mar: '🌊', luna: '🌙', estrella: '⭐', bosque: '🌲', lluvia: '🌧️', sol: '☀️', nieve: '❄️', viento: '💨', playa: '🏖️', 'montaña': '⛰️', 'volcán': '🌋', lago: '🏞️', primavera: '🌷', verano: '🏖️', invierno: '⛄', 'otoño': '🍂', noche: '🌜',
+  /* viajes */ viaje: '🧭', aeropuerto: '✈️', maleta: '🧳', pasaporte: '🛂', billete: '🎫', vuelo: '🛫', equipaje: '🎒',
+  /* cuerpo y salud */ cabeza: '😀', mano: '✋', pie: '🦶', ojo: '👁️', boca: '👄', nariz: '👃', oreja: '👂', 'corazón': '❤️', medicina: '💊', fiebre: '🤒', dolor: '🤕', garganta: '😷', 'médico': '🧑‍⚕️', enfermera: '👩‍⚕️',
+  /* gente */ familia: '👨‍👩‍👧', madre: '👩', padre: '👨', hermano: '👦', hermana: '👧', abuela: '👵', abuelo: '👴', hijo: '👶', hija: '👶', amigo: '🧑‍🤝‍🧑', 'tío': '🧔', primo: '🧑', patojo: '🧒', jefe: '🧑‍💼', cocinero: '👨‍🍳', profesor: '👨‍🏫',
+  /* guatemala y fiesta */ quetzal: '🦜', marimba: '🎶', barrilete: '🪁',
+  /* tiempo */ hora: '🕐', semana: '📅', 'año': '📆', mes: '🗓️', lunes: '📅', domingo: '📅',
+};
+/* ----- Mercado: nine stalls. Every item is a DICT word, so a right answer also learns the word. ----- */
 const MERCADO_STALLS = [
-  { id: 'frutas', t: 'Frutas y verduras', en: 'Fruit & veg', items: { manzana: ['🍎', 4], tomate: ['🍅', 3], cebolla: ['🧅', 2], aguacate: ['🥑', 5], fruta: ['🍇', 6], flor: ['🌸', 8] } },
-  { id: 'comida', t: 'Comedor', en: 'Food stall', items: { pan: ['🍞', 3], queso: ['🧀', 12], huevo: ['🥚', 2], arroz: ['🍚', 6], pollo: ['🍗', 20], sopa: ['🍲', 15], tortilla: ['🫓', 1], tamal: ['🫔', 8], pepián: ['🍛', 25], pescado: ['🐟', 18], carne: ['🥩', 30], chocolate: ['🍫', 10], café: ['☕', 7], leche: ['🥛', 9], agua: ['💧', 3], sal: ['🧂', 2], azúcar: ['🍬', 4] } },
-  { id: 'granja', t: 'Granja', en: 'Farm stall', items: { perro: ['🐶', 50], gato: ['🐱', 40], pájaro: ['🐦', 25], pez: ['🐠', 15], vaca: ['🐮', 900], caballo: ['🐴', 800], conejo: ['🐰', 60], oso: ['🐻', 999], ratón: ['🐭', 5], cerdo: ['🐷', 300], gallina: ['🐔', 45], oveja: ['🐑', 250], pato: ['🦆', 35], burro: ['🫏', 400] } },
-  { id: 'ropa', t: 'Ropa', en: 'Clothes', items: { camisa: ['👕', 60], zapato: ['👟', 120], vestido: ['👗', 150], sombrero: ['👒', 45], abrigo: ['🧥', 200], falda: ['👚', 80], huipil: ['🧵', 350], cartera: ['👛', 90] } },
-  { id: 'tienda', t: 'Tienda', en: 'General store', items: { llave: ['🔑', 10], silla: ['🪑', 120], cama: ['🛏️', 700], puerta: ['🚪', 400], ventana: ['🪟', 300], libro: ['📖', 40], lápiz: ['✏️', 2], papel: ['📄', 1], reloj: ['⌚', 150], maleta: ['🧳', 250], billete: ['🎫', 30], pasaporte: ['🛂', 100] } },
-  { id: 'plaza', t: 'Plaza', en: 'Town square', items: { árbol: ['🌳', 90], luna: ['🌙', 999], estrella: ['⭐', 999], quetzal: ['🦜', 999], marimba: ['🎶', 500], barrilete: ['🪁', 35], lluvia: ['🌧️', 0], sol: ['☀️', 0] } },
+  { id: 'frutas', t: 'Frutas y verduras', en: 'Fruit & veg', items: { manzana: 4, tomate: 3, cebolla: 2, aguacate: 5, fruta: 6, flor: 8 } },
+  { id: 'comida', t: 'Comedor', en: 'Food stall', items: { pan: 3, queso: 12, huevo: 2, arroz: 6, pollo: 20, sopa: 15, tortilla: 1, tamal: 8, 'pepián': 25, pescado: 18, carne: 30, chocolate: 10, 'café': 7, leche: 9, agua: 3, sal: 2, 'azúcar': 4, merienda: 10 } },
+  { id: 'granja', t: 'Granja', en: 'Farm stall', items: { perro: 50, gato: 40, 'pájaro': 25, pez: 15, vaca: 900, caballo: 800, conejo: 60, oso: 999, 'ratón': 5, cerdo: 300, gallina: 45, oveja: 250, pato: 35, burro: 400, 'león': 999, chucho: 50 } },
+  { id: 'ropa', t: 'Ropa', en: 'Clothes', items: { camisa: 60, zapato: 120, vestido: 150, sombrero: 45, abrigo: 200, falda: 80, huipil: 350, cartera: 90 } },
+  { id: 'hogar', t: 'Hogar', en: 'Home stall', items: { llave: 10, silla: 120, cama: 700, puerta: 400, ventana: 300, mesa: 250, reloj: 150, cocina: 900, 'jardín': 80, 'baño': 500, casa: 999 } },
+  { id: 'papeleria', t: 'Papelería', en: 'Stationery', items: { libro: 40, 'lápiz': 2, papel: 1, computadora: 800, correo: 5, pantalla: 400, tarea: 0, pregunta: 0 } },
+  { id: 'viajes', t: 'Agencia de viajes', en: 'Travel desk', items: { maleta: 250, pasaporte: 100, billete: 30, vuelo: 900, equipaje: 200, viaje: 700, hotel: 350, aeropuerto: 999 } },
+  { id: 'vivero', t: 'Vivero y campo', en: 'Garden & country', items: { 'árbol': 90, 'río': 0, mar: 0, bosque: 0, 'montaña': 0, playa: 0, 'volcán': 0, lago: 0, nieve: 0, viento: 0, lluvia: 0, sol: 0 } },
+  { id: 'plaza', t: 'Plaza', en: 'Town square', items: { luna: 999, estrella: 999, quetzal: 999, marimba: 500, barrilete: 35, iglesia: 0, parque: 0, museo: 0, mercado: 0, calle: 0 } },
 ];
-/* only words the dictionary knows, so the definition and flashcard hooks work */
+/* only words the dictionary knows AND we have a picture for */
 let _MI = null;
 function mercadoItems() {
-  if (!_MI) _MI = MERCADO_STALLS.flatMap(st => Object.entries(st.items).filter(([es]) => DICT_BY_ES[es]).map(([es, [pic, price]]) => ({ es, en: DICT_BY_ES[es].en, pic, price, stall: st.id, stallName: st.t })));
+  if (!_MI) _MI = MERCADO_STALLS.flatMap(st => Object.entries(st.items).filter(([es]) => DICT_BY_ES[es] && PICS[es]).map(([es, price]) => ({ es, en: DICT_BY_ES[es].en, pic: PICS[es], price, stall: st.id, stallName: st.t })));
   return _MI;
 }
 
-const MERCADO = { customers: 12, baseTime: 5000, minTime: 2800, step: 220 };
+const MERCADO_LEN = [['corto', 'Corto', 10], ['normal', 'Normal', 20], ['largo', 'Largo', 32]];
+const MERCADO = { customers: 20, baseTime: 7000, minTime: 3600, step: 180 };
 let MG = null;   /* the running Mercado game */
 function mercadoPick() {
   const seen = new Set(MG.asked);
@@ -5124,34 +5195,38 @@ function renderMercado() {
     <div class="gcard intro">
       <div class="gmascot">${companion(buddy().id, 120, 'float')}</div>
       <h2>¿Qué quiere el cliente?</h2>
-      <p class="muted">${MERCADO.customers} customers. ${MERCADO.baseTime / 1000} seconds each — a little less as your combo grows. Tap the Spanish for what they want.</p>
+      <p class="muted">${MERCADO.baseTime / 1000} seconds per customer — a little less as your combo grows. ${mercadoItems().length} things across ${MERCADO_STALLS.length} stalls. Tap the Spanish for what they want.</p>
+      <span class="label">How long?</span>
+      <div class="seg wide" id="mgLen">${MERCADO_LEN.map(([k, t, n]) => `<button type="button" data-len="${k}" class="${(S.games.mercado.len || 'normal') === k ? 'on' : ''}">${t}<small>${n} customers</small></button>`).join('')}</div>
       <div class="stallrow">${MERCADO_STALLS.map(s => `<span class="pill">${esc(s.t)}</span>`).join('')}</div>
       <div class="btn-row center"><button type="button" class="btn rose big" id="mgStart">Open the market</button><a class="btn ghost" href="#games">← Play</a></div>
     </div>
   </div>`;
+  app.querySelectorAll('[data-len]').forEach(b => b.addEventListener('click', () => { S.games.mercado.len = b.dataset.len; save(); renderMercado(); }));
   $('#mgStart').addEventListener('click', mercadoStart);
 }
 function gameFocus() { app.classList.add('has-item'); window.scrollTo(0, 0); }
 function mercadoStart() {
   gameFocus();
-  MG = { n: 0, score: 0, combo: 0, bestCombo: 0, right: 0, asked: [], learned: [], timer: null, tick: null, over: false, start: Date.now() };
+  const len = MERCADO_LEN.find(l => l[0] === (S.games.mercado.len || 'normal')) || MERCADO_LEN[1];
+  MG = { n: 0, total: len[2], score: 0, combo: 0, bestCombo: 0, right: 0, asked: [], learned: [], timer: null, tick: null, over: false, start: Date.now() };
   mercadoNext();
 }
 function mercadoTime() { return Math.max(MERCADO.minTime, MERCADO.baseTime - MG.combo * MERCADO.step); }
 function mercadoNext() {
   if (!MG || MG.over) return;
-  if (MG.n >= MERCADO.customers) return mercadoEnd();
+  if (MG.n >= MG.total) return mercadoEnd();
   MG.n++;
   const q = mercadoPick(); MG.q = q;
   const g = $('#game'); if (!g) return;
   const t = mercadoTime();
   g.innerHTML = `
   <div class="gcard play" id="mgCard">
-    <div class="gstatus"><span class="mono">Customer ${MG.n}/${MERCADO.customers}</span><span class="mono">Score ${MG.score}</span><span class="mono ${MG.combo >= 3 ? 'hot' : ''}">${MG.combo ? 'Combo ×' + MG.combo : ''}</span></div>
+    <div class="gstatus"><span class="mono">Customer ${MG.n}/${MG.total}</span><span class="mono">Score ${MG.score}</span><span class="mono ${MG.combo >= 3 ? 'hot' : ''}">${MG.combo ? 'Combo ×' + MG.combo : ''}</span></div>
     <div class="gtimer"><i id="mgBar" style="animation-duration:${t}ms"></i></div>
     <div class="customer">
       <div class="cpic" aria-hidden="true">${q.item.pic}</div>
-      <div class="cbubble"><span class="label">${esc(q.item.stallName)}</span><b>${esc(q.item.en)}</b><span class="price">Q${q.item.price}</span></div>
+      <div class="cbubble"><span class="label">${esc(q.item.stallName)}</span><b>${esc(q.item.en)}</b>${q.item.price ? `<span class="price">Q${q.item.price}</span>` : ''}</div>
     </div>
     <div class="goptions">${q.options.map(o => `<button type="button" class="gopt" data-es="${esc(o.es)}">${esc(o.es)}</button>`).join('')}</div>
     <p class="small muted center">Tap the Spanish word.</p>
@@ -5185,7 +5260,8 @@ function mercadoEnd() {
   MG.over = true;
   const st = gameStat('mercado'); st.plays++;
   const newBest = MG.score > st.best; if (newBest) st.best = MG.score;
-  const xp = MG.right * XP.huntWord + (MG.right >= 10 ? 10 : 0);
+  const bonus = MG.right >= MG.total ? 20 : MG.right >= Math.ceil(MG.total * 0.6) ? 10 : 0;
+  const xp = MG.right * XP.huntWord + bonus;
   logAct('game', 'Mercado ' + MG.score, { n: MG.right });
   save();
   if (xp) addXP(xp, 'Mercado');
@@ -5195,8 +5271,8 @@ function mercadoEnd() {
     <div class="gmascot">${companion(buddy().id, 130, MG.right >= 8 ? 'float' : '')}</div>
     <span class="label">${newBest ? 'New best!' : 'Round over'}</span>
     <h2>${MG.score} points</h2>
-    <p class="muted">${MG.right} of ${MERCADO.customers} customers served · best combo ×${MG.bestCombo}${MG.learned.length ? ` · ${MG.learned.length} new word${MG.learned.length === 1 ? '' : 's'} learned` : ''}</p>
-    <p class="small muted">+${xp} XP${MG.right >= 10 ? ' (with the 10-customer bonus)' : ''}. Best so far: ${st.best}.</p>
+    <p class="muted">${MG.right} of ${MG.total} customers served · best combo ×${MG.bestCombo}${MG.learned.length ? ` · ${MG.learned.length} new word${MG.learned.length === 1 ? '' : 's'} learned` : ''}</p>
+    <p class="small muted">+${xp} XP${bonus ? ` (with a ${bonus}-XP bonus)` : ''}. Best so far: ${st.best}.</p>
     ${MG.learned.length ? `<div class="chips">${MG.learned.map(w => `<span class="pill pink">${esc(w)}</span>`).join('')}</div>` : ''}
     <div class="btn-row center"><button type="button" class="btn rose big" id="mgAgain">Play again</button><a class="btn ghost" href="#games">← Play</a></div>
   </div>`;
@@ -5346,21 +5422,492 @@ function renderGames(id) {
   initGames();
   if (id === 'mercado') return renderMercado();
   if (id === 'escucha') return renderEscucha();
+  if (id === 'loteria') return renderLoteria();
+  if (id === 'genero') return renderGender('play');
+  if (id === 'rescue') return renderGender('rescue');
+  if (id === 'crucigrama') return renderCrucigrama();
   crumb([{ t: 'Play' }]);
   const lv = LV();
   const hunts = (HUNTS[lv.id] || []), huntsDone = hunts.filter(h => S.done['h' + lv.id + '-' + h.theme]).length;
-  const m = gameStat('mercado'), e = gameStat('escucha');
+  const m = gameStat('mercado'), e = gameStat('escucha'), l = gameStat('loteria'), gn = gameStat('genero'), cw = gameStat('crucigrama');
+  const cwDone = cw.day === todayStr() && cw.done;
   app.innerHTML = `
   <section class="pagehead">
     <div class="title"><span class="label">04 · Play</span><h1>Games</h1><p>Short rounds that teach on the sly. Every game pays XP and ${COIN_NAME}, feeds your companion, and counts towards the streak.</p></div>
     <div class="side pink"><span class="label">Today</span><div class="es" style="font-size:2rem">${xpToday()}<span class="muted" style="font-size:1rem">/${S.goal} XP</span></div><span class="small muted">${COIN} ${S.coins || 0} in your purse</span></div>
   </section>
+  ${rescueBannerHTML()}
   <section class="gamecards">
     <a class="gamecard t-pink3" href="#hunt">${mascot('mota', 72)}<div><span class="label">Vocabulary</span><h3>Word Hunt</h3><p>Find the hidden words, learn what they mean.</p><span class="gstat">${huntsDone}/${hunts.length} puzzles at level ${lv.id}</span></div><span class="arr">→</span></a>
     <a class="gamecard t-gold" href="#games/mercado"><span class="gemoji" aria-hidden="true">🍅</span><div><span class="label">Vocabulary · speed</span><h3>Mercado</h3><p>Customers point, you tap the Spanish before they walk off.</p><span class="gstat">${m.plays ? 'best ' + m.best + ' · ' + m.plays + ' round' + (m.plays === 1 ? '' : 's') : 'new'}</span></div><span class="arr">→</span></a>
     <a class="gamecard t-sky" href="#games/escucha"><span class="gemoji" aria-hidden="true">🎧</span><div><span class="label">Listening · spelling</span><h3>Escucha y escribe</h3><p>Hear a sentence once, type it, climb the ladder.</p><span class="gstat">${e.plays ? 'best rung ' + e.best + '/' + ESCUCHA.rungs : 'new'}</span></div><span class="arr">→</span></a>
-    <div class="gamecard soon"><span class="gemoji" aria-hidden="true">🎲</span><div><span class="label">Coming soon</span><h3>More games</h3><p>Lotería, the conjugation runner, gender sort and a duel for two are on the list.</p></div></div>
+    <a class="gamecard t-sand" href="#games/loteria"><span class="gemoji" aria-hidden="true">🫘</span><div><span class="label">Listening · vocabulary</span><h3>Lotería</h3><p>The caller names a card; you find the picture on your board.</p><span class="gstat">${l.plays ? 'best ' + l.best + ' · ' + l.plays + ' board' + (l.plays === 1 ? '' : 's') : 'new'}</span></div><span class="arr">→</span></a>
+    <a class="gamecard t-lilac" href="#games/genero"><span class="gemoji" aria-hidden="true">⚖️</span><div><span class="label">Grammar · speed</span><h3>¡El o la!</h3><p>Words fall — send each one to <b>el</b> or <b>la</b>. Two minutes.</p><span class="gstat">${gn.plays ? 'best ' + gn.best + ' · ' + gn.plays + ' round' + (gn.plays === 1 ? '' : 's') : 'new'}</span></div><span class="arr">→</span></a>
+    <a class="gamecard t-mint" href="#games/crucigrama"><span class="gemoji" aria-hidden="true">🧩</span><div><span class="label">Words · daily</span><h3>Crucigrama</h3><p>A little 5×5 from this week's words, clues in Spanish.</p><span class="gstat">${cwDone ? "today's is done ✓" : cw.best ? cw.best + ' solved · today is waiting' : 'new · one a day'}</span></div><span class="arr">→</span></a>
+    <div class="gamecard soon"><span class="gemoji" aria-hidden="true">🎲</span><div><span class="label">Coming soon</span><h3>More games</h3><p>The conjugation runner, karaoke lines and a duel for two are next on the list.</p></div></div>
   </section>`;
+}
+
+/* =========================== GAMES II (v16): Lotería, ¡El o la!, streak rescue, crucigrama ===========================
+   Same shape as part15: one card per screen, big targets, XP paid through addXP(). */
+
+/* ----- gender and plural helpers (shared by ¡El o la! and the clue writer) ----- */
+/* feminine nouns that take EL in the singular (stressed a-) — too cruel for a speed game */
+const GENDER_TRAPS = ['agua', 'alma', 'área', 'águila', 'hambre', 'aula', 'arma', 'hacha', 'ala'];
+function nounGender(d) { return d && /^noun \((m|f)\)$/.test(d.pos) ? d.pos.charAt(6) : null; }
+/* regular Spanish plural: vowel + s, consonant + es, -z → -ces, and a final stressed syllable loses its accent */
+function pluralOf(es) {
+  const w = String(es);
+  if (/[aeiouáéíóú]$/i.test(w)) return w + 's';
+  if (/z$/i.test(w)) return w.slice(0, -1) + 'ces';
+  const m = w.match(/^(.*)([áéíóú])([^aeiouáéíóú]+)$/);
+  if (m && /^(n|s|r|l)$/i.test(m[2 + 1])) return m[1] + 'aeiou'['áéíóú'.indexOf(m[2])] + m[3] + 'es';
+  return w + 'es';
+}
+
+/* =========================== LOTERÍA =========================== */
+/* The caller says a card in Spanish ("¡La luna!"); you find the picture on your 4×4 board.
+   A finished line is ¡Lotería!, all sixteen is carta llena. */
+const LOT_SIZE = 4;
+const LOT_LINES = (() => {
+  const L = [];
+  for (let r = 0; r < LOT_SIZE; r++) L.push(Array.from({ length: LOT_SIZE }, (_, c) => r * LOT_SIZE + c));
+  for (let c = 0; c < LOT_SIZE; c++) L.push(Array.from({ length: LOT_SIZE }, (_, r) => r * LOT_SIZE + c));
+  L.push(Array.from({ length: LOT_SIZE }, (_, i) => i * LOT_SIZE + i));
+  L.push(Array.from({ length: LOT_SIZE }, (_, i) => i * LOT_SIZE + (LOT_SIZE - 1 - i)));
+  return L;
+})();
+let _LD = null;
+function lotDeck() {
+  if (!_LD) _LD = Object.keys(PICS).filter(es => DICT_BY_ES[es] && nounGender(DICT_BY_ES[es])).map(es => ({ es, pic: PICS[es], g: nounGender(DICT_BY_ES[es]), en: DICT_BY_ES[es].en }));
+  return _LD;
+}
+const lotArticle = (c) => (c.g === 'f' ? 'La' : 'El');
+let LOT = null;
+function renderLoteria() {
+  crumb([{ t: 'Play', href: '#games' }, { t: 'Lotería' }]);
+  const st = gameStat('loteria');
+  app.innerHTML = `
+  <section class="pagehead game-head">
+    <div class="title"><span class="label">Play · Lotería</span><h1>Lotería</h1><p>The caller names a card in Spanish — <em>¡la luna!</em> — and you find the picture on your board. Four in a row is <b>¡Lotería!</b>, all sixteen is <b>carta llena</b>.</p></div>
+    <div class="side pink"><span class="label">Best</span><div class="es" style="font-size:2rem">${st.best}</div><span class="small muted">${st.plays ? st.plays + ' board' + (st.plays === 1 ? '' : 's') + ' played' : 'not played yet'}</span></div>
+  </section>
+  <div class="game" id="game">
+    <div class="gcard intro">
+      <div class="gmascot">${companion(buddy().id, 120, 'float')}</div>
+      <h2>¿Jugamos lotería?</h2>
+      <p class="muted">Sixteen cards, drawn from ${lotDeck().length} in the deck. Listen to the call, tap the picture. If you did not catch it, play it again or peek at the word — peeking just costs the clean-board bonus.</p>
+      <div class="btn-row center"><button type="button" class="btn rose big" id="ltStart">Deal a board</button><a class="btn ghost" href="#games">← Play</a></div>
+    </div>
+  </div>`;
+  $('#ltStart').addEventListener('click', loteriaStart);
+}
+function loteriaStart() {
+  gameFocus();
+  const cards = shuffle(lotDeck()).slice(0, LOT_SIZE * LOT_SIZE);
+  LOT = { board: cards.map(c => Object.assign({ marked: false }, c)), order: shuffle(cards.map((_, i) => i)), at: 0, wrong: 0, peeks: 0, line: false, over: false, revealed: false, learned: [] };
+  loteriaCall();
+}
+function loteriaCall() {
+  if (!LOT || LOT.over) return;
+  while (LOT.at < LOT.order.length && LOT.board[LOT.order[LOT.at]].marked) LOT.at++;
+  if (LOT.at >= LOT.order.length) return loteriaEnd();
+  LOT.revealed = false;
+  loteriaPaint();
+  setTimeout(() => loteriaSay(), 250);
+}
+const lotCur = () => LOT.board[LOT.order[LOT.at]];
+function loteriaSay() { if (!LOT || LOT.over) return; const c = lotCur(); if (c) speak('¡' + lotArticle(c) + ' ' + c.es + '!'); }
+function loteriaPaint() {
+  const g = $('#game'); if (!g) return;
+  const c = lotCur();
+  const done = LOT.board.filter(x => x.marked).length;
+  g.innerHTML = `
+  <div class="gcard play" id="ltCard">
+    <div class="gstatus"><span class="mono">Card ${done + 1}/${LOT.board.length}</span><span class="mono ${LOT.line ? 'hot' : ''}">${LOT.line ? '¡Lotería! ✓' : 'Line: not yet'}</span><span class="mono muted">${LOT.wrong ? LOT.wrong + ' miss' + (LOT.wrong === 1 ? '' : 'es') : 'clean'}</span></div>
+    <div class="lotcall ${LOT.revealed ? 'shown' : ''}">
+      <div class="callcard" aria-live="polite">${LOT.revealed || ON_CLAUDE ? `<b>¡${lotArticle(c)} ${esc(c.es)}!</b><span class="small muted">${esc(c.en)}</span>` : '<b class="q">¿?</b><span class="small muted">Listen to the caller</span>'}</div>
+      <div class="btn-row"><button type="button" class="btn rose sm" id="ltSay">▶ Again</button>${LOT.revealed || ON_CLAUDE ? '' : '<button type="button" class="btn ghost sm" id="ltPeek">Ver la palabra</button>'}</div>
+    </div>
+    <div class="lotboard" role="grid" aria-label="Your lotería board">
+      ${LOT.board.map((x, i) => `<button type="button" class="lotcell ${x.marked ? 'marked' : ''}" data-i="${i}" ${x.marked ? 'disabled' : ''} aria-label="${esc(x.en)}${x.marked ? ' — ' + esc(x.es) + ', marked' : ''}"><span class="pic" aria-hidden="true">${x.pic}</span><span class="es">${x.marked ? esc(x.es) : ''}</span>${x.marked ? '<span class="bean" aria-hidden="true">🫘</span>' : ''}</button>`).join('')}
+    </div>
+    <p class="small muted center" id="ltMsg">Tap the card the caller named.</p>
+  </div>`;
+  $('#ltSay').addEventListener('click', loteriaSay);
+  const pk = $('#ltPeek'); if (pk) pk.addEventListener('click', () => { LOT.peeks++; LOT.revealed = true; loteriaPaint(); });
+  g.querySelectorAll('[data-i]').forEach(b => b.addEventListener('click', () => loteriaTap(Number(b.dataset.i))));
+}
+function loteriaTap(i) {
+  if (!LOT || LOT.over) return;
+  const want = LOT.order[LOT.at];
+  const cell = $(`.lotcell[data-i="${i}"]`);
+  if (i !== want) {
+    LOT.wrong++;
+    if (cell) { cell.classList.add('bad'); setTimeout(() => cell.classList.remove('bad'), 500); }
+    const m = $('#ltMsg'); if (m) m.textContent = 'Not that one — listen again.';
+    return;
+  }
+  const c = LOT.board[i]; c.marked = true;
+  if (learnWord(c.es)) LOT.learned.push(c.es);
+  if (!LOT.line && LOT_LINES.some(line => line.every(k => LOT.board[k].marked))) {
+    LOT.line = true;
+    bigToast('¡Lotería!', `A full line — <b>${esc(c.es)}</b> closed it. Keep going for <b>carta llena</b>.`, buddy().id);
+  }
+  loteriaCall();
+}
+function loteriaEnd() {
+  LOT.over = true;
+  const st = gameStat('loteria'); st.plays++;
+  const clean = LOT.wrong === 0 && LOT.peeks === 0;
+  const score = Math.max(0, LOT.board.length * 10 - LOT.wrong * 5 - LOT.peeks * 3) + (LOT.line ? 20 : 0);
+  const newBest = score > st.best; if (newBest) st.best = score;
+  const xp = LOT.board.length * XP.huntWord + (LOT.line ? 10 : 0) + (clean ? 10 : 0);
+  logAct('game', 'Lotería ' + score, { n: LOT.board.length });
+  save();
+  if (xp) addXP(xp, 'Lotería');
+  const g = $('#game'); if (!g) return;
+  g.innerHTML = `
+  <div class="gcard end">
+    <div class="gmascot">${companion(buddy().id, 130, 'float')}</div>
+    <span class="label">${newBest ? 'New best!' : '¡Carta llena!'}</span>
+    <h2>${score} points</h2>
+    <p class="muted">All ${LOT.board.length} cards${LOT.wrong ? ` · ${LOT.wrong} miss${LOT.wrong === 1 ? '' : 'es'}` : ' · not a single miss'}${LOT.peeks ? ` · ${LOT.peeks} peek${LOT.peeks === 1 ? '' : 's'}` : ''}${LOT.learned.length ? ` · ${LOT.learned.length} new word${LOT.learned.length === 1 ? '' : 's'}` : ''}</p>
+    <p class="small muted">+${xp} XP${clean ? ' (with the clean-board bonus)' : ''}. Best so far: ${st.best}.</p>
+    ${LOT.learned.length ? `<div class="chips">${LOT.learned.map(w => `<span class="pill pink">${esc(w)}</span>`).join('')}</div>` : ''}
+    <div class="btn-row center"><button type="button" class="btn rose big" id="ltAgain">Deal again</button><a class="btn ghost" href="#games">← Play</a></div>
+  </div>`;
+  $('#ltAgain').addEventListener('click', loteriaStart);
+}
+
+/* =========================== ¡EL O LA! (gender sort) =========================== */
+/* Words fall; swipe or tap left for EL, right for LA. A plural needs the double — two quick taps on the
+   same side, or the little LOS / LAS chip. 120 seconds, or 60 when it is rescuing a streak. */
+const GS_CONF = { secs: 120, rescueSecs: 60, rescueTarget: 12, fall0: 4600, fallMin: 2100, fallStep: 90, dblMs: 300 };
+let GS = null, _GP = null;
+function genderPool() {
+  if (!_GP) _GP = DICT.filter(d => nounGender(d) && d.es.length <= 12 && !/\s/.test(d.es) && !/s$/i.test(d.es) && GENDER_TRAPS.indexOf(d.es) < 0)
+    .map(d => ({ es: d.es, g: nounGender(d), en: d.en }));
+  return _GP;
+}
+function genderNext() {
+  if (!GS || GS.over) return;
+  const pool = genderPool();
+  const d = pool[Math.floor(Math.random() * pool.length)];
+  const plural = Math.random() < 0.3;
+  GS.cur = { es: plural ? pluralOf(d.es) : d.es, base: d.es, en: d.en, plural, art: (d.g === 'f' ? 'la' : 'el') + (plural ? 's' : '') };
+  GS.pending = null;
+  GS.fall = Math.max(GS_CONF.fallMin, GS_CONF.fall0 - GS.n * GS_CONF.fallStep);
+  GS.n++;
+  const tile = $('#gsTile');
+  if (tile) {
+    tile.className = 'gstile' + (GS.cur.plural ? ' plural' : '');
+    tile.innerHTML = `<b>${esc(GS.cur.es)}</b><span class="small">${esc(GS.cur.en)}${GS.cur.plural ? ' (plural)' : ''}</span>`;
+    tile.style.animation = 'none'; void tile.offsetWidth;
+    tile.style.animation = `gsfall ${GS.fall}ms linear forwards`;
+  }
+  clearTimeout(GS.drop);
+  GS.drop = setTimeout(() => genderAnswer(null), GS.fall);
+}
+/* a tap starts a short window: a second tap on the same side upgrades it to the plural article */
+function genderSide(side) {
+  if (!GS || GS.over || !GS.cur) return;
+  if (GS.pending && GS.pending.side === side) { clearTimeout(GS.pending.t); const p = GS.pending; GS.pending = null; genderAnswer(p.art + 's'); return; }
+  if (GS.pending) clearTimeout(GS.pending.t);
+  const art = side === 'l' ? 'el' : 'la';
+  GS.pending = { side, art, t: setTimeout(() => { GS.pending = null; genderAnswer(art); }, GS_CONF.dblMs) };
+  const z = $(side === 'l' ? '#gsL' : '#gsR'); if (z) { z.classList.add('armed'); setTimeout(() => z.classList.remove('armed'), GS_CONF.dblMs); }
+}
+function genderAnswer(art) {
+  if (!GS || GS.over || !GS.cur) return;
+  clearTimeout(GS.drop);
+  if (GS.pending) { clearTimeout(GS.pending.t); GS.pending = null; }
+  const c = GS.cur; GS.cur = null;
+  const ok = art === c.art;
+  if (ok) { GS.right++; GS.combo++; GS.best = Math.max(GS.best, GS.combo); GS.score += 10 + Math.min(10, GS.combo - 1) * 2; }
+  else { GS.wrong++; GS.combo = 0; if (art) GS.slips.push(`${c.art} ${c.es}`); }
+  const tile = $('#gsTile');
+  if (tile) { tile.style.animation = 'none'; tile.classList.add(ok ? 'ok' : 'no'); tile.innerHTML = `<b>${esc(c.art)} ${esc(c.es)}</b><span class="small">${ok ? '¡bien!' : art ? 'not ' + esc(art) : 'too slow'}</span>`; }
+  genderPaintStatus();
+  setTimeout(() => { if (GS && !GS.over) { const t = $('#gsTile'); if (t) t.classList.remove('ok', 'no'); genderNext(); } }, ok ? 260 : 700);
+}
+function genderPaintStatus() {
+  const s = $('#gsStat'); if (!s || !GS) return;
+  const left = Math.max(0, Math.ceil((GS.until - Date.now()) / 1000));
+  s.innerHTML = `<span class="mono">${left}s</span><span class="mono">Score ${GS.score}</span><span class="mono ${GS.combo >= 3 ? 'hot' : ''}">${GS.rescue ? GS.right + '/' + GS_CONF.rescueTarget : GS.combo ? 'Combo ×' + GS.combo : GS.right + ' right'}</span>`;
+}
+function renderGender(mode) {
+  const rescue = mode === 'rescue';
+  crumb([{ t: 'Play', href: '#games' }, { t: rescue ? 'Streak rescue' : '¡El o la!' }]);
+  const st = gameStat('genero');
+  const pend = rescuePending();
+  if (rescue && !pend) { app.innerHTML = `<section class="pagehead"><div class="title"><span class="label">Play</span><h1>Nothing to rescue</h1><p>Your streak is fine — there is nothing to save right now.</p></div></section><div class="game"><div class="gcard intro"><div class="gmascot">${companion(buddy().id, 120, 'float')}</div><div class="btn-row center"><a class="btn rose" href="#games/genero">Play ¡El o la! anyway</a><a class="btn ghost" href="#games">← Play</a></div></div></div>`; return; }
+  app.innerHTML = `
+  <section class="pagehead game-head">
+    <div class="title"><span class="label">Play · ${rescue ? 'Streak rescue' : '¡El o la!'}</span><h1>${rescue ? 'Save your streak' : '¡El o la!'}</h1><p>${rescue ? `You missed a day, so your <b>${pend.count}-day streak</b> is hanging by a thread. Get ${GS_CONF.rescueTarget} right in 60 seconds and it carries on as if nothing happened.` : 'Words fall. Send each one left to <b>el</b> or right to <b>la</b> — and a plural needs the double: two quick taps on the same side, or the little LOS / LAS chip.'}</p></div>
+    <div class="side pink"><span class="label">${rescue ? 'Streak at stake' : 'Best'}</span><div class="es" style="font-size:2rem">${rescue ? pend.count : st.best}</div><span class="small muted">${rescue ? 'days' : st.plays ? st.plays + ' round' + (st.plays === 1 ? '' : 's') : 'not played yet'}</span></div>
+  </section>
+  <div class="game" id="game">
+    <div class="gcard intro">
+      <div class="gmascot">${companion(buddy().id, 120, 'float')}</div>
+      <h2>${rescue ? '¿Lista? Sesenta segundos.' : '¿El o la?'}</h2>
+      <p class="muted">${rescue ? `${GS_CONF.rescueTarget} correct saves it. One try — after that the streak starts again from today, and that is all right too.` : `${GS_CONF.secs} seconds. Singular is one tap or swipe; plural is the double. Every miss shows you the right article.`}</p>
+      <div class="btn-row center"><button type="button" class="btn rose big" id="gsStart">${rescue ? 'Save it' : 'Start'}</button><a class="btn ghost" href="#games">← Play</a></div>
+    </div>
+  </div>`;
+  $('#gsStart').addEventListener('click', () => genderStart(rescue));
+}
+function genderStart(rescue) {
+  gameFocus();
+  const secs = rescue ? GS_CONF.rescueSecs : GS_CONF.secs;
+  GS = { n: 0, right: 0, wrong: 0, combo: 0, best: 0, score: 0, slips: [], rescue: !!rescue, over: false, until: Date.now() + secs * 1000, cur: null, pending: null };
+  const g = $('#game'); if (!g) return;
+  g.innerHTML = `
+  <div class="gcard play gsplay" id="gsCard">
+    <div class="gstatus" id="gsStat"></div>
+    <div class="gtimer"><i style="animation-duration:${secs * 1000}ms"></i></div>
+    <div class="gsarena" id="gsArena">
+      <div class="gsguides"><span>el</span><span>la</span></div>
+      <div class="gstile" id="gsTile"></div>
+    </div>
+    <div class="gszones">
+      <div class="gszone" id="gsL"><button type="button" class="zbig" data-side="l">EL</button><button type="button" class="zsm" data-art="los">LOS</button></div>
+      <div class="gszone" id="gsR"><button type="button" class="zbig" data-side="r">LA</button><button type="button" class="zsm" data-art="las">LAS</button></div>
+    </div>
+    <p class="small muted center">Swipe the word, or tap. Two quick taps (or LOS / LAS) for a plural.</p>
+  </div>`;
+  g.querySelectorAll('[data-side]').forEach(b => b.addEventListener('click', () => genderSide(b.dataset.side)));
+  g.querySelectorAll('[data-art]').forEach(b => b.addEventListener('click', () => { if (GS && GS.pending) { clearTimeout(GS.pending.t); GS.pending = null; } genderAnswer(b.dataset.art); }));
+  const arena = $('#gsArena');
+  let x0 = null;
+  arena.addEventListener('pointerdown', (e) => { x0 = e.clientX; });
+  arena.addEventListener('pointerup', (e) => {
+    if (x0 === null) return; const dx = e.clientX - x0; x0 = null;
+    if (Math.abs(dx) < 24) { const mid = arena.getBoundingClientRect().left + arena.getBoundingClientRect().width / 2; genderSide(e.clientX < mid ? 'l' : 'r'); }
+    else genderSide(dx < 0 ? 'l' : 'r');
+  });
+  GS.tick = setInterval(() => {
+    if (!GS || GS.over) return clearInterval(GS.tick);
+    genderPaintStatus();
+    if (Date.now() >= GS.until) genderEnd();
+  }, 250);
+  genderPaintStatus();
+  genderNext();
+}
+function genderEnd() {
+  if (!GS || GS.over) return;
+  GS.over = true; clearInterval(GS.tick); clearTimeout(GS.drop);
+  if (GS.pending) clearTimeout(GS.pending.t);
+  const st = gameStat('genero'); st.plays++;
+  const newBest = GS.score > st.best; if (newBest) st.best = GS.score;
+  let saved = null;
+  if (GS.rescue) saved = GS.right >= GS_CONF.rescueTarget ? rescueWin() : rescueLose();
+  const xp = GS.rescue ? (saved ? 15 : 5) : Math.min(40, GS.right * 2) + (GS.best >= 8 ? 10 : 0);
+  logAct('game', (GS.rescue ? 'Rescue ' : 'El o la ') + GS.right, { n: GS.right });
+  save();
+  if (xp) addXP(xp, GS.rescue ? 'Streak rescue' : '¡El o la!');
+  const g = $('#game'); if (!g) return;
+  g.innerHTML = `
+  <div class="gcard end">
+    <div class="gmascot">${companion(buddy().id, 130, GS.rescue && !saved ? '' : 'float')}</div>
+    <span class="label">${GS.rescue ? (saved ? '¡Salvada!' : 'So close') : newBest ? 'New best!' : 'Time!'}</span>
+    <h2>${GS.rescue ? `${GS.right} of ${GS_CONF.rescueTarget}` : GS.score + ' points'}</h2>
+    <p class="muted">${GS.right} right · ${GS.wrong} wrong · best combo ×${GS.best}</p>
+    <p class="small muted">${GS.rescue ? (saved ? `Your ${saved} -day streak is safe.`.replace(' -', '-') : 'The streak starts again today — no harm done.') : `+${xp} XP. Best so far: ${st.best}.`}</p>
+    ${GS.slips.length ? `<div class="chips">${[...new Set(GS.slips)].slice(0, 8).map(w => `<span class="pill">${esc(w)}</span>`).join('')}</div><p class="small muted">Those are the ones that got away — with the right article.</p>` : ''}
+    <div class="btn-row center"><button type="button" class="btn rose big" id="gsAgain">${GS.rescue ? 'Play ¡El o la!' : 'Play again'}</button><a class="btn ghost" href="#games">← Play</a></div>
+  </div>`;
+  $('#gsAgain').addEventListener('click', () => genderStart(false));
+}
+
+/* ----- streak rescue: one missed day can be bought back with a 60-second round ----- */
+/* Recorded at boot, because the first XP of the day rewrites S.streak. */
+function initStreak() {
+  if (!S.rescue) S.rescue = {};
+  const y = addDays(-1);
+  if (S.streak.last === addDays(-2) && (S.streak.count || 0) >= 2 && S.rescue.day !== y) S.rescue = { day: y, count: S.streak.count, open: true };
+  if (S.rescue.day && S.rescue.day !== y) S.rescue = {};
+}
+function rescuePending() { return S.rescue && S.rescue.open && S.rescue.day === addDays(-1) ? S.rescue : null; }
+function rescueWin() {
+  const p = rescuePending(); if (!p) return null;
+  const count = p.count;
+  if (S.streak.last === todayStr()) S.streak.count = count + 1;
+  else { S.streak.last = addDays(-1); S.streak.count = count; }
+  S.rescue = { day: p.day, open: false, won: true };
+  logAct('streak', 'rescued ' + S.streak.count);
+  save(); updateStat();
+  return S.streak.count;
+}
+function rescueLose() { const p = rescuePending(); if (p) { S.rescue = { day: p.day, open: false, won: false }; save(); } return null; }
+function rescueBannerHTML() {
+  const p = rescuePending(); if (!p) return '';
+  return `<section class="hsec"><div class="hbody"><div class="acct nudge rescue"><div>${companion(buddy().id, 56)}</div><div><b>Your ${p.count}-day streak is hanging by a thread.</b><p class="small muted">One missed day. Sixty seconds of ¡El o la! brings it back.</p></div><a class="btn sm rose" href="#games/rescue">Save it →</a></div></div></section>`;
+}
+
+/* =========================== CRUCIGRAMA =========================== */
+/* Five by five, built from the words learned this week, clues in Spanish. Same puzzle all day. */
+const CW_SIZE = 5;
+function seededRnd(seed) {
+  let x = 2166136261;
+  for (const ch of String(seed)) { x ^= ch.charCodeAt(0); x = Math.imul(x, 16777619) >>> 0; }
+  return () => { x = (Math.imul(x, 1664525) + 1013904223) >>> 0; return x / 4294967296; };
+}
+/* this week's words first, then anything learned, then the level's dictionary so it is never empty */
+function crossWords() {
+  const week = addDays(-6);
+  const learned = Object.keys(S.learned || {}).filter(es => DICT_BY_ES[es]);
+  const fresh = learned.filter(es => S.cards[es] && S.cards[es].at && S.cards[es].at >= week);
+  const fit = (list) => list.filter(es => { const g = gridForm(es); return g.length >= 3 && g.length <= CW_SIZE && !/\s/.test(es); });
+  let out = fit(fresh);
+  if (out.length < 8) out = out.concat(fit(learned).filter(es => out.indexOf(es) < 0));
+  if (out.length < 8) out = out.concat(fit(DICT.filter(d => d.lvl <= Math.max(2, S.level || 1)).map(d => d.es)).filter(es => out.indexOf(es) < 0));
+  return [...new Set(out)];
+}
+function cwClue(es) {
+  const d = DICT_BY_ES[es]; if (!d) return '';
+  if (d.ex) {
+    const re = new RegExp('\\b' + es.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i');
+    if (re.test(d.ex)) return d.ex.replace(re, '___');
+  }
+  return `«${d.en}»`;
+}
+/* place words on the grid; every word after the first must cross one already there */
+function buildCrossword(words, rnd) {
+  const norm = words.map(es => ({ es, w: gridForm(es) })).filter(x => x.w.length >= 3);
+  if (!norm.length) return null;
+  const pick = norm.slice().sort((a, b) => b.w.length - a.w.length || rnd() - 0.5);
+  const grid = Array.from({ length: CW_SIZE }, () => Array(CW_SIZE).fill(null));
+  const placed = [];
+  const at = (r, c) => (r < 0 || c < 0 || r >= CW_SIZE || c >= CW_SIZE ? '#' : grid[r][c]);
+  const fits = (w, r, c, dir) => {
+    const dr = dir === 'd' ? 1 : 0, dc = dir === 'a' ? 1 : 0;
+    if (r < 0 || c < 0 || r + dr * (w.length - 1) >= CW_SIZE || c + dc * (w.length - 1) >= CW_SIZE) return -1;
+    if (at(r - dr, c - dc) !== '#' && at(r - dr, c - dc) !== null) return -1;
+    if (at(r + dr * w.length, c + dc * w.length) !== '#' && at(r + dr * w.length, c + dc * w.length) !== null) return -1;
+    let cross = 0;
+    for (let i = 0; i < w.length; i++) {
+      const rr = r + dr * i, cc = c + dc * i, cur = grid[rr][cc];
+      if (cur === w[i]) { cross++; continue; }
+      if (cur !== null) return -1;
+      /* an empty cell must not touch another word sideways */
+      const a = at(rr + dc, cc + dr), b = at(rr - dc, cc - dr);
+      if ((a !== null && a !== '#') || (b !== null && b !== '#')) return -1;
+    }
+    return cross;
+  };
+  const put = (item, r, c, dir) => {
+    const dr = dir === 'd' ? 1 : 0, dc = dir === 'a' ? 1 : 0;
+    for (let i = 0; i < item.w.length; i++) grid[r + dr * i][c + dc * i] = item.w[i];
+    placed.push({ es: item.es, w: item.w, r, c, dir });
+  };
+  const first = pick[0];
+  put(first, Math.floor(rnd() * (CW_SIZE - 1)), Math.floor(rnd() * (CW_SIZE - first.w.length + 1)), 'a');
+  /* three passes: a word that would not fit early often fits once more letters are on the board */
+  for (let pass = 0; pass < 3 && placed.length < 7; pass++) {
+    for (const item of pick) {
+      if (placed.length >= 7) break;
+      if (placed.some(p => p.es === item.es)) continue;
+      let best = null;
+      for (let r = 0; r < CW_SIZE; r++) for (let c = 0; c < CW_SIZE; c++) for (const dir of ['a', 'd']) {
+        const n = fits(item.w, r, c, dir);
+        if (n > 0 && (!best || n > best.n || (n === best.n && rnd() < 0.4))) best = { r, c, dir, n };
+      }
+      if (best) put(item, best.r, best.c, best.dir);
+    }
+  }
+  if (placed.length < 3) return null;
+  /* numbering: reading order over the word starts */
+  const starts = placed.slice().sort((a, b) => a.r - b.r || a.c - b.c);
+  const num = {}; let k = 0;
+  starts.forEach(p => { const key = p.r + ',' + p.c; if (!num[key]) num[key] = ++k; p.n = num[key]; });
+  return { grid, words: placed.sort((a, b) => a.n - b.n || (a.dir === 'a' ? -1 : 1)), num };
+}
+let CW = null;
+const seededShuffle = (arr, rnd) => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+/* the same grid all day: everything downstream of here is driven by the date seed */
+function cwToday() {
+  const pool = crossWords();
+  if (pool.length < 3) return null;
+  const seed = 'hablemos-' + todayStr() + '-' + pool.length;
+  let best = null;
+  for (let tries = 0; tries < 30; tries++) {
+    const rnd = seededRnd(seed + '#' + tries);
+    const p = buildCrossword(seededShuffle(pool, rnd).slice(0, 14), rnd);
+    if (p && (!best || p.words.length > best.words.length)) best = p;
+    if (best && best.words.length >= 6) break;
+  }
+  return best;
+}
+function renderCrucigrama() {
+  crumb([{ t: 'Play', href: '#games' }, { t: 'Crucigrama' }]);
+  const st = gameStat('crucigrama');
+  const doneToday = st.day === todayStr() && st.done;
+  const puzzle = cwToday();
+  if (!puzzle) {
+    app.innerHTML = `<section class="pagehead"><div class="title"><span class="label">Play · Crucigrama</span><h1>Not enough words yet</h1><p>The crossword is built from the words you have learned. Find a few more in Word Hunt or Mercado and come back.</p></div></section><div class="game"><div class="gcard intro"><div class="gmascot">${companion(buddy().id, 120, 'float')}</div><div class="btn-row center"><a class="btn rose" href="#games/mercado">Play Mercado</a><a class="btn ghost" href="#games">← Play</a></div></div></div>`;
+    return;
+  }
+  CW = { p: puzzle, checked: false, done: doneToday };
+  gameFocus();
+  const cells = [];
+  for (let r = 0; r < CW_SIZE; r++) for (let c = 0; c < CW_SIZE; c++) {
+    const ch = puzzle.grid[r][c];
+    const n = puzzle.words.find(w => w.r === r && w.c === c);
+    cells.push(ch === null ? '<span class="cwcell off"></span>'
+      : `<span class="cwcell">${n ? `<i class="cwn">${n.n}</i>` : ''}<input type="text" maxlength="1" data-r="${r}" data-c="${c}" data-ch="${ch}" inputmode="text" autocapitalize="characters" autocomplete="off" spellcheck="false" aria-label="Row ${r + 1} column ${c + 1}" value="${doneToday ? ch : ''}" ${doneToday ? 'readonly' : ''}></span>`);
+  }
+  const list = (dir) => puzzle.words.filter(w => w.dir === dir).map(w => `<li><b>${w.n}.</b> ${esc(cwClue(w.es))} <span class="mono muted">(${w.w.length})</span></li>`).join('');
+  app.innerHTML = `
+  <section class="pagehead game-head">
+    <div class="title"><span class="label">Play · Crucigrama</span><h1>Daily crossword</h1><p>Five by five, built from the words you have been learning, with the clues in Spanish. A new one every day.</p></div>
+    <div class="side pink"><span class="label">Solved</span><div class="es" style="font-size:2rem">${st.best}</div><span class="small muted">${doneToday ? "today's is done ✓" : 'today is waiting'}</span></div>
+  </section>
+  <div class="game" id="game">
+    <div class="gcard play">
+      <div class="gstatus"><span class="mono">${puzzle.words.length} words</span><span class="mono muted">${st.best ? st.best + ' solved' : esc(todayStr())}</span><span class="mono" id="cwMsg">${doneToday ? 'done ✓' : ''}</span></div>
+      <div class="cwgrid" id="cwGrid">${cells.join('')}</div>
+      <div class="cwclues">
+        <div><span class="label">Horizontales →</span><ul>${list('a')}</ul></div>
+        <div><span class="label">Verticales ↓</span><ul>${list('d')}</ul></div>
+      </div>
+      <div class="btn-row center">${doneToday ? '<a class="btn ghost" href="#games">← Play</a>' : '<button type="button" class="btn rose" id="cwCheck">Revisar</button><button type="button" class="btn ghost sm" id="cwClear">↺ Reset</button><a class="btn ghost sm" href="#games">← Play</a>'}</div>
+      <p class="small muted center">Accents are not needed — just the letters. ${doneToday ? 'Come back tomorrow for a new grid.' : ''}</p>
+    </div>
+  </div>`;
+  if (doneToday) return;
+  const inputs = [...app.querySelectorAll('#cwGrid input')];
+  inputs.forEach((el, i) => {
+    el.addEventListener('input', () => {
+      el.value = gridForm(el.value).slice(0, 1);
+      el.classList.remove('bad');
+      if (el.value && inputs[i + 1]) inputs[i + 1].focus();
+    });
+    el.addEventListener('keydown', (e) => { if (e.key === 'Backspace' && !el.value && inputs[i - 1]) inputs[i - 1].focus(); });
+  });
+  $('#cwCheck').addEventListener('click', () => cwCheck(inputs));
+  $('#cwClear').addEventListener('click', () => { inputs.forEach(el => { el.value = ''; el.classList.remove('bad'); }); $('#cwMsg').textContent = ''; });
+}
+function cwCheck(inputs) {
+  let wrong = 0, blank = 0;
+  inputs.forEach(el => {
+    const want = el.dataset.ch, got = gridForm(el.value);
+    if (!got) { blank++; return; }
+    if (got !== want) { wrong++; el.classList.add('bad'); }
+  });
+  const msg = $('#cwMsg');
+  if (blank || wrong) { if (msg) msg.textContent = wrong ? `${wrong} wrong` : `${blank} to go`; setTimeout(() => inputs.forEach(el => { if (el.classList.contains('bad')) { el.value = ''; el.classList.remove('bad'); } }), 900); return; }
+  const st = gameStat('crucigrama');
+  const first = st.day !== todayStr() || !st.done;
+  st.day = todayStr(); st.done = true; st.plays++;
+  if (first) st.best = (st.best || 0) + 1;
+  inputs.forEach(el => el.setAttribute('readonly', 'readonly'));
+  if (msg) msg.textContent = 'done ✓';
+  logAct('game', 'Crucigrama ' + CW.p.words.length, { n: CW.p.words.length });
+  save();
+  const xp = first ? 10 + CW.p.words.length * 3 : 0;
+  if (xp) addXP(xp, 'Crucigrama');
+  bigToast('¡Completo!', `${CW.p.words.length} words${first ? ` · <b>+${xp} XP</b>` : ''}. A new grid tomorrow.`, buddy().id);
 }
 
 /* =========================== APP =========================== */
@@ -5372,7 +5919,7 @@ const gridForm = (w) => stripAccents(String(w).toUpperCase()).replace(/[^A-Z\u00
 const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const DICT_BY_ES = Object.fromEntries(DICT.map(d => [d.es, d]));
 const KEY = 'hablemos.v1';
-const BUILD = { v: 'v15', date: '3 September 2026' };
+const BUILD = { v: 'v16', date: '3 September 2026' };
 const todayStr = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 const addDays = (n) => { const d = new Date(); d.setDate(d.getDate() + n); return todayStr(d); };
 const XP = { lesson: 15, perfect: 5, phrase: 5, passage: 15, huntWord: 2, hunt: 10, card: 1, mistake: 3, dialogue: 10, listen: 3 };
@@ -5387,6 +5934,7 @@ initProfile();
 initConcepts();
 initChecks();
 initGames();
+initStreak();
 const LV = () => LEVELS.find(l => l.id === S.level) || LEVELS[0];
 const learnedCount = () => Object.keys(S.learned).length;
 const lessonsDone = () => Object.keys(S.done).filter(k => k.startsWith('g')).length;
@@ -5826,7 +6374,7 @@ function gloss(raw) {
   if (/^[A-ZÁÉÍÓÚÑ]/.test(String(raw).replace(/^[¿¡"“(]+/, ''))) return { es: w, word: String(raw).replace(/^[¿¡"“(]+|[.,;:!?"”)]+$/g, ''), en: 'a name or place', pos: 'proper noun', def: 'Names and places stay as they are. Say it with Spanish vowels.' };
   return null;
 }
-function learnWord(es) { if (DICT_BY_ES[es] && !S.learned[es]) { S.learned[es] = true; if (!S.cards[es]) S.cards[es] = { box: 0, due: todayStr() }; return true; } return false; }
+function learnWord(es) { if (DICT_BY_ES[es] && !S.learned[es]) { S.learned[es] = true; if (!S.cards[es]) S.cards[es] = { box: 0, due: todayStr(), at: todayStr() }; return true; } return false; }
 
 /* ----- topbar ----- */
 const levelSel = $('#levelSel');
@@ -5876,7 +6424,9 @@ function render() {
   const { page, id, sub } = route();
   Player.stop(); LineAudio.stop();
   if (activeHunt && page !== 'hunt') { activeHunt = null; }
-  if (page !== 'games' && typeof MG !== 'undefined' && MG) { clearTimeout(MG.timer); MG = null; }
+  if (page !== 'games') { if (typeof MG !== 'undefined' && MG) { clearTimeout(MG.timer); MG = null; }
+    if (typeof GS !== 'undefined' && GS) { clearInterval(GS.tick); clearTimeout(GS.drop); GS.over = true; GS = null; }
+    if (typeof LOT !== 'undefined' && LOT) { LOT.over = true; LOT = null; } }
   updateStat();
   paintTestBar();
   /* on phones and tablets a chosen lesson or passage hides the big section header — the back row carries the title */
@@ -5980,6 +6530,7 @@ function renderHome() {
     </div>
   </section>
 
+  ${rescueBannerHTML()}
   ${accountNudgeHTML()}
   ${installBannerHTML()}
   <section class="hsec">
