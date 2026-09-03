@@ -1332,6 +1332,22 @@ img, svg { max-width: 100%; }
 html.standalone .foot { display: none; }
 html.standalone .topbar { padding-top: max(env(safe-area-inset-top, 0px), 6px); }
 
+/* =========================== v12: accounts =========================== */
+.acct { display: grid; gap: 8px; padding: 16px; border-radius: 18px; background: var(--surface); border: 1px solid var(--line); }
+.acct.in { background: var(--ok-soft); border-color: var(--sage); }
+.acct > b { font-family: var(--font-display); font-size: 1.05rem; }
+.acct .row.between b { font-family: var(--font-display); font-size: 1.05rem; }
+.acctform { display: grid; grid-template-columns: 1fr 140px; gap: 10px; }
+.acctform label { display: grid; gap: 4px; min-width: 0; }
+.acctform input { width: 100%; padding: 11px 12px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); font: inherit; }
+.acct.nudge { grid-template-columns: auto 1fr auto; align-items: center; gap: 14px; background: var(--pink-1); border-color: var(--pink-3); }
+.acct.nudge .btn { white-space: nowrap; }
+.bigtoast.acctbox { align-items: flex-start; }
+.bigtoast.acctbox .acct { padding: 0; border: 0; background: none; }
+.bigtoast.acctbox .acctform { grid-template-columns: 1fr 110px; }
+@media (max-width: 480px) { .acctform { grid-template-columns: 1fr; } .acct.nudge { grid-template-columns: auto 1fr; } .acct.nudge .btn { grid-column: 2; justify-self: start; } .bigtoast.acctbox .acctform { grid-template-columns: 1fr; } }
+@media (pointer: coarse) { .acctform input { min-height: 44px; font-size: 16px !important; } }
+
 </style>
 
 <header class="topbar">
@@ -1365,7 +1381,7 @@ html.standalone .topbar { padding-top: max(env(safe-area-inset-top, 0px), 6px); 
 
 <footer class="foot page">
   <span>Hablemos · Grade 1 → Fluent · <a href="#about">About</a> · <a href="#owner">Owner</a></span>
-  <span>v2 · built with <span class="heart">♥</span> for Nat <span class="heart">♥</span></span>
+  <span><span id="footv">v2</span> · built with <span class="heart">♥</span> for Nat <span class="heart">♥</span></span>
   <span id="footStat"></span>
 </footer>
 <script>
@@ -3667,7 +3683,9 @@ function summary() {
 }
 
 /* ----- cloud config ----- */
-function cloudCfg() { try { return JSON.parse(localStorage.getItem(CLOUD_KEY) || 'null'); } catch (e) { return null; } }
+/* Anndy's project, baked in so nobody needs a setup code. The anon key is public by design (RLS limits it to this table). */
+const CLOUD_DEFAULT = { url: 'https://tmexeztpuhiiqcoikyip.supabase.co', key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRtZXhlenRwdWhpaXFjb2lreWlwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgyMDk1MzgsImV4cCI6MjEwMzc4NTUzOH0.76b7IY4gr333VgWjljunKUW38EWWDGUcMbDd-sWwF5w' };
+function cloudCfg() { try { return JSON.parse(localStorage.getItem(CLOUD_KEY) || 'null') || CLOUD_DEFAULT; } catch (e) { return CLOUD_DEFAULT; } }
 function setCloudCfg(c) { try { c ? localStorage.setItem(CLOUD_KEY, JSON.stringify(c)) : localStorage.removeItem(CLOUD_KEY); } catch (e) {} }
 function encodeSetup(c) { try { return btoa(JSON.stringify({ u: c.url, k: c.key })).replace(/=+$/, ''); } catch (e) { return ''; } }
 function decodeSetup(code) {
@@ -3695,8 +3713,9 @@ const Cloud = {
   async push(force) {
     const cfg = cloudCfg(); if (!cfg) return;
     if (Cloud.blocked()) { Cloud.setState('blocked', 'Sync is switched off inside claude.ai — use your web address.'); return; }
-    const body = { id: S.who.id, name: learnerName(), updated_at: new Date().toISOString(), payload: summary() };
-    const sig = JSON.stringify([body.payload.xp, body.payload.coins, body.payload.lessons, body.payload.learned, body.payload.minutes, body.name]);
+    const payload = summary(); payload.full = fullState(); payload.acct = !!S.acct;
+    const body = { id: rowId(), name: learnerName(), updated_at: new Date().toISOString(), payload };
+    const sig = JSON.stringify([body.id, payload.xp, payload.coins, payload.lessons, payload.learned, payload.minutes, body.name, Object.keys(S.items || {}).length, Object.keys(S.done || {}).length]);
     if (!force && sig === Cloud.lastSent) return;
     Cloud.setState('syncing');
     try {
@@ -3724,6 +3743,33 @@ const Cloud = {
     if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + (await r.text()).slice(0, 160));
     return r.json();
   },
+  async get(id) {
+    const cfg = cloudCfg(); if (!cfg || Cloud.blocked()) return null;
+    const r = await fetch(cfg.url + '/rest/v1/' + TABLE + '?id=eq.' + encodeURIComponent(id) + '&select=id,name,updated_at,payload', { headers: Cloud.head(cfg) });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const rows = await r.json(); return rows[0] || null;
+  },
+  async byName(name) {
+    const cfg = cloudCfg(); if (!cfg || Cloud.blocked()) return [];
+    const r = await fetch(cfg.url + '/rest/v1/' + TABLE + '?name=ilike.' + encodeURIComponent(String(name).trim()) + '&select=id,name,updated_at,payload&order=updated_at.desc', { headers: Cloud.head(cfg) });
+    if (!r.ok) return [];
+    return r.json();
+  },
+  async patch(id, payload) {
+    const cfg = cloudCfg(); if (!cfg || Cloud.blocked()) return;
+    await fetch(cfg.url + '/rest/v1/' + TABLE + '?id=eq.' + encodeURIComponent(id), { method: 'PATCH', headers: Cloud.head(cfg, { Prefer: 'return=minimal' }), body: JSON.stringify({ payload }) }).catch(() => {});
+  },
+  /* on open: if the account's cloud copy is newer and not behind, take it — that is what makes a second device just work */
+  async pull() {
+    if (!S.acct || Cloud.blocked() || !Cloud.on()) return false;
+    try {
+      const row = await Cloud.get(S.acct.id);
+      const full = row && row.payload && row.payload.full;
+      if (!full) return false;
+      if ((full.savedAt || 0) > (S.savedAt || 0) && (full.xp || 0) >= (S.xp || 0)) { adoptState(full); return true; }
+    } catch (e) {}
+    return false;
+  },
 };
 function paintCloudPill(el) {
   const map = { off: ['Not set up', 'off'], ready: ['Ready', 'off'], syncing: ['Syncing…', 'go'], ok: ['Synced', 'ok'], error: ['Sync problem', 'bad'], blocked: ['Off in claude.ai', 'off'] };
@@ -3734,10 +3780,112 @@ function paintCloudPill(el) {
 }
 function initCloud() {
   if (Cloud.blocked()) { Cloud.state = cloudCfg() ? 'blocked' : 'off'; return; }
-  if (cloudCfg()) { Cloud.state = 'ready'; setTimeout(() => Cloud.push(true), 1500); }
-  document.addEventListener('visibilitychange', () => { if (document.hidden) Cloud.push(false); });
+  if (cloudCfg()) { Cloud.state = 'ready'; setTimeout(async () => { const took = await Cloud.pull(); if (!took) Cloud.push(true); }, 1200); }
+  document.addEventListener('visibilitychange', () => { if (document.hidden) Cloud.push(false); else if (S.acct) Cloud.pull().then(took => { if (took) render(); }); });
   window.addEventListener('pagehide', () => Cloud.push(false));
 }
+
+/* ----------------------------------------------------------------------
+   ACCOUNTS — a name and a PIN. No email, no verification: the id is a hash of the two,
+   so the same name + PIN on any device opens the same progress.
+   ---------------------------------------------------------------------- */
+const rowId = () => (S.acct && S.acct.id) || S.who.id;
+async function acctId(name, pin) {
+  const text = 'hablemos:' + String(name).trim().toLowerCase() + ':' + String(pin).trim();
+  try {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+    return 'a_' + Array.from(new Uint8Array(buf)).slice(0, 12).map(b => b.toString(16).padStart(2, '0')).join('');
+  } catch (e) {
+    let h1 = 2166136261, h2 = 5381;
+    for (const ch of text) { h1 = Math.imul(h1 ^ ch.charCodeAt(0), 16777619) >>> 0; h2 = (Math.imul(h2, 33) + ch.charCodeAt(0)) >>> 0; }
+    return 'a_' + h1.toString(16).padStart(8, '0') + h2.toString(16).padStart(8, '0');
+  }
+}
+const validPin = (p) => /^\d{4,8}$/.test(String(p).trim());
+/* the whole state, as it will be restored on another device */
+function fullState() {
+  const o = JSON.parse(JSON.stringify(S));
+  delete o.shopPick; delete o.showAllPath;
+  o.savedAt = Date.now(); o.v = BUILD.v;
+  return o;
+}
+function adoptState(full) {
+  const keep = { acct: S.acct, who: S.who };
+  S = Object.assign({ level: 1, done: {}, found: {}, learned: {}, quiz: {}, spoken: {}, xp: 0, xpLog: {}, streak: { count: 0, last: null }, goal: 20, mistakes: [], cards: {}, listen: {} }, full);
+  S.streak = Object.assign({ count: 0, last: null }, full.streak || {});
+  if (keep.acct) S.acct = keep.acct;
+  if (!S.who || !S.who.id) S.who = keep.who;
+  initRewards(); initProfile(); initConcepts(); initChecks();
+  try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {}
+  updateStat();
+}
+/* an older row only ever held a summary, but its activity log is detailed enough to replay */
+function rebuildFromSummary(p) {
+  const out = fullState();
+  out.xp = Math.max(out.xp || 0, p.xp || 0);
+  out.coins = Math.max(out.coins || 0, p.coins || 0);
+  out.level = Math.max(out.level || 1, p.level || 1);
+  out.goal = p.goal || out.goal;
+  if (p.streak) { out.streak = { count: p.streak, last: Object.keys(p.days || {}).filter(d => p.days[d]).sort().pop() || todayStr() }; }
+  Object.entries(p.days || {}).forEach(([d, v]) => { if (v) out.xpLog[d] = Math.max(out.xpLog[d] || 0, v); });
+  (p.chars || []).forEach(c => { out.chars[c.id] = out.chars[c.id] || blankChar(c.id); out.chars[c.id].care = Math.max(out.chars[c.id].care || 0, c.care || 0); });
+  if (p.minutes) { const d = Object.keys(out.xpLog).sort().pop() || todayStr(); out.time[d] = Math.max(out.time[d] || 0, p.minutes); }
+  const lessons = allLessons();
+  (p.recent || []).forEach(a => {
+    if (a.k === 'lesson') { const l = lessons.find(x => x.title === a.v); if (l) { out.done[l.id] = true; out.gcards[l.id] = out.gcards[l.id] || { box: 1, due: addDays(1) }; } }
+    else if (a.k === 'reading') { const r = Object.values(READING).flat().find(x => x.title === a.v); if (r) out.done[r.id] = true; }
+    else if (a.k === 'dialogue') { const d = Object.values(DIALOGUES).flat().find(x => x.title === a.v); if (d) out.done[d.id] = true; }
+    else if (a.k === 'hunt') { Object.entries(HUNTS).forEach(([lv, hs]) => hs.forEach(h => { if (h.theme === a.v) out.done['h' + lv + '-' + h.theme] = true; })); }
+    else if (a.k === 'xp' && / found$/.test(a.v)) { const es = a.v.replace(/ found$/, ''); if (DICT_BY_ES[es]) { out.learned[es] = true; out.cards[es] = out.cards[es] || { box: 0, due: todayStr() }; } }
+    else if (a.k === 'buy') { const it = ITEMS.find(i => i.es === a.v); const dc = DECOR.find(d => d.es === a.v); const bg = ROOM_BGS.find(b => b.es === a.v); if (it) { out.items[it.id] = true; } if (dc) { out.decor[dc.id] = true; out.room.on[dc.id] = true; } if (bg) { out.decor['bg:' + bg.id] = true; } }
+    else if (a.k === 'chest') { const d = new Date(a.t * 1000); out.chest.daily = todayStr(d); }
+    else if (a.k === 'checkpoint' && a.s >= 75) { const lv = Number(String(a.v).replace(/\D/g, '')); if (lv) out.checks[lv] = { best: a.s, passed: true, at: todayStr() }; }
+  });
+  out.act = (out.act || []).concat(p.recent || []).slice(-240);
+  return out;
+}
+/* sign in or create; returns { ok, msg, choice? } — choice means the caller must ask which copy to keep */
+async function signIn(name, pin, opts) {
+  opts = opts || {};
+  name = String(name || '').trim();
+  if (name.length < 2) return { ok: false, msg: 'Type your name first.' };
+  if (!validPin(pin)) return { ok: false, msg: 'The PIN is 4 to 8 digits.' };
+  if (Cloud.blocked()) return { ok: false, msg: 'Sign-in needs the web address — claude.ai blocks this page from reaching the internet.' };
+  const id = await acctId(name, pin);
+  let row = null;
+  try { row = await Cloud.get(id); } catch (e) { return { ok: false, msg: 'Could not reach the cloud: ' + (e.message || e) }; }
+  const localXP = S.xp || 0;
+  if (row && row.payload && row.payload.full) {
+    const cloudXP = row.payload.full.xp || 0;
+    if (localXP > cloudXP && !opts.prefer) return { ok: false, choice: { local: localXP, cloud: cloudXP, name } };
+    if (opts.prefer === 'local') { S.acct = { id, name, since: todayStr() }; save(); await Cloud.push(true); return { ok: true, msg: `Signed in as ${name}. This device's progress (${localXP} XP) is now the saved copy.` }; }
+    adoptState(row.payload.full);
+    S.acct = { id, name, since: (row.payload.full.acct && row.payload.full.acct.since) || todayStr() };
+    if (S.who.id && S.who.id !== id) Cloud.patch(S.who.id, { migrated_to: id, name });
+    S.who.name = name; save(); Cloud.lastSent = ''; await Cloud.push(true);
+    logAct('signin', name);
+    return { ok: true, msg: `Welcome back, ${name} — ${S.xp || 0} XP, ${S.coins || 0} ${COIN_NAME} and ${lessonsDone()} lessons restored.`, restored: true };
+  }
+  /* new account: bring across an older DEVICE record under this name. Account rows are never imported by name — they need the PIN. */
+  let legacy = null, sameName = [];
+  try { sameName = await Cloud.byName(name); } catch (e) {}
+  const isAcct = (r) => /^a_/.test(r.id) || (r.payload && r.payload.acct);
+  if (sameName.some(isAcct) && localXP < 30) return { ok: false, msg: `There is already an account called ${name}. If that is you, check the PIN. If you are a different ${name}, add a last initial — “${name} R”, say.` };
+  legacy = sameName.filter(r => r.id !== id && !isAcct(r) && r.payload && !r.payload.migrated_to && (r.payload.xp || 0) > 0).sort((a, b) => (b.payload.xp || 0) - (a.payload.xp || 0))[0] || null;
+  let imported = '';
+  if (legacy && (legacy.payload.xp || 0) > localXP) {
+    if (legacy.payload.full) adoptState(legacy.payload.full); else adoptState(rebuildFromSummary(legacy.payload));
+    imported = ` We found your earlier record and brought it across: ${S.xp || 0} XP, ${S.coins || 0} ${COIN_NAME}, ${lessonsDone()} lessons, ${learnedCount()} words.`;
+    Cloud.patch(legacy.id, Object.assign({}, legacy.payload, { migrated_to: id }));
+  }
+  if (S.who.id && S.who.id !== id) Cloud.patch(S.who.id, { migrated_to: id, name });
+  S.acct = { id, name, since: todayStr() };
+  S.who.name = name; save(); Cloud.lastSent = ''; await Cloud.push(true);
+  logAct('signup', name);
+  const dup = sameName.some(isAcct) ? ` (There was already a ${name} saved with a different PIN — if that was you, sign out and try the other PIN.)` : '';
+  return { ok: true, msg: `Saved. From now on, sign in as ${name} with that PIN on any device and your progress follows you.` + imported + dup, restored: !!imported };
+}
+function signOut() { S.acct = null; save(); }
 
 /* ----- owner passcode ----- */
 function ownerPass() { try { return localStorage.getItem(OWNER_KEY) || ''; } catch (e) { return ''; } }
@@ -4314,7 +4462,7 @@ const gridForm = (w) => stripAccents(String(w).toUpperCase()).replace(/[^A-Z\u00
 const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const DICT_BY_ES = Object.fromEntries(DICT.map(d => [d.es, d]));
 const KEY = 'hablemos.v1';
-const BUILD = { v: 'v11', date: '2 September 2026' };
+const BUILD = { v: 'v12', date: '3 September 2026' };
 const todayStr = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 const addDays = (n) => { const d = new Date(); d.setDate(d.getDate() + n); return todayStr(d); };
 const XP = { lesson: 15, perfect: 5, phrase: 5, passage: 15, huntWord: 2, hunt: 10, card: 1, mistake: 3, dialogue: 10, listen: 3 };
@@ -4322,7 +4470,7 @@ const XP = { lesson: 15, perfect: 5, phrase: 5, passage: 15, huntWord: 2, hunt: 
 /* ----- state ----- */
 let S = { level: 1, done: {}, found: {}, learned: {}, quiz: {}, spoken: {}, xp: 0, xpLog: {}, streak: { count: 0, last: null }, goal: 20, mistakes: [], cards: {}, listen: {} };
 function load() { try { const raw = localStorage.getItem(KEY); if (raw) { const o = JSON.parse(raw); S = Object.assign(S, o); S.streak = Object.assign({ count: 0, last: null }, o.streak || {}); } } catch (e) {} }
-function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} updateStat(); Cloud.queue(); }
+function save() { S.savedAt = Date.now(); try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} updateStat(); Cloud.queue(); }
 load();
 initRewards();
 initProfile();
@@ -4918,6 +5066,7 @@ function renderHome() {
     </div>
   </section>
 
+  ${accountNudgeHTML()}
   ${installBannerHTML()}
   <section class="hsec">
     <div class="hhead"><div><span class="eyebrow">Learn</span><h2>Pick a section</h2><p>Each one follows the level you choose here.</p></div>
@@ -5024,10 +5173,8 @@ function renderSettings() {
       <div class="seg wide">${[['light', 'Light'], ['dark', 'Dark'], ['system', 'Match device']].map(([k, t]) => `<button type="button" data-theme="${k}" class="${pref === k ? 'on' : ''}">${t}</button>`).join('')}</div>
     </section>
     <section class="setcard">
-      <span class="label">You</span>
-      <label class="setrow"><span>Your name</span><input type="text" id="setName" maxlength="24" placeholder="Nat" value="${esc(S.who.name || '')}"></label>
-      <div class="setrow"><span>Cloud sync</span><span class="cpill" data-cloudstate></span></div>
-      <p class="small muted">Paste a setup code and connect on the <a href="#casita">Casita</a> page, under “Your name and sync”.</p>
+      <span class="label">Your account</span>
+      ${accountHTML()}
     </section>
     <section class="setcard">
       <span class="label">On your phone</span>
@@ -5045,8 +5192,78 @@ function renderSettings() {
   app.querySelectorAll('.levelrow button').forEach(b => b.addEventListener('click', () => { S.level = Number(b.dataset.level); save(); renderSettings(); }));
   app.querySelectorAll('[data-goal]').forEach(b => b.addEventListener('click', () => { S.goal = Number(b.dataset.goal); save(); renderSettings(); }));
   app.querySelectorAll('[data-theme]').forEach(b => b.addEventListener('click', () => { setTheme(b.dataset.theme); renderSettings(); }));
-  $('#setName').addEventListener('change', () => { const v = $('#setName').value.trim(); if (v) { S.who.name = v; S.who.asked = true; save(); Cloud.push(true); toast('Saved'); } });
+  wireAccount(app, () => renderSettings());
   wireInstall(app);
+}
+
+/* =========================== ACCOUNT UI =========================== */
+function fmtAgo(ms) { if (!ms) return 'never'; const m = Math.round((Date.now() - ms) / 60000); return m < 1 ? 'just now' : m < 60 ? m + ' min ago' : m < 1440 ? Math.round(m / 60) + ' h ago' : Math.round(m / 1440) + ' d ago'; }
+function accountHTML(opts) {
+  opts = opts || {};
+  if (ON_CLAUDE) return `<div class="acct"><b>Save your progress</b><p class="small muted">Signing in works on the web address, not inside claude.ai. Open <a href="https://thepastor.github.io/hablemos/">thepastor.github.io/hablemos</a>.</p></div>`;
+  if (S.acct) {
+    return `<div class="acct in" id="acctCard">
+      <div class="row between"><b>Signed in as ${esc(S.acct.name)}</b><span class="cpill" data-cloudstate></span></div>
+      <p class="small muted">Everything — XP, ${COIN_NAME}, lessons, outfits — is saved to the cloud as you go (last saved ${fmtAgo(Cloud.last ? Cloud.last.getTime() : S.savedAt)}). Sign in with the same name and PIN on any phone or iPad and it all comes with you.</p>
+      <div class="btn-row"><button type="button" class="btn sm ghost" id="acctSync">Save now</button><button type="button" class="btn sm ghost" id="acctOut">Sign out</button></div>
+    </div>`;
+  }
+  return `<div class="acct" id="acctCard">
+    <b>${opts.title || 'Save your progress'}</b>
+    <p class="small muted">${opts.blurb || `A name and a PIN — that's the whole sign-up. Use the same two on any device and your XP, ${COIN_NAME} and outfits follow you. Without it, progress lives only on this one phone.`}</p>
+    <div class="acctform">
+      <label><span class="label">Your name</span><input type="text" id="acctName" maxlength="24" placeholder="Nat" autocomplete="given-name" value="${esc(S.who.name || '')}"></label>
+      <label><span class="label">PIN (4–8 digits)</span><input type="password" id="acctPin" inputmode="numeric" pattern="[0-9]*" maxlength="8" placeholder="••••" autocomplete="off"></label>
+    </div>
+    <div class="btn-row"><button type="button" class="btn sm rose" id="acctGo">Sign in or create</button>${opts.later ? '<button type="button" class="btn sm ghost" id="acctLater">Later</button>' : ''}</div>
+    <p class="small muted" id="acctMsg">${opts.hint || 'Already have one? The same name and PIN signs you back in.'}</p>
+  </div>`;
+}
+function choiceHTML(c) {
+  return `<div class="acct" id="acctCard">
+    <b>Which copy should we keep?</b>
+    <p class="small muted">This device has <b>${c.local} XP</b>; the saved copy for ${esc(c.name)} has <b>${c.cloud} XP</b>. The other one is replaced.</p>
+    <div class="btn-row"><button type="button" class="btn sm rose" id="keepLocal">Keep this device's (${c.local} XP)</button><button type="button" class="btn sm" id="keepCloud">Use the saved copy (${c.cloud} XP)</button></div>
+  </div>`;
+}
+function wireAccount(root, after) {
+  root = root || document;
+  const done = (r) => { if (after) after(r); else render(); };
+  const go = root.querySelector('#acctGo');
+  if (go) go.addEventListener('click', async () => {
+    const name = root.querySelector('#acctName').value, pin = root.querySelector('#acctPin').value, msg = root.querySelector('#acctMsg');
+    go.disabled = true; msg.textContent = 'Checking…';
+    const r = await signIn(name, pin);
+    go.disabled = false;
+    if (r.choice) {
+      const card = root.querySelector('#acctCard'); card.outerHTML = choiceHTML(r.choice);
+      root.querySelector('#keepLocal').addEventListener('click', async () => { const r2 = await signIn(name, pin, { prefer: 'local' }); toast(r2.msg); done(r2); });
+      root.querySelector('#keepCloud').addEventListener('click', async () => { const r2 = await signIn(name, pin, { prefer: 'cloud' }); toast(r2.msg); done(r2); });
+      return;
+    }
+    if (!r.ok) { msg.textContent = r.msg; return; }
+    if (r.restored) bigToast('Progress restored', esc(r.msg), buddy().id); else toast(r.msg);
+    done(r);
+  });
+  const pin = root.querySelector('#acctPin'); if (pin) pin.addEventListener('keydown', e => { if (e.key === 'Enter' && go) go.click(); });
+  const later = root.querySelector('#acctLater'); if (later) later.addEventListener('click', () => { S.who.asked = true; save(); done(null); });
+  const out = root.querySelector('#acctOut'); if (out) out.addEventListener('click', () => { signOut(); toast('Signed out — progress stays on this device.'); done(null); });
+  const sync = root.querySelector('#acctSync'); if (sync) sync.addEventListener('click', async () => { sync.disabled = true; await Cloud.push(true); sync.disabled = false; toast(Cloud.state === 'ok' ? 'Saved to the cloud.' : (Cloud.msg || 'Could not save right now.')); done(null); });
+  document.querySelectorAll('[data-cloudstate]').forEach(paintCloudPill);
+}
+/* first run, and again once there is something worth keeping */
+function askAccount() {
+  if (S.acct || S.who.asked || ON_CLAUDE) return;
+  S.who.asked = true; save();
+  const el = document.createElement('div');
+  el.className = 'bigtoast in namebox acctbox';
+  el.innerHTML = `<div class="pic">${companion('lola', 92)}</div><div>${accountHTML({ title: '¡Hola! Save your progress', blurb: 'A name and a PIN. Same two on any device and your streak, coins and outfits follow you.', later: true, hint: '' })}</div>`;
+  document.body.appendChild(el); stackToasts();
+  wireAccount(el, () => { el.remove(); stackToasts(); render(); });
+}
+function accountNudgeHTML() {
+  if (S.acct || ON_CLAUDE || (S.xp || 0) < 30) return '';
+  return `<section class="hsec"><div class="hbody"><div class="acct nudge"><div>${companion(buddy().id, 56)}</div><div><b>${S.xp} XP and ${S.coins || 0} ${COIN_NAME} live only on this device.</b><p class="small muted">Sign in once so they can't be lost.</p></div><a class="btn sm rose" href="#settings">Save it →</a></div></div></section>`;
 }
 
 /* =========================== ABOUT =========================== */
@@ -6126,33 +6343,14 @@ function renderCasita(sub) {
   </section>
 
   <section class="hsec">
-    <div class="hhead"><div><span class="eyebrow">You</span><h2>Your name and sync</h2><p>Your name labels your progress. Sync keeps a copy in the cloud so it isn't lost if this phone is.</p></div><span class="cpill" data-cloudstate></span></div>
-    <div class="hbody setupform">
-      <label><span class="label">Your name</span><input type="text" id="whoName" maxlength="24" placeholder="Nat" value="${esc(S.who.name || '')}"></label>
-      <label><span class="label">Setup code${cloudCfg() ? ' (connected)' : ''}</span><input type="text" id="whoCode" placeholder="Paste the code you were sent"></label>
-      <div class="btn-row"><button type="button" class="btn sm rose" id="whoSave">Save</button><button type="button" class="btn sm ghost" id="whoSync">Sync now</button></div>
-      <p class="small muted" id="whoMsg">${ON_CLAUDE ? 'Sync is switched off inside claude.ai — it runs on your own web address.' : cloudCfg() ? 'Connected. Progress is sent every few seconds while you practise.' : 'Not connected yet — that is fine, everything still saves on this device.'}</p>
-    </div>
+    <div class="hhead"><div><span class="eyebrow">You</span><h2>Your account</h2><p>Progress, ${COIN_NAME} and outfits are saved to the cloud under your name and PIN.</p></div></div>
+    <div class="hbody">${accountHTML()}</div>
   </section>`;
   app.querySelectorAll('[data-pick]').forEach(btn => btn.addEventListener('click', () => { S.buddy = btn.dataset.pick; logAct('buddy', CHAR_BY_ID[S.buddy].name); save(); renderCasita(); }));
   app.querySelectorAll('[data-slot]').forEach(sel => sel.addEventListener('change', () => { S.chars[b.id].worn[sel.dataset.slot] = sel.value || null; save(); renderCasita(); }));
   wireChests(app);
   document.querySelectorAll('[data-cloudstate]').forEach(paintCloudPill);
-  $('#whoSave').addEventListener('click', () => {
-    const msg = $('#whoMsg');
-    const n = $('#whoName').value.trim();
-    if (n) { S.who.name = n; S.who.asked = true; }
-    const code = $('#whoCode').value.trim();
-    if (code) {
-      const cfg = decodeSetup(code);
-      if (!cfg) { msg.textContent = 'That setup code was not readable — copy it again from the Owner page.'; return; }
-      setCloudCfg(cfg); Cloud.setState(ON_CLAUDE ? 'blocked' : 'ready');
-    }
-    save();
-    Cloud.push(true).then(() => { msg.textContent = Cloud.state === 'ok' ? 'Saved and synced. ✓' : Cloud.state === 'blocked' ? 'Saved. Sync runs on your own web address, not inside claude.ai.' : 'Saved. ' + (Cloud.msg || ''); });
-    msg.textContent = 'Saving…';
-  });
-  $('#whoSync').addEventListener('click', () => { const msg = $('#whoMsg'); msg.textContent = 'Syncing…'; Cloud.push(true).then(() => { msg.textContent = Cloud.state === 'ok' ? 'Synced. ✓' : (Cloud.msg || 'Sync is not set up on this device yet.'); }); });
+  wireAccount(app, () => renderCasita());
 }
 
 function shopTabs(tab) {
@@ -6374,7 +6572,7 @@ function ownerCard(row) {
   return `<section class="ocard">
     <div class="ohead">
       <div class="who">${p.buddy ? `<span class="mascot" style="width:56px;height:56px">${companionSVG(p.buddy, { stage: p.stage || 1, worn: {} })}</span>` : ''}
-        <div><b>${esc(row.name || p.name || 'Learner')}</b><br><span class="small muted">${esc(row.id)} · last seen ${fmtWhen(row.updated_at)} · ${esc(p.v || '')}</span></div></div>
+        <div><b>${esc(row.name || p.name || 'Learner')}</b> ${p.acct || /^a_/.test(row.id) ? '<span class="pill ok">account</span>' : '<span class="pill">this device only</span>'}<br><span class="small muted">${esc(row.id)} · last seen ${fmtWhen(row.updated_at)} · ${esc(p.v || '')}${p.full ? ' · full copy saved' : ''}</span></div></div>
       <div class="obadges"><span class="pill">Level ${p.level ?? '—'}</span><span class="pill">♥ ${p.streak ?? 0}-day streak</span><span class="pill">${p.xp ?? 0} XP</span></div>
     </div>
     <div class="ogrid">
@@ -6417,7 +6615,7 @@ async function loadOwner() {
   const box = $('#ownerBody'); if (!box) return;
   box.innerHTML = '<p class="muted">Loading…</p>';
   try {
-    const rows = await Cloud.all();
+    const rows = (await Cloud.all()).filter(r => !(r.payload && r.payload.migrated_to));
     if (!rows.length) { box.innerHTML = `<div class="notice">No learners yet. Open Hablemos on the other device, put a name in <b>Casita → your name</b>, and earn a little XP — the row appears here within a few seconds.</div>`; return; }
     box.innerHTML = rows.map(ownerCard).join('');
   } catch (e) {
@@ -6428,7 +6626,7 @@ async function loadOwner() {
 function ownerSetupHTML() {
   const cfg = cloudCfg();
   return `<section class="hsec" id="cloudSetup">
-    <div class="hhead"><div><span class="eyebrow">Setup</span><h2>Connect the cloud</h2><p>One free Supabase project holds everyone's progress. You do this once, then paste the same setup code into each device.</p></div></div>
+    <div class="hhead"><div><span class="eyebrow">Setup</span><h2>Connect the cloud</h2><p>Your project is built into the app now — every copy connects on its own and nobody needs a setup code. This panel is only for pointing the app at a different project.</p></div></div>
     <div class="hbody">
       ${ON_CLAUDE ? `<div class="notice warn">You are viewing this inside claude.ai, which blocks the page from reaching the internet — sync can be set up here but will only run on your own web address.</div>` : ''}
       <ol class="steps">
@@ -6505,25 +6703,12 @@ function ownerGate() {
   $('#pw').focus();
 }
 
-/* ----- first run: ask the learner's name once, so the owner view has something to call them ----- */
-function askName() {
-  if (S.who.name || S.who.asked) return;
-  S.who.asked = true; save();
-  const el = document.createElement('div');
-  el.className = 'bigtoast in namebox';
-  el.innerHTML = `<div class="pic">${companion('lola', 92)}</div><div><b>¡Hola! What should we call you?</b><p>Just a first name — it labels your progress so it doesn't get mixed up with anyone else's.</p><div class="btn-row"><input type="text" id="nameIn" maxlength="24" placeholder="Nat" autocomplete="given-name"><button type="button" class="btn sm rose" id="nameGo">That's me</button></div></div>`;
-  document.body.appendChild(el);
-  stackToasts();
-  const go = () => { const v = $('#nameIn').value.trim(); if (v) { S.who.name = v; logAct('name', v); save(); Cloud.push(true); } el.remove(); render(); };
-  $('#nameGo').addEventListener('click', go);
-  $('#nameIn').addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
-}
-
 /* ----- boot ----- */
 initCloud();
 initPWA();
 startClock();
 render();
-setTimeout(askName, 1200);
+setTimeout(askAccount, 1200);
+{ const fv = $('#footv'); if (fv) fv.textContent = BUILD.v; }
 </script>
 </html>
