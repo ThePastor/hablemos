@@ -1477,6 +1477,70 @@ html.standalone #testbar { top: calc(64px + max(env(safe-area-inset-top, 0px), 6
   html:not(.noanim) .mo-heart { animation: mo-heart 1.8s ease-in-out infinite; transform-origin: 50% 50%; }
   html:not(.noanim) .mo-flower { animation: mo-flower 3.2s ease-in-out infinite; transform-origin: 50% 50%; }
 }
+
+/* v15: games */
+.gamecards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 16px 48px 28px; border-bottom: 1px solid var(--line); }
+.gamecard { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px; padding: 16px; border-radius: 20px; text-decoration: none; color: var(--ink); border: 1px solid var(--line); background: var(--surface); min-width: 0; }
+.gamecard > div { min-width: 0; }
+.gamecard h3 { font-family: var(--font-display); font-size: 1.3rem; letter-spacing: -0.02em; margin: 2px 0; }
+.gamecard p { margin: 0 0 4px; font-size: .9rem; opacity: .85; }
+.gamecard .gstat { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+.gamecard .gemoji { font-size: 2.4rem; width: 72px; height: 72px; display: grid; place-items: center; border-radius: 50%; background: rgba(255,255,255,.55); }
+.gamecard .arr { font-size: 1.3rem; }
+.gamecard.t-pink3 { background: var(--tile-3); } .gamecard.t-gold { background: var(--sand); } .gamecard.t-sky { background: #DCEBF5; color: #2F2D1F; }
+.gamecard.soon { opacity: .7; border-style: dashed; }
+.game { padding: 18px 48px 40px; border-bottom: 1px solid var(--line); }
+.gcard { max-width: 620px; margin: 0 auto; background: var(--surface); border: 1px solid var(--line); border-radius: 24px; padding: 20px; display: grid; gap: 14px; min-width: 0; }
+.gcard.intro, .gcard.end { text-align: center; justify-items: center; }
+.gcard h2 { font-family: var(--font-display); font-size: 1.7rem; letter-spacing: -0.02em; margin: 0; }
+.gmascot { display: flex; justify-content: center; }
+.stallrow { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.btn-row.center { justify-content: center; }
+.btn.big { padding: 14px 24px; font-size: .85rem; }
+.gstatus { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: .72rem; }
+.gstatus .hot { color: var(--pink-5); }
+.gtimer { height: 8px; border-radius: 999px; background: var(--pink-1); overflow: hidden; }
+.gtimer i { display: block; height: 100%; width: 100%; background: var(--pink-5); transform-origin: left; animation: gtimer linear forwards; }
+@keyframes gtimer { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+.customer { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: center; padding: 14px; border-radius: 18px; background: var(--sand); border: 1px solid var(--line-soft); }
+.cpic { font-size: 3.2rem; line-height: 1; width: 84px; height: 84px; display: grid; place-items: center; border-radius: 50%; background: var(--surface); border: 1px solid var(--line-soft); }
+.cbubble { display: grid; gap: 2px; min-width: 0; }
+.cbubble b { font-family: var(--font-display); font-size: 1.5rem; letter-spacing: -0.02em; line-height: 1.1; }
+.cbubble .price { font-family: var(--font-mono); font-size: .8rem; color: var(--pink-5); }
+.verdict { font-family: var(--font-mono); font-size: .7rem; letter-spacing: .04em; margin-top: 4px; }
+.verdict.ok { color: var(--ok); } .verdict.bad { color: var(--bad); }
+.goptions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.gopt { min-height: 64px; padding: 12px; border-radius: 16px; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); font-family: var(--font-display); font-size: 1.25rem; letter-spacing: -0.01em; cursor: pointer; transition: transform .08s; }
+.gopt:active { transform: scale(.97); }
+.gopt.right { background: var(--ok-soft); border-color: var(--ok); color: var(--ok); }
+.gopt.wrong { background: var(--bad-soft); border-color: var(--bad); color: var(--bad); }
+.gopt:disabled { cursor: default; }
+.gcard.good .customer { background: var(--ok-soft); } .gcard.bad .customer, .gcard.late .customer { background: var(--bad-soft); }
+.center { text-align: center; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.dladder { position: relative; padding: 46px 22px 0; }
+.ltrack { position: relative; height: 12px; border-radius: 999px; background: var(--pink-1); border: 1px solid var(--line-soft); }
+.lfill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 999px; background: var(--pink-4); transition: width .35s; }
+.lrung { position: absolute; top: -4px; width: 2px; height: 18px; margin-left: -1px; background: var(--line-soft); }
+.lrung.done { background: var(--pink-5); }
+.lrung.top { width: 12px; height: 12px; top: -1px; margin-left: -6px; border-radius: 50%; background: #F0C674; border: 1px solid #C9922F; }
+.lwho { position: absolute; top: 0; margin-left: -22px; transition: left .35s; }
+.lends { display: flex; justify-content: space-between; font-size: .62rem; margin-top: 6px; }
+.listenrow { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.dictform { display: grid; gap: 10px; }
+.dictform input { width: 100%; font-size: 1.1rem; padding: 12px 14px; }
+.dictcheck { display: grid; gap: 10px; padding: 14px; border-radius: 16px; background: var(--sand); border: 1px solid var(--line-soft); }
+.dictcheck.clean { background: var(--ok-soft); }
+.dictwords { font-family: var(--font-display); font-size: 1.25rem; line-height: 1.6; }
+.dw { padding: 0 3px; border-radius: 6px; }
+.dw.ok { color: var(--ok); }
+.dw.accent { background: #FBE7B0; color: #6B4A00; text-decoration: underline dotted; }
+.dw.wrong, .dw.missing { background: var(--bad-soft); color: var(--bad); }
+.dw.missing { text-decoration: underline; }
+.dw.extra { color: var(--bad); text-decoration: line-through; opacity: .7; }
+@media (max-width: 1100px) { .gamecards { padding-left: 32px; padding-right: 32px; } .game { padding-left: 32px; padding-right: 32px; } }
+@media (max-width: 760px) { .gamecards { grid-template-columns: 1fr; padding: 12px 18px 22px; } .game { padding: 12px 18px 30px; } .gcard { padding: 16px; border-radius: 20px; } .cpic { font-size: 2.6rem; width: 68px; height: 68px; } .cbubble b { font-size: 1.3rem; } .gopt { min-height: 60px; font-size: 1.15rem; } .dladder { padding: 40px 20px 0; } .lwho .mascot { width: 38px !important; height: 38px !important; } .lwho { margin-left: -19px; } }
+@media (max-width: 400px) { .goptions { gap: 8px; } .gopt { font-size: 1.05rem; padding: 10px 6px; } .dladder { padding-left: 18px; padding-right: 18px; } }
 </style>
 
 <header class="topbar">
@@ -1492,7 +1556,7 @@ html.standalone #testbar { top: calc(64px + max(env(safe-area-inset-top, 0px), 6
   </a>
   <a class="coins" id="coinWidget" href="#casita" aria-label="Your quetzalitos and companion"><span class="coin" aria-hidden="true">◕</span><b id="coinTxt">0</b></a>
   <div class="theme"><button id="themeBtn" type="button" aria-label="Toggle light or dark theme">Dark</button></div>
-  <div class="cta"><a class="btn" href="#hunt">Word Hunt <span class="arr">→</span></a></div>
+  <div class="cta"><a class="btn" href="#games">Play <span class="arr">→</span></a></div>
   <a class="gear" id="gearBtn" href="#settings" aria-label="Settings"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></a>
 </header>
 <div class="crumbm" id="crumbM" hidden></div>
@@ -1503,7 +1567,7 @@ html.standalone #testbar { top: calc(64px + max(env(safe-area-inset-top, 0px), 6
 <nav class="mobnav" id="mobnav" aria-label="Sections">
   <a href="#home" data-sec="home"><span class="mi">⌂</span>Home</a>
   <a href="#learn" data-sec="learn"><span class="mi">¿?</span>Learn</a>
-  <a href="#hunt" data-sec="hunt"><span class="mi">ñ</span>Hunt</a>
+  <a href="#games" data-sec="hunt"><span class="mi">ñ</span>Play</a>
   <a href="#review" data-sec="review"><span class="mi">✎</span>Practice</a>
   <a href="#casita" data-sec="casita"><span class="mi">♥</span>Casita</a>
 </nav>
@@ -5011,6 +5075,294 @@ function wireTester(root) {
   const rs = root.querySelector('#testReset'); if (rs) rs.addEventListener('click', () => { Test.reset(); toast('Fresh test copy.'); render(); });
 }
 
+/* =========================== GAMES (v15): the Play hub, Mercado, Escucha y escribe =========================== */
+/* Each game is one screen, phone-first: a status row, one big play area, big tap targets, and an end card
+   that pays XP through addXP() so quetzalitos, care and streak all work as usual. Bests live in S.games. */
+
+function initGames() { if (!S.games) S.games = {}; ['mercado', 'escucha'].forEach(k => { if (!S.games[k]) S.games[k] = { best: 0, plays: 0 }; }); }
+const gameStat = (k) => (S.games && S.games[k]) || { best: 0, plays: 0 };
+
+/* ----- Mercado: the stalls. Every item is a DICT word, so a right answer also learns the word. ----- */
+const MERCADO_STALLS = [
+  { id: 'frutas', t: 'Frutas y verduras', en: 'Fruit & veg', items: { manzana: ['🍎', 4], tomate: ['🍅', 3], cebolla: ['🧅', 2], aguacate: ['🥑', 5], fruta: ['🍇', 6], flor: ['🌸', 8] } },
+  { id: 'comida', t: 'Comedor', en: 'Food stall', items: { pan: ['🍞', 3], queso: ['🧀', 12], huevo: ['🥚', 2], arroz: ['🍚', 6], pollo: ['🍗', 20], sopa: ['🍲', 15], tortilla: ['🫓', 1], tamal: ['🫔', 8], pepián: ['🍛', 25], pescado: ['🐟', 18], carne: ['🥩', 30], chocolate: ['🍫', 10], café: ['☕', 7], leche: ['🥛', 9], agua: ['💧', 3], sal: ['🧂', 2], azúcar: ['🍬', 4] } },
+  { id: 'granja', t: 'Granja', en: 'Farm stall', items: { perro: ['🐶', 50], gato: ['🐱', 40], pájaro: ['🐦', 25], pez: ['🐠', 15], vaca: ['🐮', 900], caballo: ['🐴', 800], conejo: ['🐰', 60], oso: ['🐻', 999], ratón: ['🐭', 5], cerdo: ['🐷', 300], gallina: ['🐔', 45], oveja: ['🐑', 250], pato: ['🦆', 35], burro: ['🫏', 400] } },
+  { id: 'ropa', t: 'Ropa', en: 'Clothes', items: { camisa: ['👕', 60], zapato: ['👟', 120], vestido: ['👗', 150], sombrero: ['👒', 45], abrigo: ['🧥', 200], falda: ['👚', 80], huipil: ['🧵', 350], cartera: ['👛', 90] } },
+  { id: 'tienda', t: 'Tienda', en: 'General store', items: { llave: ['🔑', 10], silla: ['🪑', 120], cama: ['🛏️', 700], puerta: ['🚪', 400], ventana: ['🪟', 300], libro: ['📖', 40], lápiz: ['✏️', 2], papel: ['📄', 1], reloj: ['⌚', 150], maleta: ['🧳', 250], billete: ['🎫', 30], pasaporte: ['🛂', 100] } },
+  { id: 'plaza', t: 'Plaza', en: 'Town square', items: { árbol: ['🌳', 90], luna: ['🌙', 999], estrella: ['⭐', 999], quetzal: ['🦜', 999], marimba: ['🎶', 500], barrilete: ['🪁', 35], lluvia: ['🌧️', 0], sol: ['☀️', 0] } },
+];
+/* only words the dictionary knows, so the definition and flashcard hooks work */
+let _MI = null;
+function mercadoItems() {
+  if (!_MI) _MI = MERCADO_STALLS.flatMap(st => Object.entries(st.items).filter(([es]) => DICT_BY_ES[es]).map(([es, [pic, price]]) => ({ es, en: DICT_BY_ES[es].en, pic, price, stall: st.id, stallName: st.t })));
+  return _MI;
+}
+
+const MERCADO = { customers: 12, baseTime: 5000, minTime: 2800, step: 220 };
+let MG = null;   /* the running Mercado game */
+function mercadoPick() {
+  const seen = new Set(MG.asked);
+  const all = mercadoItems();
+  let pool = all.filter(i => !seen.has(i.es));
+  if (!pool.length) pool = all;
+  const item = pool[Math.floor(Math.random() * pool.length)];
+  MG.asked.push(item.es);
+  const same = shuffle(all.filter(i => i.stall === item.stall && i.es !== item.es)).slice(0, 3);
+  const others = shuffle(all.filter(i => i.stall !== item.stall && i.es !== item.es));
+  const wrong = same.concat(others).slice(0, 3);
+  return { item, options: shuffle([item].concat(wrong)) };
+}
+function renderMercado() {
+  crumb([{ t: 'Play', href: '#games' }, { t: 'Mercado' }]);
+  const st = gameStat('mercado');
+  app.innerHTML = `
+  <section class="pagehead game-head">
+    <div class="title"><span class="label">Play · Mercado</span><h1>Market rush</h1><p>A customer points at something and says the price. Tap the Spanish word before they walk off. Right answers build a combo, and every one teaches the word.</p></div>
+    <div class="side pink"><span class="label">Best</span><div class="es" style="font-size:2rem">${st.best}</div><span class="small muted">${st.plays ? st.plays + ' round' + (st.plays === 1 ? '' : 's') + ' played' : 'not played yet'}</span></div>
+  </section>
+  <div class="game" id="game">
+    <div class="gcard intro">
+      <div class="gmascot">${companion(buddy().id, 120, 'float')}</div>
+      <h2>¿Qué quiere el cliente?</h2>
+      <p class="muted">${MERCADO.customers} customers. ${MERCADO.baseTime / 1000} seconds each — a little less as your combo grows. Tap the Spanish for what they want.</p>
+      <div class="stallrow">${MERCADO_STALLS.map(s => `<span class="pill">${esc(s.t)}</span>`).join('')}</div>
+      <div class="btn-row center"><button type="button" class="btn rose big" id="mgStart">Open the market</button><a class="btn ghost" href="#games">← Play</a></div>
+    </div>
+  </div>`;
+  $('#mgStart').addEventListener('click', mercadoStart);
+}
+function gameFocus() { app.classList.add('has-item'); window.scrollTo(0, 0); }
+function mercadoStart() {
+  gameFocus();
+  MG = { n: 0, score: 0, combo: 0, bestCombo: 0, right: 0, asked: [], learned: [], timer: null, tick: null, over: false, start: Date.now() };
+  mercadoNext();
+}
+function mercadoTime() { return Math.max(MERCADO.minTime, MERCADO.baseTime - MG.combo * MERCADO.step); }
+function mercadoNext() {
+  if (!MG || MG.over) return;
+  if (MG.n >= MERCADO.customers) return mercadoEnd();
+  MG.n++;
+  const q = mercadoPick(); MG.q = q;
+  const g = $('#game'); if (!g) return;
+  const t = mercadoTime();
+  g.innerHTML = `
+  <div class="gcard play" id="mgCard">
+    <div class="gstatus"><span class="mono">Customer ${MG.n}/${MERCADO.customers}</span><span class="mono">Score ${MG.score}</span><span class="mono ${MG.combo >= 3 ? 'hot' : ''}">${MG.combo ? 'Combo ×' + MG.combo : ''}</span></div>
+    <div class="gtimer"><i id="mgBar" style="animation-duration:${t}ms"></i></div>
+    <div class="customer">
+      <div class="cpic" aria-hidden="true">${q.item.pic}</div>
+      <div class="cbubble"><span class="label">${esc(q.item.stallName)}</span><b>${esc(q.item.en)}</b><span class="price">Q${q.item.price}</span></div>
+    </div>
+    <div class="goptions">${q.options.map(o => `<button type="button" class="gopt" data-es="${esc(o.es)}">${esc(o.es)}</button>`).join('')}</div>
+    <p class="small muted center">Tap the Spanish word.</p>
+  </div>`;
+  g.querySelectorAll('.gopt').forEach(b => b.addEventListener('click', () => mercadoAnswer(b.dataset.es, b)));
+  clearTimeout(MG.timer);
+  MG.timer = setTimeout(() => mercadoAnswer(null, null), t);
+}
+function mercadoAnswer(es, btn) {
+  if (!MG || MG.over || !MG.q) return;
+  clearTimeout(MG.timer);
+  const q = MG.q; MG.q = null;
+  const ok = es === q.item.es;
+  const card = $('#mgCard'); if (!card) return;
+  card.querySelectorAll('.gopt').forEach(b => { b.disabled = true; if (b.dataset.es === q.item.es) b.classList.add('right'); else if (b === btn) b.classList.add('wrong'); });
+  const bar = $('#mgBar'); if (bar) bar.style.animationPlayState = 'paused';
+  if (ok) {
+    MG.combo++; MG.bestCombo = Math.max(MG.bestCombo, MG.combo); MG.right++;
+    const pts = 10 + Math.min(10, MG.combo - 1) * 2; MG.score += pts;
+    if (learnWord(q.item.es)) MG.learned.push(q.item.es);
+    card.classList.add('good');
+    card.querySelector('.cbubble').insertAdjacentHTML('beforeend', `<span class="verdict ok">+${pts} · ¡${esc(q.item.es)}!</span>`);
+  } else {
+    MG.combo = 0;
+    card.classList.add(es === null ? 'late' : 'bad');
+    card.querySelector('.cbubble').insertAdjacentHTML('beforeend', `<span class="verdict bad">${es === null ? 'Too slow — ' : ''}it was <b>${esc(q.item.es)}</b></span>`);
+  }
+  setTimeout(mercadoNext, ok ? 650 : 1300);
+}
+function mercadoEnd() {
+  MG.over = true;
+  const st = gameStat('mercado'); st.plays++;
+  const newBest = MG.score > st.best; if (newBest) st.best = MG.score;
+  const xp = MG.right * XP.huntWord + (MG.right >= 10 ? 10 : 0);
+  logAct('game', 'Mercado ' + MG.score, { n: MG.right });
+  save();
+  if (xp) addXP(xp, 'Mercado');
+  const g = $('#game'); if (!g) return;
+  g.innerHTML = `
+  <div class="gcard end">
+    <div class="gmascot">${companion(buddy().id, 130, MG.right >= 8 ? 'float' : '')}</div>
+    <span class="label">${newBest ? 'New best!' : 'Round over'}</span>
+    <h2>${MG.score} points</h2>
+    <p class="muted">${MG.right} of ${MERCADO.customers} customers served · best combo ×${MG.bestCombo}${MG.learned.length ? ` · ${MG.learned.length} new word${MG.learned.length === 1 ? '' : 's'} learned` : ''}</p>
+    <p class="small muted">+${xp} XP${MG.right >= 10 ? ' (with the 10-customer bonus)' : ''}. Best so far: ${st.best}.</p>
+    ${MG.learned.length ? `<div class="chips">${MG.learned.map(w => `<span class="pill pink">${esc(w)}</span>`).join('')}</div>` : ''}
+    <div class="btn-row center"><button type="button" class="btn rose big" id="mgAgain">Play again</button><a class="btn ghost" href="#games">← Play</a></div>
+  </div>`;
+  $('#mgAgain').addEventListener('click', mercadoStart);
+}
+
+/* ----- Escucha y escribe: a sentence is read once; type it; every word is a rung ----- */
+const ESCUCHA = { rungs: 24, sentences: 6, minWords: 3, maxWords: 11 };
+let EG = null;
+function escuchaPool() {
+  const lv = Math.max(1, S.level || 1);
+  const out = [];
+  for (let l = 1; l <= lv; l++) {
+    (DIALOGUES[l] || []).forEach(d => d.lines.forEach(ln => out.push({ es: ln.es, en: ln.en, from: d.title, lvl: l })));
+    (READING[l] || []).forEach(r => r.text.forEach(par => (par.match(/[^.!?]+[.!?]+/g) || [par]).forEach(s => out.push({ es: s.trim(), en: '', from: r.title, lvl: l }))));
+  }
+  const words = (s) => s.replace(/[¿¡.,!?;:"«»()]/g, '').trim().split(/\s+/).filter(Boolean);
+  return out.filter(x => { const n = words(x.es).length; return n >= ESCUCHA.minWords && n <= ESCUCHA.maxWords; });
+}
+const escWords = (s) => String(s).replace(/[¿¡.,!?;:"«»()—–-]/g, ' ').trim().split(/\s+/).filter(Boolean);
+/* word-by-word verdict: exact climbs, accent-only holds, anything else drops */
+function escuchaGrade(target, typed) {
+  const T = escWords(target), U = escWords(typed);
+  const res = []; let up = 0, down = 0, hold = 0;
+  const n = Math.max(T.length, U.length);
+  for (let i = 0; i < n; i++) {
+    const t = T[i], u = U[i];
+    if (t === undefined) { res.push({ w: u, k: 'extra' }); down++; continue; }
+    if (u === undefined) { res.push({ w: t, k: 'missing' }); down++; continue; }
+    if (t.toLowerCase() === u.toLowerCase()) { res.push({ w: t, k: 'ok' }); up++; }
+    else if (norm(t) === norm(u)) { res.push({ w: t, typed: u, k: 'accent' }); hold++; }
+    else { res.push({ w: t, typed: u, k: 'wrong' }); down++; }
+  }
+  return { res, up, down, hold, perfect: down === 0 && hold === 0 && T.length === U.length };
+}
+function ladderHTML() {
+  const b = buddy(); const pct = EG.rung / ESCUCHA.rungs * 100;
+  return `<div class="dladder" role="img" aria-label="Ladder: rung ${EG.rung} of ${ESCUCHA.rungs}">
+    <div class="ltrack"><i class="lfill" style="width:${pct}%"></i>${Array.from({ length: ESCUCHA.rungs + 1 }, (_, i) => `<span class="lrung ${i <= EG.rung ? 'done' : ''} ${i === ESCUCHA.rungs ? 'top' : ''}" style="left:${i / ESCUCHA.rungs * 100}%"></span>`).join('')}</div>
+    <div class="lwho" style="left:${pct}%">${companion(b.id, 44)}</div>
+    <div class="lends"><span class="mono muted">start</span><span class="mono muted">${EG.rung}/${ESCUCHA.rungs}</span><span class="mono muted">top ★</span></div>
+  </div>`;
+}
+function renderEscucha() {
+  crumb([{ t: 'Play', href: '#games' }, { t: 'Escucha y escribe' }]);
+  const st = gameStat('escucha');
+  const canSpeak = 'speechSynthesis' in window;
+  app.innerHTML = `
+  <section class="pagehead game-head">
+    <div class="title"><span class="label">Play · Escucha y escribe</span><h1>Dictation ladder</h1><p>A sentence is read once at normal speed. Type what you hear. Every right word climbs a rung; a wrong or missing word drops one; an accent slip holds. Reach the top before the sentences run out.</p></div>
+    <div class="side pink"><span class="label">Best rung</span><div class="es" style="font-size:2rem">${st.best}<span class="muted" style="font-size:1rem">/${ESCUCHA.rungs}</span></div><span class="small muted">${st.plays ? st.plays + ' climb' + (st.plays === 1 ? '' : 's') : 'not played yet'}</span></div>
+  </section>
+  <div class="game" id="game">
+    <div class="gcard intro">
+      <div class="gmascot">${companion(buddy().id, 120, 'float')}</div>
+      <h2>¿Listo para escuchar?</h2>
+      <p class="muted">${ESCUCHA.sentences} sentences from the dialogues and readings up to level ${S.level}. You can replay each one, and once slowly, but the first listen is the one that counts for the combo.</p>
+      ${canSpeak ? '' : '<div class="notice warn">This browser cannot read aloud — use Safari or Chrome on the phone.</div>'}
+      <div class="btn-row center"><button type="button" class="btn rose big" id="egStart" ${canSpeak ? '' : 'disabled'}>Start climbing</button><a class="btn ghost" href="#games">← Play</a></div>
+    </div>
+  </div>`;
+  $('#egStart').addEventListener('click', escuchaStart);
+}
+function escuchaStart() {
+  gameFocus();
+  const pool = shuffle(escuchaPool());
+  EG = { rung: 0, n: 0, items: pool.slice(0, ESCUCHA.sentences), words: 0, perfect: 0, replays: 0, over: false, top: false };
+  escuchaNext();
+}
+function escuchaNext() {
+  if (!EG || EG.over) return;
+  if (EG.n >= EG.items.length) return escuchaEnd();
+  const it = EG.items[EG.n]; EG.n++; EG.cur = it; EG.replayed = 0;
+  const g = $('#game'); if (!g) return;
+  g.innerHTML = `
+  <div class="gcard play" id="egCard">
+    <div class="gstatus"><span class="mono">Sentence ${EG.n}/${EG.items.length}</span><span class="mono">Rung ${EG.rung}/${ESCUCHA.rungs}</span><span class="mono muted">${esc(it.from)}</span></div>
+    ${ladderHTML()}
+    <div class="listenrow">
+      <button type="button" class="btn rose" id="egPlay">▶ Listen</button>
+      <button type="button" class="btn ghost" id="egSlow">🐢 Slowly</button>
+      <span class="small muted" id="egHint">Listen, then type it.</span>
+    </div>
+    <form class="dictform" id="egForm" autocomplete="off">
+      <input type="text" id="egInput" lang="es" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Escribe la frase…" aria-label="Type the sentence">
+      <div class="btn-row"><button type="submit" class="btn rose" id="egCheck">Check</button><button type="button" class="btn ghost sm" id="egReset">↺ Reset</button><button type="button" class="btn ghost sm" id="egSkip">Skip</button></div>
+    </form>
+    <div id="egResult"></div>
+  </div>`;
+  const play = (slow) => { if (!EG || EG.cur !== it) return; speak(it.es, slow); EG.replayed++; const h = $('#egHint'); if (EG.replayed > 1) { EG.replays++; if (h) h.textContent = 'Replaying is fine — it just costs the perfect-sentence bonus.'; } };
+  $('#egPlay').addEventListener('click', () => play(false));
+  $('#egSlow').addEventListener('click', () => play(true));
+  $('#egReset').addEventListener('click', () => { $('#egInput').value = ''; $('#egInput').focus(); });
+  $('#egSkip').addEventListener('click', () => escuchaAnswer(''));
+  $('#egForm').addEventListener('submit', (e) => { e.preventDefault(); escuchaAnswer($('#egInput').value); });
+  setTimeout(() => play(false), 300);
+  setTimeout(() => { const i = $('#egInput'); if (i && window.innerWidth > 760) i.focus(); }, 400);
+}
+function escuchaAnswer(typed) {
+  if (!EG || EG.over || !EG.cur) return;
+  const it = EG.cur; EG.cur = null;
+  const r = escuchaGrade(it.es, typed);
+  const before = EG.rung;
+  EG.rung = Math.max(0, Math.min(ESCUCHA.rungs, EG.rung + r.up - r.down));
+  EG.words += r.up;
+  const perfect = r.perfect && EG.replayed <= 1;
+  if (perfect) EG.perfect++;
+  if (EG.rung >= ESCUCHA.rungs) EG.top = true;
+  const card = $('#egCard'); if (!card) return;
+  card.querySelector('#egForm').hidden = true;
+  card.querySelector('.dladder').outerHTML = ladderHTML();
+  const rs = card.querySelectorAll('.gstatus .mono')[1]; if (rs) rs.textContent = `Rung ${EG.rung}/${ESCUCHA.rungs}`;
+  const delta = EG.rung - before;
+  $('#egResult').innerHTML = `
+    <div class="dictcheck ${r.down ? 'has-bad' : 'clean'}">
+      <div class="dictwords">${r.res.map(x => `<span class="dw ${x.k}" title="${x.typed ? 'you typed ' + esc(x.typed) : ''}">${esc(x.w)}</span>`).join(' ')}</div>
+      <div class="row between"><span class="verdict ${delta >= 0 ? 'ok' : 'bad'}">${delta > 0 ? '▲ +' + delta : delta < 0 ? '▼ ' + delta : '— no change'}${perfect ? ' · perfect!' : ''}</span><span class="small muted">${r.up} right · ${r.hold} accent · ${r.down} slip${r.down === 1 ? '' : 's'}</span></div>
+      ${it.en ? `<p class="small muted">${esc(it.en)}</p>` : ''}
+      <div class="btn-row"><button type="button" class="btn rose" id="egNext">${EG.top ? 'You reached the top! Finish →' : EG.n >= EG.items.length ? 'See the result →' : 'Next sentence →'}</button><button type="button" class="btn ghost sm" id="egAgainListen">▶ Hear it again</button></div>
+    </div>`;
+  $('#egNext').addEventListener('click', () => { if (EG.top) escuchaEnd(); else escuchaNext(); });
+  $('#egAgainListen').addEventListener('click', () => speak(it.es, false));
+}
+function escuchaEnd() {
+  EG.over = true;
+  const st = gameStat('escucha'); st.plays++;
+  const newBest = EG.rung > st.best; if (newBest) st.best = EG.rung;
+  const xp = Math.min(30, EG.words) + EG.perfect * 5 + (EG.top ? 10 : 0);
+  logAct('game', 'Escucha rung ' + EG.rung, { n: EG.words });
+  save();
+  if (xp) addXP(xp, 'Escucha y escribe');
+  const g = $('#game'); if (!g) return;
+  g.innerHTML = `
+  <div class="gcard end">
+    <div class="gmascot">${companion(buddy().id, 130, EG.top ? 'float' : '')}</div>
+    <span class="label">${EG.top ? '¡Llegaste arriba!' : newBest ? 'New best rung' : 'Climb over'}</span>
+    <h2>Rung ${EG.rung} of ${ESCUCHA.rungs}</h2>
+    <p class="muted">${EG.words} words right · ${EG.perfect} perfect sentence${EG.perfect === 1 ? '' : 's'}${EG.replays ? ' · ' + EG.replays + ' replay' + (EG.replays === 1 ? '' : 's') : ''}</p>
+    <p class="small muted">+${xp} XP${EG.top ? ' (with the top-of-the-ladder bonus)' : ''}. Best rung: ${st.best}.</p>
+    <div class="btn-row center"><button type="button" class="btn rose big" id="egAgain">Climb again</button><a class="btn ghost" href="#games">← Play</a></div>
+  </div>`;
+  $('#egAgain').addEventListener('click', escuchaStart);
+}
+
+/* ----- the hub ----- */
+function renderGames(id) {
+  initGames();
+  if (id === 'mercado') return renderMercado();
+  if (id === 'escucha') return renderEscucha();
+  crumb([{ t: 'Play' }]);
+  const lv = LV();
+  const hunts = (HUNTS[lv.id] || []), huntsDone = hunts.filter(h => S.done['h' + lv.id + '-' + h.theme]).length;
+  const m = gameStat('mercado'), e = gameStat('escucha');
+  app.innerHTML = `
+  <section class="pagehead">
+    <div class="title"><span class="label">04 · Play</span><h1>Games</h1><p>Short rounds that teach on the sly. Every game pays XP and ${COIN_NAME}, feeds your companion, and counts towards the streak.</p></div>
+    <div class="side pink"><span class="label">Today</span><div class="es" style="font-size:2rem">${xpToday()}<span class="muted" style="font-size:1rem">/${S.goal} XP</span></div><span class="small muted">${COIN} ${S.coins || 0} in your purse</span></div>
+  </section>
+  <section class="gamecards">
+    <a class="gamecard t-pink3" href="#hunt">${mascot('mota', 72)}<div><span class="label">Vocabulary</span><h3>Word Hunt</h3><p>Find the hidden words, learn what they mean.</p><span class="gstat">${huntsDone}/${hunts.length} puzzles at level ${lv.id}</span></div><span class="arr">→</span></a>
+    <a class="gamecard t-gold" href="#games/mercado"><span class="gemoji" aria-hidden="true">🍅</span><div><span class="label">Vocabulary · speed</span><h3>Mercado</h3><p>Customers point, you tap the Spanish before they walk off.</p><span class="gstat">${m.plays ? 'best ' + m.best + ' · ' + m.plays + ' round' + (m.plays === 1 ? '' : 's') : 'new'}</span></div><span class="arr">→</span></a>
+    <a class="gamecard t-sky" href="#games/escucha"><span class="gemoji" aria-hidden="true">🎧</span><div><span class="label">Listening · spelling</span><h3>Escucha y escribe</h3><p>Hear a sentence once, type it, climb the ladder.</p><span class="gstat">${e.plays ? 'best rung ' + e.best + '/' + ESCUCHA.rungs : 'new'}</span></div><span class="arr">→</span></a>
+    <div class="gamecard soon"><span class="gemoji" aria-hidden="true">🎲</span><div><span class="label">Coming soon</span><h3>More games</h3><p>Lotería, the conjugation runner, gender sort and a duel for two are on the list.</p></div></div>
+  </section>`;
+}
+
 /* =========================== APP =========================== */
 const $ = (s, el = document) => el.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
@@ -5020,7 +5372,7 @@ const gridForm = (w) => stripAccents(String(w).toUpperCase()).replace(/[^A-Z\u00
 const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const DICT_BY_ES = Object.fromEntries(DICT.map(d => [d.es, d]));
 const KEY = 'hablemos.v1';
-const BUILD = { v: 'v14', date: '3 September 2026' };
+const BUILD = { v: 'v15', date: '3 September 2026' };
 const todayStr = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 const addDays = (n) => { const d = new Date(); d.setDate(d.getDate() + n); return todayStr(d); };
 const XP = { lesson: 15, perfect: 5, phrase: 5, passage: 15, huntWord: 2, hunt: 10, card: 1, mistake: 3, dialogue: 10, listen: 3 };
@@ -5034,6 +5386,7 @@ initRewards();
 initProfile();
 initConcepts();
 initChecks();
+initGames();
 const LV = () => LEVELS.find(l => l.id === S.level) || LEVELS[0];
 const learnedCount = () => Object.keys(S.learned).length;
 const lessonsDone = () => Object.keys(S.done).filter(k => k.startsWith('g')).length;
@@ -5523,6 +5876,7 @@ function render() {
   const { page, id, sub } = route();
   Player.stop(); LineAudio.stop();
   if (activeHunt && page !== 'hunt') { activeHunt = null; }
+  if (page !== 'games' && typeof MG !== 'undefined' && MG) { clearTimeout(MG.timer); MG = null; }
   updateStat();
   paintTestBar();
   /* on phones and tablets a chosen lesson or passage hides the big section header — the back row carries the title */
@@ -5531,6 +5885,7 @@ function render() {
   else if (page === 'speaking') renderSpeaking(id, sub);
   else if (page === 'reading') renderReading(id);
   else if (page === 'hunt') renderHunt(id);
+  else if (page === 'games') renderGames(id);
   else if (page === 'review') renderReview(id);
   else if (page === 'learn') renderLearn();
   else if (page === 'settings') renderSettings();
@@ -5548,7 +5903,7 @@ function render() {
   foldSides();
 }
 function paintMobNav(page) {
-  const map = { home: 'home', learn: 'learn', grammar: 'learn', speaking: 'learn', reading: 'learn', hunt: 'hunt', review: 'review', casita: 'casita', shop: 'casita', checkout: 'casita', collection: 'casita', checkpoint: 'review', placement: 'home', owner: 'home', about: 'home', settings: 'home' };
+  const map = { home: 'home', learn: 'learn', grammar: 'learn', speaking: 'learn', reading: 'learn', hunt: 'hunt', games: 'hunt', review: 'review', casita: 'casita', shop: 'casita', checkout: 'casita', collection: 'casita', checkpoint: 'review', placement: 'home', owner: 'home', about: 'home', settings: 'home' };
   document.querySelectorAll('.mobnav a').forEach(a => a.classList.toggle('on', a.dataset.sec === (map[page] || 'home')));
 }
 /* on a phone the page intro + side panel fill the first screen — fold them so the lesson starts at the top */
@@ -5594,7 +5949,7 @@ function renderHome() {
       <p class="tag">Spanish from the very first word to real fluency, one small step a day.</p>
       <div class="btn-row">
         <a class="btn primary" href="${curIdx >= 0 ? items[curIdx].href : '#grammar'}">${curIdx >= 0 ? 'Continue: ' + esc(items[curIdx].kind) : 'Level ' + lv.id + ' complete'} <span class="arr">→</span></a>
-        <a class="btn" href="#hunt">Play Word Hunt <span class="arr">→</span></a>
+        <a class="btn" href="#games">Play a game <span class="arr">→</span></a>
       </div>
       <p class="why">“Hablemos” means “let's talk”. <a href="#about">About the app and its cast →</a>${(S.xp || 0) < 40 && !S.placed ? ' · <a href="#placement">Not a beginner? Take the placement test →</a>' : ''}</p>
     </div>
@@ -5635,7 +5990,7 @@ function renderHome() {
       <a class="lcard t-pink" href="#grammar"><span class="glyph">¿?</span>${mascot('nopalito', 72)}<h3>Grammar</h3><p>Short rules, then a few exercises.</p><span class="foot"><span>${(GRAMMAR[lv.id] || []).filter(l => S.done[l.id]).length}/${(GRAMMAR[lv.id] || []).length} done</span><span>→</span></span></a>
       <a class="lcard t-pink2" href="#speaking"><span class="glyph">¡!</span>${mascot('lola', 72)}<h3>Speaking</h3><p>Phrases, dialogues, listen &amp; type.</p><span class="foot"><span>${(SPEAKING[lv.id] || []).length} phrases</span><span>→</span></span></a>
       <a class="lcard t-sage" href="#reading"><span class="glyph">Aa</span>${mascot('nube', 72)}<h3>Reading</h3><p>Passages read aloud, tap any word.</p><span class="foot"><span>${(READING[lv.id] || []).filter(r => r.qs.length).length} passages</span><span>→</span></span></a>
-      <a class="lcard t-pink3" href="#hunt"><span class="glyph">ñ</span>${mascot('mota', 72)}<h3>Word Hunt</h3><p>Find the word, learn its meaning.</p><span class="foot"><span>${(HUNTS[lv.id] || []).length} puzzles</span><span>→</span></span></a>
+      <a class="lcard t-pink3" href="#games"><span class="glyph">ñ</span>${mascot('mota', 72)}<h3>Play</h3><p>Word Hunt, Mercado, dictation ladder.</p><span class="foot"><span>${(HUNTS[lv.id] || []).length} puzzles</span><span>→</span></span></a>
       <a class="lcard t-sand" href="#review"><span class="glyph">♥</span>${mascot('nube', 72)}<h3>Practice</h3><p>Words, grammar, verbs and translation.</p><span class="foot"><span>${due + dueConcepts().length} due</span><span>→</span></span></a>
       <a class="lcard t-pink2" href="#casita"><span class="glyph">⌂</span>${companion(buddy().id, 72)}<h3>Casita</h3><p>Your friends, their outfits and the shop.</p><span class="foot"><span>${COIN} ${S.coins || 0}${chestReady('daily') || chestReady('weekly') ? ' · chest ready' : ''}</span><span>→</span></span></a>
     </div>
@@ -6282,7 +6637,7 @@ function newHunt(level, setIdx) {
 }
 function renderHunt(id) {
   const lv = LV();
-  crumb([{ t: 'Word Hunt' }]);
+  crumb([{ t: 'Play', href: '#games' }, { t: 'Word Hunt' }]);
   const sets = HUNTS[lv.id] || [];
   const want = id !== null && id !== undefined && sets[Number(id)] ? Number(id) : null;
   if (!activeHunt || activeHunt.level !== lv.id || (want !== null && activeHunt.setIdx !== want)) activeHunt = newHunt(lv.id, want ?? 0);
