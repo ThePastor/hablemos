@@ -12,7 +12,9 @@
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap">
 <style>
-/* ---------- Hablemos — visual system (hairline grid, sage/cream ground, pink celebration) ---------- */
+/* ---------- visual system (hairline grid, warm ground, one strong accent) ----------
+   Colours live in tokens only. The palettes at the end of this sheet re-point those tokens, so
+   nothing below ever names a colour directly. --pink-* is the accent ramp, whatever the accent is. */
 :root {
   --bg: #FEFAE0;
   --surface: #FFFDF3;
@@ -1593,6 +1595,94 @@ html.standalone #testbar { top: calc(64px + max(env(safe-area-inset-top, 0px), 6
 .cwclues li { font-size: .85rem; line-height: 1.4; }
 @media (max-width: 760px) { .gsarena { height: 190px; } .gstile b { font-size: 1.3rem; } .lotcell .pic { font-size: 1.6rem; } .cwclues { grid-template-columns: 1fr; gap: 8px; } }
 @media (max-width: 400px) { .lotboard { gap: 4px; } .lotcell .es { font-size: .52rem; } .gszone .zbig { font-size: 1.3rem; min-height: 56px; } .cwgrid { max-width: 280px; } .cwcell input { font-size: 1.2rem; } }
+/* =========================== PALETTES ===========================
+   The app is built on a small set of colour tokens. `--pink-1…5` is simply the accent ramp, lightest to
+   strongest — it keeps that name for historical reasons, not because a palette has to be pink.
+   Each palette supplies a light set and a dark set; the light/dark switch and the palette switch are
+   independent, so three palettes × two themes all work. `rosa` is the base :root set in the stylesheet
+   above, so it only needs its dark half repeated here for the [data-palette] selector to win. */
+
+/* ---------- rosa: cream, sage and pink (the original) ---------- */
+:root[data-palette="rosa"] {
+  --bg: #FEFAE0; --surface: #FFFDF3; --surface-2: #FAEDCD; --sand: #FAEDCD;
+  --pink-1: #FFE5EC; --pink-2: #FFC2D1; --pink-3: #FFB3C6; --pink-4: #FF8FAB; --pink-5: #FB6F92; --pink-ink: #2F2D1F;
+  --ink: #3A2230; --ink-2: #6B4A58; --ink-3: #9A7F8A; --line: #5C2E45; --line-soft: #EBD3DA; --dot: #5C2E45;
+  --shape: #FFB3C6; --tile-3: #FFB3C6; --inverse: #3A2230; --inverse-ink: #FFE5EC; --inverse-ink-2: #B58FA0;
+  --shadow: 0 24px 60px -30px rgba(58, 34, 48, .45);
+}
+/* ---------- teal: warm sand and deep teal ---------- */
+:root[data-palette="teal"] {
+  --bg: #FBF7EF; --surface: #FFFDF8; --surface-2: #F1E7D6; --sand: #F1E7D6;
+  --pink-1: #DFEFEA; --pink-2: #B7DED3; --pink-3: #8FCBBC; --pink-4: #4FA893; --pink-5: #2F8C77; --pink-ink: #10312B;
+  --ink: #17332E; --ink-2: #3D5C55; --ink-3: #7D948E; --line: #1F4A42; --line-soft: #D4E5DF; --dot: #1F4A42;
+  --shape: #8FCBBC; --tile-3: #8FCBBC; --inverse: #17332E; --inverse-ink: #DFEFEA; --inverse-ink-2: #8FB2A8;
+  --sage: #CBD8AE; --sage-soft: #E6EDD3; --tan: #C9A27A; --tan-deep: #8A6540; --tan-soft: #EEE0CD;
+  --ok: #2F7A55; --ok-soft: #DCEFE3; --bad: #B15A3D; --bad-soft: #F7DED2;
+  --shadow: 0 24px 60px -30px rgba(23, 51, 46, .45);
+}
+/* ---------- indigo: cool paper and violet ---------- */
+:root[data-palette="indigo"] {
+  --bg: #F7F6FB; --surface: #FFFFFF; --surface-2: #ECEAF6; --sand: #ECEAF6;
+  --pink-1: #E7E4F7; --pink-2: #CFC8ED; --pink-3: #B7ADE3; --pink-4: #8A7BD1; --pink-5: #6A57C0; --pink-ink: #1B1733;
+  --ink: #221D3D; --ink-2: #4A4270; --ink-3: #8B85A8; --line: #2E2757; --line-soft: #DCD8EE; --dot: #2E2757;
+  --shape: #B7ADE3; --tile-3: #B7ADE3; --inverse: #221D3D; --inverse-ink: #E7E4F7; --inverse-ink-2: #A79FC6;
+  --sage: #C3D2C8; --sage-soft: #E2EBE5; --tan: #C0A184; --tan-deep: #856348; --tan-soft: #EBDFD3;
+  --ok: #3C7A5A; --ok-soft: #DFEEE6; --bad: #AF5450; --bad-soft: #F6DCDB;
+  --shadow: 0 24px 60px -30px rgba(34, 29, 61, .45);
+}
+
+/* ---------- dark halves ---------- */
+:root[data-palette="rosa"][data-theme="dark"], :root[data-palette="teal"][data-theme="dark"], :root[data-palette="indigo"][data-theme="dark"] { color-scheme: dark; }
+:root[data-palette="rosa"][data-theme="dark"] {
+  --bg: #1E1519; --surface: #26191F; --surface-2: #2F2026; --sand: #2F2026;
+  --pink-1: #3A2530; --pink-2: #4E2E3C; --pink-3: #6B3D4E; --pink-4: #C4738D; --pink-5: #E58AA6; --pink-ink: #FFE5EC;
+  --ink: #F5E7EC; --ink-2: #D2B8C2; --ink-3: #A98C99; --line: #6B4A58; --line-soft: #3E2A33; --dot: #8A6272;
+  --shape: #6B3D4E; --tile-3: #4E2E3C; --inverse: #FFE5EC; --inverse-ink: #26191F; --inverse-ink-2: #6B4A58;
+  --shadow: 0 24px 60px -30px rgba(0, 0, 0, .8);
+}
+:root[data-palette="teal"][data-theme="dark"] {
+  --bg: #0F1A18; --surface: #14231F; --surface-2: #1B2E29; --sand: #1B2E29;
+  --pink-1: #1B2E29; --pink-2: #23413A; --pink-3: #2F5A50; --pink-4: #5FBAA3; --pink-5: #7ED3BB; --pink-ink: #DFEFEA;
+  --ink: #E6F2EE; --ink-2: #B3CCC5; --ink-3: #85A099; --line: #3D6B60; --line-soft: #24403A; --dot: #4F8577;
+  --shape: #2F5A50; --tile-3: #23413A; --inverse: #DFEFEA; --inverse-ink: #14231F; --inverse-ink-2: #3D6B60;
+  --sage: #3E5B3A; --sage-soft: #25361F; --tan: #9C7A54; --tan-deep: #C9A27A; --tan-soft: #33291D;
+  --ok: #7ED3BB; --ok-soft: #1E3A30; --bad: #E39176; --bad-soft: #43241B;
+  --shadow: 0 24px 60px -30px rgba(0, 0, 0, .8);
+}
+:root[data-palette="indigo"][data-theme="dark"] {
+  --bg: #14121F; --surface: #1A1729; --surface-2: #231F36; --sand: #231F36;
+  --pink-1: #231F36; --pink-2: #302A4A; --pink-3: #413A63; --pink-4: #9B8BE0; --pink-5: #B4A6F0; --pink-ink: #E7E4F7;
+  --ink: #EDEAF8; --ink-2: #C3BCE0; --ink-3: #948CB4; --line: #4A4270; --line-soft: #2B2640; --dot: #5E558C;
+  --shape: #413A63; --tile-3: #302A4A; --inverse: #E7E4F7; --inverse-ink: #1A1729; --inverse-ink-2: #4A4270;
+  --sage: #3F5347; --sage-soft: #253026; --tan: #97795E; --tan-deep: #C0A184; --tan-soft: #302720;
+  --ok: #7BD1A6; --ok-soft: #1E3A2C; --bad: #E08C88; --bad-soft: #3E2322;
+  --shadow: 0 24px 60px -30px rgba(0, 0, 0, .8);
+}
+/* the same three, for people who never touch the theme switch and let the device decide */
+@media (prefers-color-scheme: dark) {
+  :root[data-palette="rosa"]:not([data-theme="light"]) {
+    --bg: #1E1519; --surface: #26191F; --surface-2: #2F2026; --sand: #2F2026;
+    --pink-1: #3A2530; --pink-2: #4E2E3C; --pink-3: #6B3D4E; --pink-4: #C4738D; --pink-5: #E58AA6; --pink-ink: #FFE5EC;
+    --ink: #F5E7EC; --ink-2: #D2B8C2; --ink-3: #A98C99; --line: #6B4A58; --line-soft: #3E2A33; --dot: #8A6272;
+    --shape: #6B3D4E; --tile-3: #4E2E3C; --inverse: #FFE5EC; --inverse-ink: #26191F; --inverse-ink-2: #6B4A58;
+  }
+  :root[data-palette="teal"]:not([data-theme="light"]) {
+    --bg: #0F1A18; --surface: #14231F; --surface-2: #1B2E29; --sand: #1B2E29;
+    --pink-1: #1B2E29; --pink-2: #23413A; --pink-3: #2F5A50; --pink-4: #5FBAA3; --pink-5: #7ED3BB; --pink-ink: #DFEFEA;
+    --ink: #E6F2EE; --ink-2: #B3CCC5; --ink-3: #85A099; --line: #3D6B60; --line-soft: #24403A; --dot: #4F8577;
+    --shape: #2F5A50; --tile-3: #23413A; --inverse: #DFEFEA; --inverse-ink: #14231F; --inverse-ink-2: #3D6B60;
+    --sage: #3E5B3A; --sage-soft: #25361F; --tan: #9C7A54; --tan-deep: #C9A27A; --tan-soft: #33291D;
+    --ok: #7ED3BB; --ok-soft: #1E3A30; --bad: #E39176; --bad-soft: #43241B;
+  }
+  :root[data-palette="indigo"]:not([data-theme="light"]) {
+    --bg: #14121F; --surface: #1A1729; --surface-2: #231F36; --sand: #231F36;
+    --pink-1: #231F36; --pink-2: #302A4A; --pink-3: #413A63; --pink-4: #9B8BE0; --pink-5: #B4A6F0; --pink-ink: #E7E4F7;
+    --ink: #EDEAF8; --ink-2: #C3BCE0; --ink-3: #948CB4; --line: #4A4270; --line-soft: #2B2640; --dot: #5E558C;
+    --shape: #413A63; --tile-3: #302A4A; --inverse: #E7E4F7; --inverse-ink: #1A1729; --inverse-ink-2: #4A4270;
+    --sage: #3F5347; --sage-soft: #253026; --tan: #97795E; --tan-deep: #C0A184; --tan-soft: #302720;
+    --ok: #7BD1A6; --ok-soft: #1E3A2C; --bad: #E08C88; --bad-soft: #3E2322;
+  }
+}
 </style>
 
 <header class="topbar">
@@ -1626,10 +1716,34 @@ html.standalone #testbar { top: calc(64px + max(env(safe-area-inset-top, 0px), 6
 
 <footer class="foot page">
   <span>Hablemos · Grade 1 → Fluent · <a href="#about">About</a> · <a href="#owner">Owner</a></span>
-  <span><span id="footv">v2</span> · built with <span class="heart">♥</span> for Nat <span class="heart">♥</span></span>
+  <span><span id="footv">v2</span><span id="footcredit"></span></span>
   <span id="footStat"></span>
 </footer>
 <script>
+/* =========================== BRAND ===========================
+   Generated by mkbrand.sh from brands/hablemos.brand — do not edit here, edit the brand file.
+   Everything that makes this copy *this* app: wordmark, title, home-screen name, storage keys,
+   About page, footer, palette and cloud project. */
+const BRAND = {
+  id: 'hablemos',
+  name: 'Hablemos',
+  a: 'Hable', b: 'mos',
+  tagline: 'Spanish from the very first word to real fluency, one small step a day.',
+  why: '“Hablemos” means “let\'s talk”.',
+  about: '“Hablemos” is the <em>nosotros</em> subjunctive of <em>hablar</em> — “let\'s talk”. You will meet that verb form at level 4. Until then, it\'s just the plan.',
+  nameNote: 'Notice the name of this app: <b>Hablemos</b> is the nosotros subjunctive of hablar — "let\'s talk".',
+  credit: 'built with ♥ for Nat ♥',
+  owner: '',
+  site: 'https://thepastor.github.io/hablemos/',
+  folder: 'Nat ♥ › Hablemos',
+  sample: 'Nat',
+  palette: 'rosa',
+  table: 'hablemos_progress',
+  cloud: { url: 'https://tmexeztpuhiiqcoikyip.supabase.co', key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRtZXhlenRwdWhpaXFjb2lreWlwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgyMDk1MzgsImV4cCI6MjEwMzc4NTUzOH0.76b7IY4gr333VgWjljunKUW38EWWDGUcMbDd-sWwF5w' },
+};
+/* the localStorage prefix for everything this copy saves. It comes from BRAND.id, and it is defined
+   here rather than in part4 because the cloud and PWA parts load first and build their keys from it. */
+const KEY = BRAND.id + '.v1';
 
 /* =========================== DATA =========================== */
 const LEVELS = [
@@ -2086,7 +2200,7 @@ const GRAMMAR = {
         { r:'Form: take the yo form, drop -o, swap the vowel (-ar → e, -er/-ir → a).', ex:[['hablar → hable, hables, hable, hablemos, hablen','that I speak …'],['comer → coma, comas, coma, comamos, coman','that I eat …']] },
         { r:'Triggers: querer que, esperar que, es importante que, ojalá.', ex:[['Espero que tengas un buen día.','I hope you have a good day.'],['Ojalá llueva.','I hope it rains.']] },
       ],
-      callout:'Notice the name of this app: <b>Hablemos</b> is the nosotros subjunctive of hablar — "let\'s talk".',
+      callout:BRAND.nameNote,
       quiz:[ { q:'"I want you to study."', o:['Quiero que estudias.','Quiero que estudies.','Quiero que estudiar.','Quiero estudias.'], a:1, why:'Querer que + subjunctive: estudies.' } ] },
   ],
   5: [
@@ -4122,7 +4236,7 @@ function renderDecorate() {
   <div class="deco">
     <div class="deco-room">
       <div class="roomwrap" id="roomWrap">${roomSVG()}${hotspotsHTML()}</div>
-      <label class="roomname"><span class="label">Name your casita</span><input type="text" id="roomName" maxlength="28" placeholder="Casita de Nat" value="${esc(S.room.name || '')}"></label>
+      <label class="roomname"><span class="label">Name your casita</span><input type="text" id="roomName" maxlength="28" placeholder="Casita de ${esc(BRAND.sample)}" value="${esc(S.room.name || '')}"></label>
     </div>
     <div class="deco-panel">
       ${spotPanelHTML()}
@@ -4158,9 +4272,9 @@ function wireDecorate() {
 /* Sync is a plain REST call to a Supabase table — no SDK, no external script.
    claude.ai artifacts block outbound fetch, so sync only runs on the hosted (GitHub Pages) copy. */
 
-const CLOUD_KEY = 'hablemos.v1.cloud';
-const OWNER_KEY = 'hablemos.v1.owner';
-const TABLE = 'hablemos_progress';
+const CLOUD_KEY = KEY + '.cloud';
+const OWNER_KEY = KEY + '.owner';
+const TABLE = BRAND.table || 'learner_progress';
 
 /* ----- learner profile ----- */
 function newLearnerId() {
@@ -4233,8 +4347,9 @@ function summary() {
 }
 
 /* ----- cloud config ----- */
-/* Anndy's project, baked in so nobody needs a setup code. The anon key is public by design (RLS limits it to this table). */
-const CLOUD_DEFAULT = { url: 'https://tmexeztpuhiiqcoikyip.supabase.co', key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRtZXhlenRwdWhpaXFjb2lreWlwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgyMDk1MzgsImV4cCI6MjEwMzc4NTUzOH0.76b7IY4gr333VgWjljunKUW38EWWDGUcMbDd-sWwF5w' };
+/* The project this build ships with (from the brand file). Empty in a fresh copy: the app then runs on the
+   device alone until an owner pastes a URL and key into Owner → Setup. The anon key is public by design. */
+const CLOUD_DEFAULT = (BRAND.cloud && BRAND.cloud.url && BRAND.cloud.key) ? { url: BRAND.cloud.url, key: BRAND.cloud.key } : null;
 function cloudCfg() { try { return JSON.parse(localStorage.getItem(CLOUD_KEY) || 'null') || CLOUD_DEFAULT; } catch (e) { return CLOUD_DEFAULT; } }
 function setCloudCfg(c) { try { c ? localStorage.setItem(CLOUD_KEY, JSON.stringify(c)) : localStorage.removeItem(CLOUD_KEY); } catch (e) {} }
 function encodeSetup(c) { try { return btoa(JSON.stringify({ u: c.url, k: c.key })).replace(/=+$/, ''); } catch (e) { return ''; } }
@@ -4289,7 +4404,7 @@ const Cloud = {
   },
   async all() {
     const cfg = cloudCfg(); if (!cfg) throw new Error('Cloud sync is not set up on this device yet.');
-    if (Cloud.blocked()) throw new Error('claude.ai blocks this page from reaching the internet. Open your hablemos web address instead.');
+    if (Cloud.blocked()) throw new Error('claude.ai blocks this page from reaching the internet. Open the app from its own web address instead.');
     const r = await fetch(cfg.url + '/rest/v1/' + TABLE + '?select=id,name,updated_at,payload&order=updated_at.desc', { headers: Cloud.head(cfg) });
     if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + (await r.text()).slice(0, 160));
     return r.json();
@@ -4342,7 +4457,7 @@ function initCloud() {
    ---------------------------------------------------------------------- */
 const rowId = () => (S.acct && S.acct.id) || S.who.id;
 async function acctId(name, pin) {
-  const text = 'hablemos:' + String(name).trim().toLowerCase() + ':' + String(pin).trim();
+  const text = BRAND.id + ':' + String(name).trim().toLowerCase() + ':' + String(pin).trim();
   try {
     const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
     return 'a_' + Array.from(new Uint8Array(buf)).slice(0, 12).map(b => b.toString(16).padStart(2, '0')).join('');
@@ -4369,6 +4484,7 @@ function adoptState(full) {
   initRewards(); initProfile(); initConcepts(); initChecks();
   try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {}
   if (typeof applyAnim === 'function') applyAnim();
+  if (typeof applyPalette === 'function') applyPalette();
   updateStat();
 }
 /* an older row only ever held a summary, but its activity log is detailed enough to replay */
@@ -4403,6 +4519,7 @@ async function signIn(name, pin, opts) {
   if (name.length < 2) return { ok: false, msg: 'Type your name first.' };
   if (!validPin(pin)) return { ok: false, msg: 'The PIN is 4 to 8 digits.' };
   if (S.test) return { ok: false, msg: 'Leave test mode first — the test copy is never saved to the cloud.' };
+  if (!Cloud.on()) return { ok: false, msg: 'Saving across devices needs a cloud project. An owner sets one up once in Owner → Setup; until then progress stays on this device.' };
   if (Cloud.blocked()) return { ok: false, msg: 'Sign-in needs the web address — claude.ai blocks this page from reaching the internet.' };
   const id = await acctId(name, pin);
   let row = null;
@@ -4938,7 +5055,7 @@ function initPWA() {
   document.documentElement.classList.toggle('standalone', PWA.standalone());
   /* Android / desktop: keep the install prompt for our own button */
   window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); PWA.prompt = e; paintInstallUI(); });
-  window.addEventListener('appinstalled', () => { try { localStorage.setItem(KEY + '.installed', '1'); } catch (e) {} PWA.prompt = null; logAct('install', 'installed'); paintInstallUI(); toast('Installed. Find Hablemos on your home screen.'); });
+  window.addEventListener('appinstalled', () => { try { localStorage.setItem(KEY + '.installed', '1'); } catch (e) {} PWA.prompt = null; logAct('install', 'installed'); paintInstallUI(); toast('Installed. Find ' + BRAND.name + ' on your home screen.'); });
   /* online / offline pill */
   const paintNet = () => { document.documentElement.classList.toggle('offline', !navigator.onLine); const p = $('#netpill'); if (p) p.hidden = navigator.onLine; };
   window.addEventListener('online', paintNet); window.addEventListener('offline', paintNet); paintNet();
@@ -4965,7 +5082,7 @@ function showUpdateToast() {
   if ($('#updToast')) return;
   const el = document.createElement('div');
   el.id = 'updToast'; el.className = 'updtoast';
-  el.innerHTML = `<span>A newer Hablemos is ready.</span><button type="button" class="btn sm rose" id="updGo">Refresh</button><button type="button" class="x" aria-label="Later">×</button>`;
+  el.innerHTML = `<span>A newer ${esc(BRAND.name)} is ready.</span><button type="button" class="btn sm rose" id="updGo">Refresh</button><button type="button" class="x" aria-label="Later">×</button>`;
   document.body.appendChild(el);
   $('#updGo').addEventListener('click', () => { $('#updGo').textContent = 'Refreshing…'; PWA.applyUpdate(); });
   el.querySelector('.x').addEventListener('click', () => el.remove());
@@ -4973,12 +5090,12 @@ function showUpdateToast() {
 
 /* the same block is used on Home (as a banner) and in Settings (as a card) */
 function installHTML(compact) {
-  if (PWA.standalone()) return compact ? '' : `<div class="installbox done"><b>Installed ✓</b><p class="small muted">You are using Hablemos as an app. Updates arrive on their own — a "Refresh" note appears when one is ready.</p></div>`;
-  if (!PWA.canRegister()) return compact ? '' : `<div class="installbox"><b>Install from the web address</b><p class="small muted">Open <a href="https://thepastor.github.io/hablemos/">thepastor.github.io/hablemos</a> in Safari or Chrome on the phone — that copy can be added to the home screen and works offline. This one can't.</p></div>`;
+  if (PWA.standalone()) return compact ? '' : `<div class="installbox done"><b>Installed ✓</b><p class="small muted">You are using ${esc(BRAND.name)} as an app. Updates arrive on their own — a "Refresh" note appears when one is ready.</p></div>`;
+  if (!PWA.canRegister()) return compact ? '' : (BRAND.site ? `<div class="installbox"><b>Install from the web address</b><p class="small muted">Open <a href="${BRAND.site}">${esc(BRAND.site.replace(/^https?:\/\//, '').replace(/\/$/, ''))}</a> in Safari or Chrome on the phone — that copy can be added to the home screen and works offline. This one can't.</p></div>` : `<div class="installbox"><b>Install from a web address</b><p class="small muted">Put ${esc(BRAND.name)} on an https address and that copy can be added to the home screen and works offline. This one can't.</p></div>`);
   if (PWA.isIOS()) {
     return `<div class="installbox ${compact ? 'compact' : ''}" id="${compact ? 'installBanner' : 'installCard'}">
       ${compact ? mascot('lola', 56) : ''}
-      <div><b>Put Hablemos on your home screen</b>
+      <div><b>Put ${esc(BRAND.name)} on your home screen</b>
       <ol class="small"><li>Tap <b>Share</b> <span class="ic" aria-hidden="true">⎋</span> at the bottom of Safari</li><li>Scroll and tap <b>Add to Home Screen</b></li><li>Tap <b>Add</b></li></ol>
       <p class="small muted">Opens full screen, works with no signal, and the microphone keeps working.</p></div>
       ${compact ? '<button type="button" class="x" id="installNo" aria-label="Not now">×</button>' : ''}
@@ -4987,7 +5104,7 @@ function installHTML(compact) {
   const can = PWA.installable();
   return `<div class="installbox ${compact ? 'compact' : ''}" id="${compact ? 'installBanner' : 'installCard'}">
     ${compact ? mascot('lola', 56) : ''}
-    <div><b>Install Hablemos</b><p class="small muted">${can ? 'One tap. Opens like a real app, works offline.' : 'Open the browser menu and choose <b>Install app</b> or <b>Add to Home screen</b>.'}</p>
+    <div><b>Install ${esc(BRAND.name)}</b><p class="small muted">${can ? 'One tap. Opens like a real app, works offline.' : 'Open the browser menu and choose <b>Install app</b> or <b>Add to Home screen</b>.'}</p>
     ${can ? '<button type="button" class="btn sm rose" id="installGo">Install</button>' : ''}</div>
     ${compact ? '<button type="button" class="x" id="installNo" aria-label="Not now">×</button>' : ''}
   </div>`;
@@ -5829,7 +5946,7 @@ const seededShuffle = (arr, rnd) => { const a = arr.slice(); for (let i = a.leng
 function cwToday() {
   const pool = crossWords();
   if (pool.length < 3) return null;
-  const seed = 'hablemos-' + todayStr() + '-' + pool.length;
+  const seed = BRAND.id + '-' + todayStr() + '-' + pool.length;
   let best = null;
   for (let tries = 0; tries < 30; tries++) {
     const rnd = seededRnd(seed + '#' + tries);
@@ -5918,8 +6035,7 @@ const norm = (s) => stripAccents(String(s).toLowerCase()).replace(/[^a-z0-9\u00f
 const gridForm = (w) => stripAccents(String(w).toUpperCase()).replace(/[^A-Z\u00d1]/g, '');
 const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const DICT_BY_ES = Object.fromEntries(DICT.map(d => [d.es, d]));
-const KEY = 'hablemos.v1';
-const BUILD = { v: 'v16', date: '3 September 2026' };
+const BUILD = { v: 'v17', date: '4 September 2026' };
 const todayStr = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 const addDays = (n) => { const d = new Date(); d.setDate(d.getDate() + n); return todayStr(d); };
 const XP = { lesson: 15, perfect: 5, phrase: 5, passage: 15, huntWord: 2, hunt: 10, card: 1, mistake: 3, dialogue: 10, listen: 3 };
@@ -5969,6 +6085,17 @@ function levelProgress(id) {
 
 /* ----- theme ----- */
 function isDark() { const root = document.documentElement; return root.dataset.theme === 'dark' || (!root.dataset.theme && matchMedia('(prefers-color-scheme: dark)').matches); }
+const PALETTES = [['rosa', 'Rosa'], ['teal', 'Teal'], ['indigo', 'Indigo']];
+const PALETTE_TC = { rosa: ['#FEFAE0', '#1E1519'], teal: ['#FBF7EF', '#0F1A18'], indigo: ['#F7F6FB', '#14121F'] };
+function paletteOf() { const p = (S && S.palette) || BRAND.palette || 'rosa'; return PALETTE_TC[p] ? p : 'rosa'; }
+function applyPalette() {
+  const p = paletteOf();
+  document.documentElement.dataset.palette = p;
+  /* the browser chrome (iOS status bar, Android address bar) follows the palette too */
+  const tc = PALETTE_TC[p];
+  document.querySelectorAll('meta[name="theme-color"]').forEach((m, i) => { m.setAttribute('content', tc[i] || tc[0]); });
+}
+function setPalette(p) { S.palette = p; save(); applyPalette(); }
 function applyTheme(t) {
   const root = document.documentElement;
   if (t === 'dark' || t === 'light') { root.dataset.theme = t; root.style.colorScheme = t; }
@@ -5976,6 +6103,7 @@ function applyTheme(t) {
 }
 (function initTheme() {
   let t = null; try { t = localStorage.getItem(KEY + '.theme'); } catch (e) {}
+  applyPalette();
   applyTheme(t);
   try { new MutationObserver(() => { $('#themeBtn').textContent = isDark() ? 'Light' : 'Dark'; }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] }); } catch (e) {}
   try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => applyTheme(null)); } catch (e) {}
@@ -6175,14 +6303,14 @@ const ON_CLAUDE = /claudeusercontent\.com$|claude\.ai$/i.test(location.hostname)
 const IN_FRAME = (() => { try { return window.self !== window.top; } catch (e) { return true; } })();
 const IS_FILE = location.protocol === 'file:';
 function micHelp(kind) {
-  const own = IN_FRAME ? ' The surest fix: open Hablemos in its own tab with the button below, then enable the microphone there.' : '';
+  const own = IN_FRAME ? ` The surest fix: open ${BRAND.name} in its own tab with the button below, then enable the microphone there.` : '';
   if (kind === 'blocked') {
     if (IN_FRAME) return 'This page is running inside another site, which does not pass the microphone through to it, so the browser blocked the request without asking you.' + own;
     if (IS_IOS) return 'The microphone was blocked. On iPhone or iPad: tap “aA” in the address bar › Website Settings › Microphone › Allow, then reload. Also check Settings › Safari › Microphone is set to Ask or Allow.';
     if (IS_SAFARI) return 'Safari blocked the microphone. In the Safari menu choose “Settings for this website…” (or Safari › Settings › Websites › Microphone) and set this site to Allow, then reload. If Safari never asked at all, open System Settings › Privacy & Security › Microphone and switch Safari on.';
     return 'The microphone was blocked. Click the lock or tune icon in the address bar, set Microphone to Allow, then reload and try again.';
   }
-  if (kind === 'insecure') return IS_IOS ? 'iPhone and iPad only allow the microphone on an https address. Open Hablemos from a web address (https://…), not from a downloaded file.' : IS_SAFARI ? 'Safari only allows the microphone on https pages, not on a file opened from a folder. Open the claude.ai link in its own tab instead.' : 'This browser only allows the microphone on https pages. Open the claude.ai link in its own tab instead.';
+  if (kind === 'insecure') return IS_IOS ? `iPhone and iPad only allow the microphone on an https address. Open ${BRAND.name} from a web address (https://…), not from a downloaded file.` : IS_SAFARI ? 'Safari only allows the microphone on https pages, not on a file opened from a folder. Open the claude.ai link in its own tab instead.' : 'This browser only allows the microphone on https pages. Open the claude.ai link in its own tab instead.';
   if (kind === 'nodevice') return 'No microphone was found on this device. Plug one in or check the input device in System Settings › Sound.';
   if (kind === 'recognition') return IS_IOS ? 'Speech checking uses Siri dictation. Turn it on in Settings › General › Keyboard › Enable Dictation, then reload this page. It needs iOS 14.5 or newer and Safari (not a browser inside another app).' : IS_SAFARI ? 'Safari uses Siri for speech recognition. Turn on Dictation (System Settings › Keyboard › Dictation) and make sure Siri is enabled, then try again.' : 'Speech recognition is not available here. Chrome, Edge or Safari on a computer work best.';
   return '';
@@ -6234,15 +6362,15 @@ function micPanelHTML() {
     return `<div class="micpanel" id="micPanel"><div class="row between"><span class="label">Microphone</span><span class="pill bad" id="micStatus">off on claude.ai</span></div>
       <p class="small muted" id="micNote">claude.ai switches the microphone off for every artifact page (a server rule, <code>Permissions-Policy: microphone=()</code>) — in Safari, Chrome, embedded or full-page. Nothing inside the app can turn it on. Run the same app from your own computer instead; everything else is identical and your progress is saved per browser.</p>
       <div class="howto">
-        <div><b>Chrome (easiest)</b><span>In Finder open <b>Nat ♥ › Hablemos</b>, right-click <b>Hablemos.html</b> › Open With › Google Chrome. Click <b>Enable microphone</b> › Allow.</span></div>
-        <div><b>Safari</b><span>Double-click <b>Start Hablemos.command</b> in the same folder. It starts a tiny local server and opens the app at localhost, where Safari allows the microphone. Leave the Terminal window open while you practise.</span></div>
-        <div><b>iPhone &amp; iPad</b><span>iOS can't open a local file with the microphone, so it needs a web address. Ask Claude to publish Hablemos to a free host (GitHub Pages) — everything here already works on iOS once it has an https link.</span></div>
+        <div><b>Chrome (easiest)</b><span>In Finder open <b>${esc(BRAND.folder)}</b>, right-click <b>${esc(BRAND.name)}.html</b> › Open With › Google Chrome. Click <b>Enable microphone</b> › Allow.</span></div>
+        <div><b>Safari</b><span>Double-click <b>Start ${esc(BRAND.name)}.command</b> in the same folder. It starts a tiny local server and opens the app at localhost, where Safari allows the microphone. Leave the Terminal window open while you practise.</span></div>
+        <div><b>iPhone &amp; iPad</b><span>iOS can't open a local file with the microphone, so it needs a web address. Ask Claude to publish ${esc(BRAND.name)} to a free host (GitHub Pages) — everything here already works on iOS once it has an https link.</span></div>
         <div><b>Anywhere, any device</b><span>Put the folder on a free static host (GitHub Pages, Netlify, Cloudflare Pages) — any https address makes the microphone work everywhere.</span></div>
       </div>
       <div class="result" id="micResult" hidden></div></div>`;
   }
   const pre = IS_IOS ? 'Tap Enable microphone and choose Allow. Speech checking uses Siri dictation, so it must be on in Settings › General › Keyboard › Enable Dictation.' : IS_SAFARI ? 'Safari: click Enable and choose Allow. Speech checking uses Siri, so Dictation must be on in System Settings › Keyboard.' : 'Allow the microphone once and the Repeat buttons can hear you.';
-  const ios = IS_IOS ? '<p class="small muted">Tip: tap Share › Add to Home Screen and Hablemos opens like an app, full screen.</p>' : '';
+  const ios = IS_IOS ? `<p class="small muted">Tip: tap Share › Add to Home Screen and ${esc(BRAND.name)} opens like an app, full screen.</p>` : '';
   return `<div class="micpanel" id="micPanel"><div class="row between"><span class="label">Microphone</span><span class="pill" id="micStatus">checking…</span></div><p class="small muted" id="micNote">${esc(pre)} Your voice is checked by the browser; this page uploads nothing.</p><div class="btn-row"><button type="button" class="btn sm rose" id="micReq">Enable microphone</button><button type="button" class="btn sm ghost" id="micTest">Test: say “hola”</button></div>${ios}<div class="result" id="micResult" hidden></div></div>`;
 }
 function paintMic() {
@@ -6487,7 +6615,7 @@ function renderHome() {
   const items = pathItems(lv.id);
   const curIdx = items.findIndex(i => !i.done);
   const due = Object.entries(S.cards).filter(([es, c]) => S.learned[es] && c.due <= todayStr()).length;
-  const greet = ['¡Hola!', '¡Buenos días!', '¡Qué gusto verte!', '¡Vamos!', '¡Hablemos!'][new Date().getDay() % 5];
+  const greet = ['¡Hola!', '¡Buenos días!', '¡Qué gusto verte!', '¡Vamos!', '¡Adelante!'][new Date().getDay() % 5];
   const showAll = !!S.showAllPath;
   const start = Math.max(0, curIdx < 0 ? 0 : curIdx - 1);
   const visible = showAll ? items : items.slice(start, start + 4);
@@ -6495,13 +6623,13 @@ function renderHome() {
   <section class="home-hero">
     <div class="copy">
       <span class="label" style="color:var(--pink-5)">Español · Level ${lv.id} · ${esc(lv.name)}</span>
-      <h1>Hable<span class="mos">mos</span></h1>
+      <h1>${esc(BRAND.a)}<span class="mos">${esc(BRAND.b)}</span></h1>
       <p class="tag">Spanish from the very first word to real fluency, one small step a day.</p>
       <div class="btn-row">
         <a class="btn primary" href="${curIdx >= 0 ? items[curIdx].href : '#grammar'}">${curIdx >= 0 ? 'Continue: ' + esc(items[curIdx].kind) : 'Level ' + lv.id + ' complete'} <span class="arr">→</span></a>
         <a class="btn" href="#games">Play a game <span class="arr">→</span></a>
       </div>
-      <p class="why">“Hablemos” means “let's talk”. <a href="#about">About the app and its cast →</a>${(S.xp || 0) < 40 && !S.placed ? ' · <a href="#placement">Not a beginner? Take the placement test →</a>' : ''}</p>
+      <p class="why">${BRAND.why ? BRAND.why + ' ' : ''}<a href="#about">About the app and its cast →</a>${(S.xp || 0) < 40 && !S.placed ? ' · <a href="#placement">Not a beginner? Take the placement test →</a>' : ''}</p>
     </div>
     <div class="stage">
       <span class="blob"></span>
@@ -6636,6 +6764,8 @@ function renderSettings() {
     <section class="setcard">
       <span class="label">Appearance</span>
       <div class="seg wide">${[['light', 'Light'], ['dark', 'Dark'], ['system', 'Match device']].map(([k, t]) => `<button type="button" data-theme="${k}" class="${pref === k ? 'on' : ''}">${t}</button>`).join('')}</div>
+      <span class="label" style="margin-top:12px">Colour</span>
+      <div class="seg wide">${PALETTES.map(([k, t]) => `<button type="button" data-pal="${k}" class="${paletteOf() === k ? 'on' : ''}">${t}</button>`).join('')}</div>
       <span class="label" style="margin-top:12px">Motion</span>
       <div class="seg wide">${[[true, 'Living casita'], [false, 'Still']].map(([k, t]) => `<button type="button" data-anim="${k}" class="${(S.anim !== false) === k ? 'on' : ''}">${t}</button>`).join('')}</div>
       <p class="small muted">The companions and the room move a little. "Still" switches that off; so does your device's reduce-motion setting.</p>
@@ -6649,7 +6779,7 @@ function renderSettings() {
       ${installHTML(false)}
     </section>
     <section class="setcard links">
-      <a href="#about">About Hablemos and the cast <span class="arr">→</span></a>
+      <a href="#about">About ${esc(BRAND.name)} and the cast <span class="arr">→</span></a>
       <a href="#placement">Placement test <span class="arr">→</span></a>
       <a href="#collection">Collection <span class="arr">→</span></a>
       <a href="#owner">Owner view and test tools <span class="arr">→</span></a>
@@ -6660,6 +6790,7 @@ function renderSettings() {
   app.querySelectorAll('.levelrow button').forEach(b => b.addEventListener('click', () => { S.level = Number(b.dataset.level); save(); renderSettings(); }));
   app.querySelectorAll('[data-goal]').forEach(b => b.addEventListener('click', () => { S.goal = Number(b.dataset.goal); save(); renderSettings(); }));
   app.querySelectorAll('[data-theme]').forEach(b => b.addEventListener('click', () => { setTheme(b.dataset.theme); renderSettings(); }));
+  app.querySelectorAll('[data-pal]').forEach(b => b.addEventListener('click', () => { setPalette(b.dataset.pal); renderSettings(); }));
   app.querySelectorAll('[data-anim]').forEach(b => b.addEventListener('click', () => { S.anim = b.dataset.anim === 'true'; save(); applyAnim(); renderSettings(); }));
   wireAccount(app, () => renderSettings());
   wireInstall(app);
@@ -6670,7 +6801,9 @@ function fmtAgo(ms) { if (!ms) return 'never'; const m = Math.round((Date.now() 
 function accountHTML(opts) {
   opts = opts || {};
   if (S.test) return `<div class="acct test"><b>Owner test mode</b><p class="small muted">This is the test copy — it is never saved to the cloud and sign-in is off. <a href="#owner">Owner tools</a> to leave.</p></div>`;
-  if (ON_CLAUDE) return `<div class="acct"><b>Save your progress</b><p class="small muted">Signing in works on the web address, not inside claude.ai. Open <a href="https://thepastor.github.io/hablemos/">thepastor.github.io/hablemos</a>.</p></div>`;
+  /* no cloud project on this build: sign-in would have nowhere to save to, so offer the honest version */
+  if (!Cloud.on() && !S.acct) return opts.quiet ? '' : `<div class="acct"><b>Progress is saved on this device</b><p class="small muted">Everything you earn is kept in this browser. To carry it between phones, the owner of this copy adds a free cloud project once in <a href="#owner">Owner → Setup</a> — sign-in appears here the moment they do.</p></div>`;
+  if (ON_CLAUDE) return `<div class="acct"><b>Save your progress</b><p class="small muted">Signing in works on the web address, not inside claude.ai.${BRAND.site ? ` Open <a href="${BRAND.site}">${esc(BRAND.site.replace(/^https?:\/\//, '').replace(/\/$/, ''))}</a>.` : ''}</p></div>`;
   if (S.acct) {
     return `<div class="acct in" id="acctCard">
       <div class="row between"><b>Signed in as ${esc(S.acct.name)}</b><span class="cpill" data-cloudstate></span></div>
@@ -6682,7 +6815,7 @@ function accountHTML(opts) {
     <b>${opts.title || 'Save your progress'}</b>
     <p class="small muted">${opts.blurb || `A name and a PIN — that's the whole sign-up. Use the same two on any device and your XP, ${COIN_NAME} and outfits follow you. Without it, progress lives only on this one phone.`}</p>
     <div class="acctform">
-      <label><span class="label">Your name</span><input type="text" id="acctName" maxlength="24" placeholder="Nat" autocomplete="given-name" value="${esc(S.who.name || '')}"></label>
+      <label><span class="label">Your name</span><input type="text" id="acctName" maxlength="24" placeholder="${esc(BRAND.sample)}" autocomplete="given-name" value="${esc(S.who.name || '')}"></label>
       <label><span class="label">PIN (4–8 digits)</span><input type="password" id="acctPin" inputmode="numeric" pattern="[0-9]*" maxlength="8" placeholder="••••" autocomplete="off"></label>
     </div>
     <div class="btn-row"><button type="button" class="btn sm rose" id="acctGo">Sign in or create</button>${opts.later ? '<button type="button" class="btn sm ghost" id="acctLater">Later</button>' : ''}</div>
@@ -6723,7 +6856,7 @@ function wireAccount(root, after) {
 }
 /* first run, and again once there is something worth keeping */
 function askAccount() {
-  if (S.acct || S.who.asked || ON_CLAUDE || S.test) return;
+  if (S.acct || S.who.asked || ON_CLAUDE || S.test || !Cloud.on()) return;
   S.who.asked = true; save();
   const el = document.createElement('div');
   el.className = 'bigtoast in namebox acctbox';
@@ -6732,7 +6865,7 @@ function askAccount() {
   wireAccount(el, () => { el.remove(); stackToasts(); render(); });
 }
 function accountNudgeHTML() {
-  if (S.acct || ON_CLAUDE || S.test || (S.xp || 0) < 30) return '';
+  if (S.acct || ON_CLAUDE || S.test || !Cloud.on() || (S.xp || 0) < 30) return '';
   return `<section class="hsec"><div class="hbody"><div class="acct nudge"><div>${companion(buddy().id, 56)}</div><div><b>${S.xp} XP and ${S.coins || 0} ${COIN_NAME} live only on this device.</b><p class="small muted">Sign in once so they can't be lost.</p></div><a class="btn sm rose" href="#settings">Save it →</a></div></div></section>`;
 }
 
@@ -6741,7 +6874,7 @@ function renderAbout() {
   crumb([{ t: 'About' }]);
   app.innerHTML = `
   <section class="pagehead">
-    <div class="title"><span class="label">About</span><h1>Hablemos</h1><p>“Hablemos” is the <em>nosotros</em> subjunctive of <em>hablar</em> — “let's talk”. You will meet that verb form at level 4. Until then, it's just the plan.</p></div>
+    <div class="title"><span class="label">About</span><h1>${esc(BRAND.name)}</h1><p>${BRAND.about}</p></div>
     <div class="side pink" style="align-items:center">${mascot('lola', 120)}</div>
   </section>
   <div class="about">
@@ -6763,7 +6896,7 @@ function renderAbout() {
       <p><b>Also in now:</b> a <a href="#review/verbs">verb trainer</a> covering ${TENSES.length} tenses across ${VERBS.length} verbs (including Guatemalan <em>vos</em>), typed <a href="#review/translate">translation drills</a> in both directions, finished lessons that come back on the same spaced schedule as words, end-of-level <a href="#checkpoint/${S.level}">checkpoints</a>, a <a href="#placement">placement test</a>, and mistakes that tell you <em>why</em> they were wrong — gender, tense, ser vs estar and ten other causes.</p>
       <p><b>Next:</b> levels 4–6 filled in, illustrated stories with audio, a “hearts” mode for quizzes, streak repair and weekly quests.</p>
       <p><b>Later:</b> an AI conversation partner, native audio clips, writing correction.</p>
-      <p class="small">On a phone, add Hablemos to the home screen (<a href="#settings">Settings → On your phone</a>) and it opens full screen and works with no signal. Progress is saved in this browser, and — if cloud sync is switched on — mirrored to your own Supabase project so the <a href="#owner">Owner</a> page can see it. Built with ♥ for Nat ♥</p>
+      <p class="small">On a phone, add ${esc(BRAND.name)} to the home screen (<a href="#settings">Settings → On your phone</a>) and it opens full screen and works with no signal. Progress is saved in this browser, and — if cloud sync is switched on — mirrored to your own Supabase project so the <a href="#owner">Owner</a> page can see it.${BRAND.credit ? ' ' + BRAND.credit : ''}</p>
       <p class="small buildstamp">Version <b>${esc(BUILD.v)}</b> · built ${esc(BUILD.date)}<br>If this copy is on a web address, compare this line with the one in the Claude version to check it is up to date.</p>
     </div>
   </div>`;
@@ -8085,7 +8218,7 @@ function renderOwner(sub) {
   const cfg = cloudCfg();
   app.innerHTML = `
   <section class="pagehead">
-    <div class="title"><span class="label">Owner</span><h1>Who is learning</h1><p>Everyone whose copy of Hablemos is signed in to the same cloud project appears here, newest first.</p></div>
+    <div class="title"><span class="label">Owner</span><h1>Who is learning</h1><p>Everyone whose copy of ${esc(BRAND.name)} is signed in to the same cloud project appears here, newest first.</p></div>
     <div class="side tint">
       <span class="label">Cloud sync</span><span class="cpill" data-cloudstate></span>
       <div class="btn-row" style="margin-top:10px"><button type="button" class="btn sm rose" id="oRefresh">Refresh</button><button type="button" class="btn sm ghost" id="oSetup">Setup</button><button type="button" class="btn sm ghost" id="oLock">Lock</button></div>
@@ -8106,7 +8239,7 @@ async function loadOwner() {
   box.innerHTML = '<p class="muted">Loading…</p>';
   try {
     const rows = (await Cloud.all()).filter(r => !(r.payload && r.payload.migrated_to));
-    if (!rows.length) { box.innerHTML = `<div class="notice">No learners yet. Open Hablemos on the other device, put a name in <b>Casita → your name</b>, and earn a little XP — the row appears here within a few seconds.</div>`; return; }
+    if (!rows.length) { box.innerHTML = `<div class="notice">No learners yet. Open ${esc(BRAND.name)} on the other device, put a name in <b>Casita → your name</b>, and earn a little XP — the row appears here within a few seconds.</div>`; return; }
     box.innerHTML = rows.map(ownerCard).join('');
   } catch (e) {
     box.innerHTML = `<div class="notice warn"><b>Could not read the cloud.</b><br>${esc(String(e.message || e))}</div>` + ownerSetupHTML();
@@ -8129,12 +8262,12 @@ function ownerSetupHTML() {
   payload jsonb
 );
 alter table ${TABLE} enable row level security;
-drop policy if exists "hablemos read"   on ${TABLE};
-drop policy if exists "hablemos insert" on ${TABLE};
-drop policy if exists "hablemos update" on ${TABLE};
-create policy "hablemos read"   on ${TABLE} for select using (true);
-create policy "hablemos insert" on ${TABLE} for insert with check (true);
-create policy "hablemos update" on ${TABLE} for update using (true);</pre>
+drop policy if exists "${BRAND.id} read"   on ${TABLE};
+drop policy if exists "${BRAND.id} insert" on ${TABLE};
+drop policy if exists "${BRAND.id} update" on ${TABLE};
+create policy "${BRAND.id} read"   on ${TABLE} for select using (true);
+create policy "${BRAND.id} insert" on ${TABLE} for insert with check (true);
+create policy "${BRAND.id} update" on ${TABLE} for update using (true);</pre>
           <button type="button" class="btn sm ghost" id="copySql">Copy the SQL</button></li>
         <li>Open <b>Project Settings → API</b>. Copy the <b>Project URL</b> and the <b>anon public</b> key into the two boxes below.</li>
       </ol>
@@ -8203,5 +8336,6 @@ startClock();
 render();
 setTimeout(askAccount, 1200);
 { const fv = $('#footv'); if (fv) fv.textContent = BUILD.v; }
+{ const fc = $('#footcredit'); if (fc) fc.innerHTML = BRAND.credit ? BRAND.credit.replace(/♥/g, '<span class="heart">♥</span>') : BRAND.owner ? 'made by <b>' + esc(BRAND.owner) + '</b>' : ''; }
 </script>
 </html>

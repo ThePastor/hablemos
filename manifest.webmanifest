@@ -1,7 +1,7 @@
 {
-  "name": "Hablemos — Spanish for Nat",
+  "name": "Hablemos — Learn Spanish",
   "short_name": "Hablemos",
-  "description": "Spanish from the very first word to real fluency, one small step a day. Guatemalan flavour, companions that grow, and practice that comes back until it sticks.",
+  "description": "Spanish from the very first word to real fluency, one small step a day. Companions that grow, and practice that comes back until it sticks.",
   "id": "/hablemos/",
   "start_url": "./?source=pwa#home",
   "scope": "./",
