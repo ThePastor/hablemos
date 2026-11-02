@@ -32,7 +32,7 @@ Signing in is optional, and only does one thing: it lets you pick the app back u
 
 Without an account, everything stays in your browser's own storage and clearing site data removes it.
 
-With one, what leaves your device is: your first name, an identifier derived from your password (never the password itself), and your practice progress. It goes to a Supabase project **hosted in Canada**, owned by JohnsonXCorp, and is used only to carry your progress between devices. It is not sold, not shared, and not added to any mailing list.
+With one, what leaves your device is: your first name, an identifier derived from your password (never the password itself), and your practice progress. It goes to a Supabase project **hosted in Canada**, owned by JohnsonX Labs, and is used only to carry your progress between devices. It is not sold, not shared, and not added to any mailing list.
 
 ## How it's built
 
@@ -40,11 +40,11 @@ One self-contained `index.html` — no build step to serve it, no dependencies t
 
 Hablemos and **[Vamos](https://thepastor.github.io/vamos/)** are the same engine with different brand files — Vamos is the neutral build, and it teaches French and Japanese as well.
 
-Built by **Johnson[X]Corp**. The version and build date sit in the footer of every page, next to *What changed*.
+Built by **Johnson[X] Labs**. The version and build date sit in the footer of every page, next to *What changed*.
 
 ## Licence — this is not open source
 
-**Copyright © 2026 JohnsonXCorp. All rights reserved.**
+**Copyright © 2026 Anndy Johnson, operating as JohnsonX Labs. All rights reserved.**
 
 The repository is public so the app can be served from GitHub Pages, and so anyone can check for themselves what the page does. It is **not** published for reuse.
 

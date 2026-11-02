@@ -1,6 +1,6 @@
 # Terms of use
 
-**Vamos** and **Hablemos** are published by Anndy Johnson, operating as JohnsonXCorp.
+**Vamos** and **Hablemos** are published by Anndy Johnson, operating as JohnsonX Labs.
 Using either application means accepting these terms. They are short on purpose.
 
 Last updated: 4 September 2026.
